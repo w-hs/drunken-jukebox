@@ -21,4 +21,10 @@ public class PlayedSong {
 	
 	@Column(unique = true, nullable = false)
 	private Calendar timestamp;
+	
+	@Column(nullable = false)
+	private int voteCount;
+	
+	@Column(nullable = false)
+	private float averateDI;
 }

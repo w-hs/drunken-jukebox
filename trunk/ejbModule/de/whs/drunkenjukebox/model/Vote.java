@@ -17,10 +17,6 @@ public class Vote {
 	
 	@ManyToOne
 	@Column(nullable = false)
-	private PartyPeople voter;
-	
-	@ManyToOne
-	@Column(nullable = false)
 	private Song song;
 	
 	@Column(nullable = false)
@@ -35,14 +31,6 @@ public class Vote {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public PartyPeople getVoter() {
-		return voter;
-	}
-
-	public void setVoter(PartyPeople voter) {
-		this.voter = voter;
 	}
 
 	public Song getSong() {
