@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class DIValue {
@@ -15,13 +14,33 @@ public class DIValue {
 	@GeneratedValue
 	private int id;
 	
-	@ManyToOne
-	@Column(nullable = false)
-	private PartyPeople person;
-	
 	@Column(nullable = false)
 	private Calendar timestamp;
 	
 	@Column(nullable = false)
 	private int diValue;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Calendar getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Calendar timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public int getDiValue() {
+		return diValue;
+	}
+
+	public void setDiValue(int diValue) {
+		this.diValue = diValue;
+	}
 }

@@ -1,8 +1,12 @@
 package de.whs.drunkenjukebox.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PartyPeople {
@@ -12,6 +16,12 @@ public class PartyPeople {
 	private int id;
 	
 	private int currentDI;
+	
+	@OneToMany
+	private Collection<DIValue> diValues = new ArrayList<DIValue>();
+	
+	@OneToMany
+	private Collection<Vote> votes = new ArrayList<Vote>();
 
 	public int getId() {
 		return id;
@@ -27,5 +37,21 @@ public class PartyPeople {
 
 	public void setCurrentDI(int currentDI) {
 		this.currentDI = currentDI;
+	}
+
+	public Collection<DIValue> getDiValues() {
+		return diValues;
+	}
+
+	public void setDiValues(Collection<DIValue> diValues) {
+		this.diValues = diValues;
+	}
+
+	public Collection<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Collection<Vote> votes) {
+		this.votes = votes;
 	}
 }
