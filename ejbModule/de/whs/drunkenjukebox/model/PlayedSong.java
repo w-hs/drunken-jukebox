@@ -25,5 +25,45 @@ public class PlayedSong {
 	private int voteCount;
 	
 	@Column(nullable = false)
-	private float averateDI;
+	private float averageDI;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Song getSong() {
+		return song;
+	}
+
+	public void setSong(Song song) {
+		this.song = song;
+	}
+
+	public Calendar getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Calendar timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public int getVoteCount() {
+		return voteCount;
+	}
+
+	public void setVoteCount(int voteCount) {
+		this.voteCount = voteCount;
+	}
+
+	public float getAverageDI() {
+		return averageDI;
+	}
+
+	public void setAverageDI(float averageDI) {
+		this.averageDI = averageDI;
+	}
 }
