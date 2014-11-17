@@ -16,7 +16,6 @@ public class Vote {
 	private int id;
 	
 	@ManyToOne
-	@Column(nullable = false)
 	private Song song;
 	
 	@Column(nullable = false)
