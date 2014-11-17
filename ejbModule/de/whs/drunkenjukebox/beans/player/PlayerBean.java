@@ -1,19 +1,17 @@
-package de.whs.drunkenjukebox.beans;
+package de.whs.drunkenjukebox.beans.player;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 
 /**
  * Session Bean implementation class PartyBean
  */
-@Stateless
-@LocalBean
-public class PartyBean {
+@Stateful
+public class PlayerBean implements IPlayerRemote {
 
     /**
      * Default constructor. 
      */
-    public PartyBean() {
+    public PlayerBean() {
         // TODO Auto-generated constructor stub
     }
 
