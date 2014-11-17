@@ -13,6 +13,30 @@ import javax.persistence.OneToOne;
 @Entity
 public class Party {
 	
+	public Playlist getPlaylist() {
+		return playlist;
+	}
+
+	public void setPlaylist(Playlist playlist) {
+		this.playlist = playlist;
+	}
+
+	public Collection<PartyPeople> getGuests() {
+		return guests;
+	}
+
+	public void setGuests(Collection<PartyPeople> guests) {
+		this.guests = guests;
+	}
+
+	public Collection<PlayedSong> getPlayedSongs() {
+		return playedSongs;
+	}
+
+	public void setPlayedSongs(Collection<PlayedSong> playedSongs) {
+		this.playedSongs = playedSongs;
+	}
+
 	@Id
 	@GeneratedValue
 	private int id;
