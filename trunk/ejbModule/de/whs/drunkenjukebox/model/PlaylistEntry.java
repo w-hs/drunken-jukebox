@@ -1,6 +1,5 @@
 package de.whs.drunkenjukebox.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +13,6 @@ public class PlaylistEntry {
 	private int id;
 	
 	@OneToOne
-	@Column(nullable = false)
 	private Song song;
 	
 	// Info ist doppelt enthalten über die Tabelle Vote

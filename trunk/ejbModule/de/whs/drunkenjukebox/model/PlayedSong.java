@@ -16,7 +16,6 @@ public class PlayedSong {
 	private int id;
 	
 	@ManyToOne
-	@Column(nullable = false)
 	private Song song;
 	
 	@Column(unique = true, nullable = false)
