@@ -13,6 +13,27 @@ import javax.persistence.OneToOne;
 @Entity
 public class Party {
 	
+	@Id
+	@GeneratedValue
+	private int id;
+	
+	@Column(nullable = false)
+	private Calendar startTime;
+	
+	private Calendar endTime;
+	
+	@OneToOne
+	private Song currentSong;
+	
+	@OneToOne
+	private Playlist playlist;
+	
+	@OneToMany
+	private Collection<PartyPeople> guests;
+	
+	@OneToMany
+	private Collection<PlayedSong> playedSongs;
+	
 	public Playlist getPlaylist() {
 		return playlist;
 	}
@@ -36,27 +57,6 @@ public class Party {
 	public void setPlayedSongs(Collection<PlayedSong> playedSongs) {
 		this.playedSongs = playedSongs;
 	}
-
-	@Id
-	@GeneratedValue
-	private int id;
-	
-	@Column(nullable = false)
-	private Calendar startTime;
-	
-	private Calendar endTime;
-	
-	@OneToOne
-	private Song currentSong;
-	
-	@OneToOne
-	private Playlist playlist;
-	
-	@OneToMany
-	private Collection<PartyPeople> guests;
-	
-	@OneToMany
-	private Collection<PlayedSong> playedSongs;
 
 	public int getId() {
 		return id;
