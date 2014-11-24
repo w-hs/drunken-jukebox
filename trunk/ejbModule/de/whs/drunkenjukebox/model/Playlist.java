@@ -3,6 +3,7 @@ package de.whs.drunkenjukebox.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class Playlist {
 	@GeneratedValue
 	private int id;
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Collection<PlaylistEntry> entries = new ArrayList<PlaylistEntry>();
 
 	public int getId() {

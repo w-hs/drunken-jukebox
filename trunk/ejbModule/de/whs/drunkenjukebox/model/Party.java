@@ -3,6 +3,7 @@ package de.whs.drunkenjukebox.model;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,16 +23,16 @@ public class Party {
 	
 	private Calendar endTime;
 	
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.REFRESH })
 	private Song currentSong;
 	
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Playlist playlist;
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Collection<PartyPeople> guests;
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Collection<PlayedSong> playedSongs;
 	
 	public Playlist getPlaylist() {

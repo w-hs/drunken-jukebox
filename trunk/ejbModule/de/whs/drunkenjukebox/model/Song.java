@@ -3,6 +3,7 @@ package de.whs.drunkenjukebox.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,10 +33,10 @@ public class Song {
 	
 	private int durationInSecs;
 	
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.REFRESH })
 	private Collection<Genre> genres = new ArrayList<Genre>();
 	
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.ALL })
 	private SongSource source;
 	
 	public int getId() {
