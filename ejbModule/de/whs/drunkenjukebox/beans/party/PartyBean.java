@@ -20,7 +20,6 @@ public class PartyBean implements IPartyRemote {
      * Default constructor. 
      */
     public PartyBean() {
-        // TODO Auto-generated constructor stub
     }
 
 	@Override
