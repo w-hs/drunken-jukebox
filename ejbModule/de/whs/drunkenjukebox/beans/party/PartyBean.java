@@ -1,12 +1,18 @@
 package de.whs.drunkenjukebox.beans.party;
 
-import java.util.List;
+import java.util.Calendar;
+import java.util.Collection;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+import de.whs.drunkenjukebox.common.Util;
 import de.whs.drunkenjukebox.model.DIValue;
+import de.whs.drunkenjukebox.model.Party;
 import de.whs.drunkenjukebox.model.PartyPeople;
 import de.whs.drunkenjukebox.model.Playlist;
+import de.whs.drunkenjukebox.model.PlaylistEntry;
 import de.whs.drunkenjukebox.model.Song;
 import de.whs.drunkenjukebox.model.Vote;
 
@@ -15,6 +21,8 @@ import de.whs.drunkenjukebox.model.Vote;
  */
 @Stateless
 public class PartyBean implements IPartyRemote {
+	@PersistenceContext
+	private EntityManager em;
 
     /**
      * Default constructor. 
@@ -24,44 +32,66 @@ public class PartyBean implements IPartyRemote {
 
 	@Override
 	public Playlist getPlaylist() {
-		// TODO Auto-generated method stub
-		return null;
+		Party currentParty = Util.getCurrentParty(em);
+		if (currentParty == null)
+			throw new RuntimeException("No current party");
+		return currentParty.getPlaylist();
 	}
 
 	@Override
 	public Song getCurrentSong() {
-		// TODO Auto-generated method stub
-		return null;
+		Party currentParty = Util.getCurrentParty(em);
+		if (currentParty == null)
+			throw new RuntimeException("No current party");
+		return currentParty.getCurrentSong();
 	}
 
 	@Override
 	public PartyPeople registerPartyPeople() {
-		// TODO Auto-generated method stub
-		return null;
+		PartyPeople people = new PartyPeople();
+		em.persist(people);
+		return people;
 	}
 
 	@Override
-	public List<Vote> getVotes() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Vote> getVotes(int partyPeopleId) {
+		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		return people.getVotes();
 	}
 
 	@Override
-	public List<DIValue> getDiValues() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<DIValue> getDiValues(int partyPeopleId) {
+		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		return people.getDiValues();
 	}
 
 	@Override
-	public void vote(int partyPeopleId, int songId) {
-		// TODO Auto-generated method stub
+	public void vote(int partyPeopleId, int songId, boolean up) {
+		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		Song votedSong = em.find(Song.class, songId);
 		
+		Party current = Util.getCurrentParty(em);
+		PlaylistEntry entry = current.getPlaylist().findSong(votedSong);
+		if (entry == null)
+			throw new RuntimeException("Voted for song which is not in playlist");
+		entry.setVoteCount(entry.getVoteCount() + (up ? 1 : -1));
+		
+		Vote vote = new Vote();
+		vote.setTimestamp(Calendar.getInstance());
+		vote.setUpOrDown(up);
+		vote.setSong(votedSong);
+		people.getVotes().add(vote);
 	}
 
 	@Override
 	public void sendDi(int partyPeopleId, int di) {
-		// TODO Auto-generated method stub
+		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		DIValue diValue = new DIValue();
+		diValue.setDiValue(di);
+		diValue.setTimestamp(Calendar.getInstance());
 		
+		people.setCurrentDI(di);
+		people.getDiValues().add(diValue);
 	}
 
 }
