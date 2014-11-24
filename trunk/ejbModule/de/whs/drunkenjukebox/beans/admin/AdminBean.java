@@ -6,11 +6,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import de.whs.drunkenjukebox.common.Util;
 import de.whs.drunkenjukebox.model.Party;
 import de.whs.drunkenjukebox.model.Playlist;
 import de.whs.drunkenjukebox.model.Song;
@@ -30,23 +30,10 @@ public class AdminBean implements IAdminRemote {
     public AdminBean() {
         // TODO Auto-generated constructor stub
     }
-    
-    private Party getCurrentParty() {
-    	Query q = em.createQuery("from Party p where p.endTime is null");
-    	List<?> resultList = q.getResultList();
-    	
-    	int size = resultList.size();    	
-    	if (size == 0)
-    		return null;    	
-    	if (size == 1)
-    		return (Party)resultList.get(0);
-    	
-    	throw new RuntimeException("Internal Server Error. More than one party!");
-    }
 
 	@Override
 	public Party startParty() {
-		if (getCurrentParty() != null)
+		if (Util.getCurrentParty(em) != null)
 			throw new RuntimeException("Party already started!");
 		
 		Party p = new Party();
@@ -75,7 +62,7 @@ public class AdminBean implements IAdminRemote {
 
 	@Override
 	public void stopParty() {
-		Party current = getCurrentParty();
+		Party current = Util.getCurrentParty(em);
 		current.setEndTime(Calendar.getInstance());
 	}
 
