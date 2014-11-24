@@ -90,4 +90,11 @@ public class Party {
 	public void setCurrentSong(Song currentSong) {
 		this.currentSong = currentSong;
 	}
+
+	public int getCurrentAverageDi() {
+		int allDiValues = 0;
+		for (PartyPeople p : getGuests())
+			allDiValues += p.getCurrentDI();
+		return allDiValues / getGuests().size();
+	}
 }
