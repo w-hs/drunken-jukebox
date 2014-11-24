@@ -3,6 +3,7 @@ package de.whs.drunkenjukebox.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +18,10 @@ public class PartyPeople {
 	
 	private int currentDI;
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Collection<DIValue> diValues = new ArrayList<DIValue>();
 	
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Collection<Vote> votes = new ArrayList<Vote>();
 
 	public int getId() {
