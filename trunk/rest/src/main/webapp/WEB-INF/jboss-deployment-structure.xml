@@ -2,7 +2,7 @@
 <jboss-deployment-structure>
 	<deployment>
 		<dependencies>
-			<module name="DrunkenJukebox.jar" />
+			<module name="deployment.DrunkenJukebox.jar" />
 		</dependencies>
 	</deployment>
 </jboss-deployment-structure>
