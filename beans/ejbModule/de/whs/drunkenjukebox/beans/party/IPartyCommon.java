@@ -1,6 +1,6 @@
 package de.whs.drunkenjukebox.beans.party;
 
-import java.util.Collection;
+import java.util.List;
 
 import de.whs.drunkenjukebox.model.DIValue;
 import de.whs.drunkenjukebox.model.PartyPeople;
@@ -15,11 +15,11 @@ public interface IPartyCommon {
 	
 	PartyPeople registerPartyPeople();
 	
-	Collection<Vote> getVotes(int partyPeopleId);
+	List<Vote> getVotes();
 	
-	Collection<DIValue> getDiValues(int partyPeopleId);
+	List<DIValue> getDiValues();
 	
-	void vote(int partyPeopleId, int songId, boolean up);
+	void vote(int partyPeopleId, int songId);
 	
 	void sendDi(int partyPeopleId, int di);
 }

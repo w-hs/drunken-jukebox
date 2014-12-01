@@ -34,13 +34,4 @@ public class Playlist {
 	public void setEntries(Collection<PlaylistEntry> entries) {
 		this.entries = entries;
 	}
-
-	public PlaylistEntry findSong(Song votedSong) {
-		for (PlaylistEntry entry : entries)
-		{
-			if (entry.getSong().getId() == votedSong.getId())
-				return entry;
-		}
-		return null;
-	}
 }
