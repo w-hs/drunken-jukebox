@@ -19,6 +19,7 @@ public class Program {
 	public void run() {
 		try {
 			IPlayerRemote player = doLookup();
+			player.play(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,11 +37,9 @@ public class Program {
 		final String beanName = PlayerBean.class.getSimpleName();
 		final String viewClassName = IPlayerRemote.class.getName();
 		String lookupName = "ejb:" + appName + "/" + moduleName + "/" + 
-		distinctName + "/" + beanName + "!" + viewClassName;
-
-		lookupName = "java:jboss/exported/rest/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote";
+		distinctName + "/" + beanName + "!" + viewClassName + "?stateful";
+		
 		System.out.println(lookupName);
-	
 		return (IPlayerRemote) context.lookup(lookupName);
 	}
 
