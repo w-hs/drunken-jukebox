@@ -1,0 +1,15 @@
+INSERT INTO principal(
+            id, name, password)
+    VALUES (1, 'admin', 'geheim'),
+    (2, 'player', 'geheim'),
+    (3, 'guest', 'geheim');
+
+INSERT INTO role(
+            id, name)
+    VALUES (1, 'Administrator'),
+    (2, 'Player'),
+    (3, 'PartyPeople');
+
+INSERT INTO principal_role(
+            principal_id, roles_id)
+    VALUES (1, 1), (2, 2), (3, 3);

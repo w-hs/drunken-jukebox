@@ -1,0 +1,11 @@
+<subsystem xmlns="urn:jboss:domain:security:1.2">
+            <security-domains>
+                <security-domain name="other" cache-type="default">
+                    <authentication>
+				    <login-module code="Database" flag="required">
+					  <module-option name="dsJndiName" value="java:jboss/datasources/DJDS"/>
+					  <module-option name="principalsQuery" value="SELECT password FROM principal WHERE name = ?"/>
+					  <module-option name="rolesQuery" value="SELECT r.name, 'Roles' FROM role r, principal_role pr, principal p WHERE r.id = pr.roles_id AND pr.principal_id = p.id AND p.name = ?"/>
+					</login-module>
+				  </authentication>
+                </security-domain>

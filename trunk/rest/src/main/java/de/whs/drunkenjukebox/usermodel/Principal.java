@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 
@@ -24,7 +25,7 @@ public class Principal {
 	@Column(nullable=false)
 	private String password;
 	
-	@OneToMany(cascade={CascadeType.PERSIST})
+	@ManyToMany(cascade={CascadeType.PERSIST})
 	private Collection<Role> roles = new ArrayList<Role>();
 
 	public int getId() {
