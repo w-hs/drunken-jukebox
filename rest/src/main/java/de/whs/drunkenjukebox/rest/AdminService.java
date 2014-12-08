@@ -3,6 +3,8 @@ package de.whs.drunkenjukebox.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.DELETE;
@@ -14,17 +16,24 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.ws.api.annotation.WebContext;
+
 import de.whs.drunkenjukebox.beans.admin.IAdminLocal;
 import de.whs.drunkenjukebox.model.LocalFileSource;
 import de.whs.drunkenjukebox.model.Song;
+import de.whs.drunkenjukebox.rest.roles.IRoles;
 import de.whs.drunkenjukebox.model.YouTubeSource;
 import de.whs.drunkenjukebox.rest.model.SongDTO;
 
+@DeclareRoles({IRoles.Admin})
+@RolesAllowed({IRoles.Admin})
+@WebContext(contextRoot="*", urlPattern="/*", authMethod="BASIC", transportGuarantee="NONE", secureWSDLAccess=false)
 @Path("/admin")
 @Stateless
 public class AdminService {
 	@EJB
 	private IAdminLocal service;
+	
 	
 	@GET
 	@Path("/songs")
@@ -43,6 +52,7 @@ public class AdminService {
         }
         return songs;
     }
+	
 	
 	@POST
 	@Path("/songs")
