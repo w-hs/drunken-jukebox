@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -33,10 +34,10 @@ public class Song {
 	
 	private int durationInSecs;
 	
-	@ManyToMany(cascade = { CascadeType.REFRESH })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
 	private Collection<Genre> genres = new ArrayList<Genre>();
 	
-	@OneToOne(cascade = { CascadeType.ALL })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private SongSource source;
 	
 	public int getId() {
