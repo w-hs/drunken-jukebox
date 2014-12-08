@@ -1,5 +1,6 @@
-package de.whs.drunkenjukebox.rest.rest;
+package de.whs.drunkenjukebox.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,6 +8,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -18,7 +20,7 @@ import de.whs.drunkenjukebox.model.Song;
 @Stateless
 public class AdminService {
 	@EJB
-	private IAdminLocal bean;
+	private IAdminLocal service;
 	
 	private Logger logger = Logger.getLogger(AdminService.class.getName());
 	
@@ -26,7 +28,15 @@ public class AdminService {
 	@Path("/songs")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Song> getSongs() {
-		logger.log(Level.INFO, "bean: " + bean);
-        return bean.getSongs();
+        return service.getSongs();
+    }
+	
+	@POST
+	@Path("/songs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void createSong(Song newSong) {
+		List<Song> newSongs = new ArrayList<Song>();
+		newSongs.add(newSong);
+		service.addSongs(newSongs);
     }
 }
