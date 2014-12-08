@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 public class YouTubeSource extends SongSource {
 	
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
 	private String url;
 
 	public String getUrl() {

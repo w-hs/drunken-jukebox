@@ -2,8 +2,6 @@ package de.whs.drunkenjukebox.rest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,14 +13,14 @@ import javax.ws.rs.core.MediaType;
 
 import de.whs.drunkenjukebox.beans.admin.IAdminLocal;
 import de.whs.drunkenjukebox.model.Song;
+import de.whs.drunkenjukebox.model.YouTubeSource;
+import de.whs.drunkenjukebox.rest.model.SongDTO;
 
 @Path("/admin")
 @Stateless
 public class AdminService {
 	@EJB
 	private IAdminLocal service;
-	
-	private Logger logger = Logger.getLogger(AdminService.class.getName());
 	
 	@GET
 	@Path("/songs")
@@ -34,9 +32,13 @@ public class AdminService {
 	@POST
 	@Path("/songs")
     @Produces(MediaType.APPLICATION_JSON)
-    public void createSong(Song newSong) {
+    public void createSong(SongDTO newSong) {
 		List<Song> newSongs = new ArrayList<Song>();
-		newSongs.add(newSong);
+		if (newSong.getYoutube() != null)
+			newSong.getSong().setSource(newSong.getYoutube());
+		else if (newSong.getLocalFile() != null)
+			newSong.getSong().setSource(newSong.getLocalFile());
+		newSongs.add(newSong.getSong());
 		service.addSongs(newSongs);
     }
 }

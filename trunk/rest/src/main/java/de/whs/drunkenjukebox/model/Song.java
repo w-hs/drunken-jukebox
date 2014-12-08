@@ -40,6 +40,14 @@ public class Song {
 	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private SongSource source;
 	
+	public SongSource getSource() {
+		return source;
+	}
+
+	public void setSource(SongSource source) {
+		this.source = source;
+	}
+
 	public int getId() {
 		return id;
 	}
