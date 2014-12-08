@@ -3,6 +3,8 @@ package de.whs.drunkenjukebox.beans.party;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,10 +17,13 @@ import de.whs.drunkenjukebox.model.Playlist;
 import de.whs.drunkenjukebox.model.PlaylistEntry;
 import de.whs.drunkenjukebox.model.Song;
 import de.whs.drunkenjukebox.model.Vote;
+import de.whs.drunkenjukebox.rest.roles.IRoles;
 
 /**
  * Session Bean implementation class PartyBean
  */
+@DeclareRoles({IRoles.PartyPeople})	
+@RolesAllowed({IRoles.PartyPeople})
 @Stateless
 public class PartyBean implements IPartyRemote {
 	@PersistenceContext

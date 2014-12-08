@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,10 +22,13 @@ import de.whs.drunkenjukebox.model.PlayedSong;
 import de.whs.drunkenjukebox.model.Playlist;
 import de.whs.drunkenjukebox.model.PlaylistEntry;
 import de.whs.drunkenjukebox.model.Song;
+import de.whs.drunkenjukebox.rest.roles.IRoles;
 
 /**
  * Session Bean implementation class PartyBean
  */
+@DeclareRoles({IRoles.Admin})	
+@RolesAllowed({IRoles.Admin})	
 @Stateless
 public class AdminBean implements IAdminRemote, IAdminLocal {
 
