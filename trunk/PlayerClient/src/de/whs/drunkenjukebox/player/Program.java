@@ -30,20 +30,17 @@ public class Program {
 		
 		final Context context = new InitialContext(jndiProperties);
 		
-		final String appName = "";
+		final String appName = "rest";
 		final String moduleName = "rest";
 		final String distinctName = "";
 		final String beanName = PlayerBean.class.getSimpleName();
 		final String viewClassName = IPlayerRemote.class.getName();
 		String lookupName = "ejb:" + appName + "/" + moduleName + "/" + 
 		distinctName + "/" + beanName + "!" + viewClassName;
-		
-		//lookupName = "java:module/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote";
-		//lookupName = "java:module/" + PlayerBean.class.getSimpleName();
-		lookupName = "java:global/rest/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote";
+
+		lookupName = "java:jboss/exported/rest/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote";
 		System.out.println(lookupName);
-		//java:module/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote
-		//java:global/rest/PlayerBean!de.whs.drunkenjukebox.beans.player.IPlayerRemote
+	
 		return (IPlayerRemote) context.lookup(lookupName);
 	}
 
