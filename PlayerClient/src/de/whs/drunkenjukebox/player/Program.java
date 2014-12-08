@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 
 import de.whs.drunkenjukebox.beans.player.IPlayerRemote;
 import de.whs.drunkenjukebox.beans.player.PlayerBean;
+import de.whs.drunkenjukebox.model.SongSource;
 
 public class Program {
 
@@ -31,7 +32,7 @@ public class Program {
 		
 		final Context context = new InitialContext(jndiProperties);
 		
-		final String appName = "rest";
+		final String appName = "";
 		final String moduleName = "rest";
 		final String distinctName = "";
 		final String beanName = PlayerBean.class.getSimpleName();
