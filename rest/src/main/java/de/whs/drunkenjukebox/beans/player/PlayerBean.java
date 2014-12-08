@@ -24,8 +24,7 @@ public class PlayerBean implements IPlayerRemote {
 
 	@Override
 	public void play(SongSource songSource) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Java ist klasse :-)!");		
 	}
 
 }
