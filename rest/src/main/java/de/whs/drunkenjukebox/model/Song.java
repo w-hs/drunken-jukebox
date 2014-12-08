@@ -37,7 +37,7 @@ public class Song {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
 	private Collection<Genre> genres = new ArrayList<Genre>();
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private SongSource source;
 	
 	public SongSource getSource() {
