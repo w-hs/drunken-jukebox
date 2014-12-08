@@ -11,9 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import de.whs.drunkenjukebox.beans.admin.AdminBean;
 import de.whs.drunkenjukebox.beans.admin.IAdminLocal;
-import de.whs.drunkenjukebox.beans.admin.IAdminRemote;
 import de.whs.drunkenjukebox.model.Song;
 
 @Path("/admin")
