@@ -28,7 +28,7 @@ import de.whs.drunkenjukebox.rest.roles.IRoles;
 @DeclareRoles({IRoles.PartyPeople})	
 @RolesAllowed({IRoles.PartyPeople})
 @Stateless
-public class PartyBean implements IPartyRemote {
+public class PartyBean implements IPartyRemote, IPartyLocal {
 	@PersistenceContext
 	private EntityManager em;
 
