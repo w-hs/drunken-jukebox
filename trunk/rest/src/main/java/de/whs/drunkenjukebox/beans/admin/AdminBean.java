@@ -52,40 +52,40 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 		if (Util.getCurrentParty(em) != null)
 			throw new RuntimeException("Party already started!");
 		
-		Party p = new Party();
-		p.setStartTime(Calendar.getInstance());
+		Party party = new Party();
+		party.setStartTime(Calendar.getInstance());
 			
 		Playlist playlist = new Playlist();
-		fillPlaylist(playlist);
-		p.setPlaylist(playlist);
+		party.setPlaylist(playlist);
+		fillPlaylist(party, playlist);
 		
-		Song song = chooseCurrentSong(playlist);
-		p.setCurrentSong(song);
+		Song song = chooseCurrentSong(party, playlist);
+		party.setCurrentSong(song);
 		
-		em.persist(p);
-		return p;
+		em.persist(party);
+		return party;
 	}
 	
-	private Song chooseCurrentSong(Playlist playlist) {
+	private Song chooseCurrentSong(Party party, Playlist playlist) {
 		Song song = playlist.getEntries().iterator().next().getSong();
 		playlist.getEntries().remove(song);
 		
-		fillPlaylist(playlist);
+		fillPlaylist(party, playlist);
 		
 		return song;
 	}
 
-	private void fillPlaylist(Playlist playlist) {
-		while (playlist.getEntries().size() < PLAYLIST_LENGTH) {
+	private void fillPlaylist(Party party, Playlist playlist) {
+		List<Song> songs = getSongs();
+		while (playlist.getEntries().size() < PLAYLIST_LENGTH && playlist.getEntries().size() < songs.size()) {
 			PlaylistEntry entry = new PlaylistEntry();
-			entry.setSong(selectSong());
+			entry.setSong(selectSong(songs, party));
 			entry.setVoteCount(0);
 			playlist.getEntries().add(entry);
 		}
 	}
 	
-	private Song selectSong() {	
-		Party party = Util.getCurrentParty(em);		
+	private Song selectSong(List<Song> songs, Party party) {		
 		int currentAverageDi = party.getCurrentAverageDi();
 		
 		for (int i = 1; i < MAX_TRIES; i++) {	
@@ -97,8 +97,8 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 			
 			Query query = em.createQuery("from PlayedSong ps where ps.averageDI between :startDi and :endDi and "
 								   + "ps.timestamp between :startTs and :endTs")
-					.setParameter("startDi", currentAverageDi - i * DETLA_DI)
-					.setParameter("endDi", currentAverageDi + i * DETLA_DI)
+					.setParameter("startDi", (float)(currentAverageDi - i * DETLA_DI))
+					.setParameter("endDi", (float)(currentAverageDi + i * DETLA_DI))
 					.setParameter("startTs", startTs)
 					.setParameter("endTs", endTs);
 				
@@ -117,21 +117,22 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 			}
 		}
 
-		return randomSong();
+		return randomSong(songs, party);
 	}
 
 
-	private Song randomSong() {
-		List<Song> songs = getSongs();
-		Party p = Util.getCurrentParty(em);
-		Collection<PlayedSong> songsToConvert = p.getPlayedSongs();
+	private Song randomSong(List<Song> songs, Party party) {
+		Collection<PlayedSong> playedSongs = party.getPlayedSongs();
 		
-		List<Song> playedSongs = new ArrayList<Song>();
-		for (PlayedSong ps : songsToConvert) {
-			playedSongs.add(ps.getSong());
+		List<Song> songsToRemove = new ArrayList<Song>();
+		for (PlayedSong ps : playedSongs) {
+			songsToRemove.add(ps.getSong());
+		}
+		for (PlaylistEntry entry : party.getPlaylist().getEntries()) {
+			songsToRemove.add(entry.getSong());
 		}
 		
-		songs.removeAll(playedSongs);
+		songs.removeAll(songsToRemove);
 		
 		return songs.get(randInt(0, songs.size() - 1));
 	}

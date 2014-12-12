@@ -85,4 +85,18 @@ public class AdminService {
 		songToDelete.setId(id);
 		service.deleteSong(songToDelete);
     }
+	
+	@POST
+	@Path("/party")
+	public void createParty()
+	{
+		service.startParty();
+	}
+	
+	@DELETE
+	@Path("/party")
+	public void updateParty()
+	{
+		service.stopParty();
+	}
 }

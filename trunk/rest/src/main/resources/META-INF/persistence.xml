@@ -6,7 +6,7 @@
 	<persistence-unit name="primary">
 		<jta-data-source>java:jboss/datasources/DJDS</jta-data-source>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
 			<property name="hibernate.show_sql" value="false" />
 		</properties>
 	</persistence-unit>
