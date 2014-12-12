@@ -1,5 +1,6 @@
 package de.whs.drunkenjukebox.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -30,10 +31,10 @@ public class Party {
 	private Playlist playlist;
 	
 	@OneToMany(cascade = { CascadeType.ALL })
-	private Collection<PartyPeople> guests;
+	private Collection<PartyPeople> guests = new ArrayList<PartyPeople>();
 	
 	@OneToMany(cascade = { CascadeType.ALL })
-	private Collection<PlayedSong> playedSongs;
+	private Collection<PlayedSong> playedSongs = new ArrayList<PlayedSong>();
 	
 	public Playlist getPlaylist() {
 		return playlist;
@@ -93,6 +94,8 @@ public class Party {
 
 	public int getCurrentAverageDi() {
 		int allDiValues = 0;
+		if (getGuests().size() == 0)
+			return 0; // Wenn die Party anfängt, ist man nüchtern
 		for (PartyPeople p : getGuests())
 			allDiValues += p.getCurrentDI();
 		return allDiValues / getGuests().size();
