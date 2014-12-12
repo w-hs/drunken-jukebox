@@ -59,25 +59,26 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 		party.setPlaylist(playlist);
 		fillPlaylist(party, playlist);
 		
-		Song song = chooseCurrentSong(party, playlist);
-		party.setCurrentSong(song);
+		chooseCurrentSong(party, playlist);
 		
 		em.persist(party);
 		return party;
 	}
 	
-	private Song chooseCurrentSong(Party party, Playlist playlist) {
+	private void chooseCurrentSong(Party party, Playlist playlist) {
 		Song song = playlist.getEntries().iterator().next().getSong();
 		playlist.getEntries().remove(song);
+		party.setCurrentSong(song);
 		
 		fillPlaylist(party, playlist);
-		
-		return song;
 	}
 
 	private void fillPlaylist(Party party, Playlist playlist) {
 		List<Song> songs = getSongs();
-		while (playlist.getEntries().size() < PLAYLIST_LENGTH && playlist.getEntries().size() < songs.size()) {
+		int currentSongCount = 0;
+		if (party.getCurrentSong() != null)
+			currentSongCount = 1;
+		while (playlist.getEntries().size() < PLAYLIST_LENGTH && playlist.getEntries().size() + currentSongCount < songs.size()) {
 			PlaylistEntry entry = new PlaylistEntry();
 			entry.setSong(selectSong(songs, party));
 			entry.setVoteCount(0);
@@ -124,6 +125,7 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 	private Song randomSong(List<Song> songs, Party party) {
 		Collection<PlayedSong> playedSongs = party.getPlayedSongs();
 		
+		List<Song> songsToChooseFrom = new ArrayList<Song>(songs);
 		List<Song> songsToRemove = new ArrayList<Song>();
 		for (PlayedSong ps : playedSongs) {
 			songsToRemove.add(ps.getSong());
@@ -131,10 +133,11 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 		for (PlaylistEntry entry : party.getPlaylist().getEntries()) {
 			songsToRemove.add(entry.getSong());
 		}
+		songsToRemove.add(party.getCurrentSong());
 		
-		songs.removeAll(songsToRemove);
+		songsToChooseFrom.removeAll(songsToRemove);
 		
-		return songs.get(randInt(0, songs.size() - 1));
+		return songsToChooseFrom.get(randInt(0, songsToChooseFrom.size() - 1));
 	}
 	
 	/**
