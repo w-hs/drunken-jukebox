@@ -16,6 +16,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import de.whs.drunkenjukebox.common.Util;
 import de.whs.drunkenjukebox.model.Party;
 import de.whs.drunkenjukebox.model.PlayedSong;
@@ -27,6 +29,7 @@ import de.whs.drunkenjukebox.rest.roles.IRoles;
 /**
  * Session Bean implementation class PartyBean
  */
+@SecurityDomain("DjDomain")
 @DeclareRoles({IRoles.Admin})	
 @RolesAllowed({IRoles.Admin})	
 @Stateless
