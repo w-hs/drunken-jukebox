@@ -66,9 +66,9 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 	}
 	
 	private void chooseCurrentSong(Party party, Playlist playlist) {
-		Song song = playlist.getEntries().iterator().next().getSong();
-		playlist.getEntries().remove(song);
-		party.setCurrentSong(song);
+		PlaylistEntry entryToPlay = playlist.getEntries().iterator().next();
+		playlist.getEntries().remove(entryToPlay);
+		party.setCurrentSong(entryToPlay.getSong());
 		
 		fillPlaylist(party, playlist);
 	}
