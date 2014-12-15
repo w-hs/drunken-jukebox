@@ -113,6 +113,7 @@
             <artifactId>jboss-annotations-api_1.2_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+        
 
         <!-- Import the JAX-RS API, we use provided scope as the API is included 
             in JBoss WildFly -->
@@ -205,6 +206,11 @@
         	<groupId>org.codehaus.jackson</groupId>
         	<artifactId>jackson-mapper-asl</artifactId>
         	<version>1.9.13</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.jboss.ejb3</groupId>
+        	<artifactId>jboss-ejb3-ext-api</artifactId>
+        	<version>2.1.0</version>
         </dependency>
     </dependencies>
 
