@@ -7,6 +7,7 @@ import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,9 +22,9 @@ import org.jboss.ws.api.annotation.WebContext;
 import de.whs.drunkenjukebox.beans.admin.IAdminLocal;
 import de.whs.drunkenjukebox.model.LocalFileSource;
 import de.whs.drunkenjukebox.model.Song;
-import de.whs.drunkenjukebox.rest.roles.IRoles;
 import de.whs.drunkenjukebox.model.YouTubeSource;
 import de.whs.drunkenjukebox.rest.model.SongDTO;
+import de.whs.drunkenjukebox.rest.roles.IRoles;
 
 @DeclareRoles({IRoles.Admin})
 @RolesAllowed({IRoles.Admin})
@@ -53,6 +54,13 @@ public class AdminService {
         return songs;
     }
 	
+	@POST
+	@Path("/addSongs")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void createSongs(List<SongDTO> songs) {
+		for (SongDTO song : songs) 
+			createSong(song);
+	}
 	
 	@POST
 	@Path("/songs")

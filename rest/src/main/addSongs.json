@@ -1,0 +1,67 @@
+[
+    {
+        "song": {
+            "title": "Last Christmas",
+            "interpret": "Wham!",
+            "album": "",
+            "durationInSecs": 277,
+            "genres": []
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/watch?v=E8gmARGvPlI"
+        },
+        "localFile": null
+    },
+    {
+        "song": {
+            "title": "When September Ends",
+            "interpret": "American Idiot",
+            "album": "American Idiot",
+            "durationInSecs": 295,
+            "genres": []
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/watch?v=LUU_2J-Dp14"
+        },
+        "localFile": null
+    },
+    {
+        "song": {
+            "title": "Truck Advertising",
+            "interpret": "Coca Cola",
+            "album": "",
+            "durationInSecs": 154,
+            "genres": []
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/watch?v=eCUsuTLYtJU"
+        },
+        "localFile": null
+    },
+    {
+        "song": {
+            "title": "Do they Know it's Christmas",
+            "interpret": "Band Aid 1984",
+            "album": "",
+            "durationInSecs": 277,
+            "genres": []
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/watch?v=bjQzJAKxTrE"
+        },
+        "localFile": null
+    },
+    {
+        "song": {
+            "title": "White Christmas",
+            "interpret": "Bing Crosby",
+            "album": "",
+            "durationInSecs": 200,
+            "genres": []
+        },
+        "youtube": {
+            "url": "https://www.youtube.com/watch?v=7S-IidmcSN8"
+        },
+        "localFile": null
+    }
+]
