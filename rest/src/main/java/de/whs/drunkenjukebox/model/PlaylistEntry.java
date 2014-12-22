@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -13,10 +14,10 @@ public class PlaylistEntry {
 	@GeneratedValue
 	private int id;
 	
-	@OneToOne(cascade = { CascadeType.REFRESH })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
 	private Song song;
 	
-	// Info ist doppelt enthalten über die Tabelle Vote
+	// Info ist doppelt enthalten ï¿½ber die Tabelle Vote
 	private int voteCount;
 
 	public int getId() {
