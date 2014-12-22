@@ -64,19 +64,27 @@ public class PartyBean implements IPartyRemote, IPartyLocal {
 	@Override
 	public Collection<Vote> getVotes(int partyPeopleId) {
 		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		if (people == null)
+			throw new RuntimeException("No guest with ID " + partyPeopleId + " found");
 		return people.getVotes();
 	}
 
 	@Override
 	public Collection<DIValue> getDiValues(int partyPeopleId) {
 		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		if (people == null)
+			throw new RuntimeException("No guest with ID " + partyPeopleId + " found");
 		return people.getDiValues();
 	}
 
 	@Override
 	public void vote(int partyPeopleId, int songId, boolean up) {
 		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		if (people == null)
+			throw new RuntimeException("No guest with ID " + partyPeopleId + " found");
 		Song votedSong = em.find(Song.class, songId);
+		if (votedSong == null)
+			throw new RuntimeException("No song with ID " + songId + " found");
 		
 		Party current = Util.getCurrentParty(em);
 		PlaylistEntry entry = current.getPlaylist().findSong(votedSong);
@@ -94,6 +102,8 @@ public class PartyBean implements IPartyRemote, IPartyLocal {
 	@Override
 	public void sendDi(int partyPeopleId, int di) {
 		PartyPeople people = em.find(PartyPeople.class, partyPeopleId);
+		if (people == null)
+			throw new RuntimeException("No guest with ID " + partyPeopleId + " found");
 		DIValue diValue = new DIValue();
 		diValue.setDiValue(di);
 		diValue.setTimestamp(Calendar.getInstance());

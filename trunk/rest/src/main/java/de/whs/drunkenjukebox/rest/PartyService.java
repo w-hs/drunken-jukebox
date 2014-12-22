@@ -20,6 +20,7 @@ import de.whs.drunkenjukebox.model.PartyPeople;
 import de.whs.drunkenjukebox.model.Playlist;
 import de.whs.drunkenjukebox.model.Song;
 import de.whs.drunkenjukebox.model.Vote;
+import de.whs.drunkenjukebox.rest.model.VoteDTO;
 import de.whs.drunkenjukebox.rest.roles.IRoles;
 
 @DeclareRoles({IRoles.PartyPeople})
@@ -45,33 +46,34 @@ public class PartyService {
 	}
 	
 	@GET
-	@Path("/diValues")
+	@Path("/peoples/{partyPeopleId}/diValues")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DIValue> getDiValues(int partyPeopleId) {
+	public List<DIValue> getDiValues(@PathParam("partyPeopleId") int partyPeopleId) {
 		return new ArrayList<DIValue>(service.getDiValues(partyPeopleId));
 	}
 	
 	@GET
-	@Path("/votes")
+	@Path("/peoples/{partyPeopleId}/votes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Vote> getVotes(int partyPeopleId) {
+	public List<Vote> getVotes(@PathParam("partyPeopleId") int partyPeopleId) {
 		return new ArrayList<Vote>(service.getVotes(partyPeopleId));
 	}
 	
 	@POST
 	@Path("/peoples")
+	@Produces(MediaType.APPLICATION_JSON)
 	public PartyPeople registerPartyPeople() {
 		return service.registerPartyPeople();
 	}
 	
 	@POST
-	@Path("/party/songs/{songId}/votes/{up}/")
-	public void vote(@PathParam("songId") int songId, @PathParam("up") boolean up, int partyPeopleId) {
-		service.vote(partyPeopleId, songId, up);
+	@Path("/peoples/{partyPeopleId}/votes")
+	public void vote(@PathParam("partyPeopleId") int partyPeopleId, VoteDTO vote) {
+		service.vote(partyPeopleId, vote.getSongId(), vote.isUp());
 	}
 	
 	@POST
-	@Path("/peoples/{partyPeopleId}/")
+	@Path("/peoples/{partyPeopleId}/diValues")
 	public void sendDi(@PathParam("partyPeopleId") int partyPeopleId, int di) {
 		service.sendDi(partyPeopleId, di);
 	}	
