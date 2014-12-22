@@ -1,5 +1,6 @@
 package de.whs.drunkenjukebox.player;
 
+import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.jms.Message;
@@ -18,7 +19,7 @@ public class Program implements MessageListener {
 	
 	    private static final String DEFAULT_MESSAGE = "Hello, World!";
 	    private static final String DEFAULT_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
-	    private static final String DEFAULT_DESTINATION = "java:/jms/topic/DjTopic";
+	    private static final String DEFAULT_DESTINATION = "java:/jms/topics/DjTopic";
 	    private static final String DEFAULT_MESSAGE_COUNT = "1";
 	    private static final String INITIAL_CONTEXT_FACTORY = "org.jboss.naming.remote.client.InitialContextFactory";
 	    private static final String PROVIDER_URL = "http-remoting://localhost:8080";
@@ -40,9 +41,9 @@ public class Program implements MessageListener {
 		Context ctx = getInitialContext();
 
 		TopicConnectionFactory tConFactory = (TopicConnectionFactory) ctx
-				.lookup("weblogic.jms.ConnectionFactory");
+				.lookup(DEFAULT_CONNECTION_FACTORY);
 
-		Topic messageTopic = (Topic) ctx.lookup("MessageTopic");
+		Topic messageTopic = (Topic) ctx.lookup(DEFAULT_DESTINATION);
 
 		TopicConnection tCon = tConFactory.createTopicConnection();
 		TopicSession session = tCon.createTopicSession(
@@ -55,24 +56,24 @@ public class Program implements MessageListener {
 		tCon.start();
 	}
 
-	// private IPlayerRemote doLookup() throws NamingException {
-	// final Hashtable jndiProperties = new Hashtable<>();
-	// jndiProperties.put(Context.URL_PKG_PREFIXES,
-	// "org.jboss.ejb.client.naming");
-	//
-	// final Context context = new InitialContext(jndiProperties);
-	//
-	// final String appName = "";
-	// final String moduleName = "rest";
-	// final String distinctName = "";
-	// final String beanName = PlayerBean.class.getSimpleName();
-	// final String viewClassName = IPlayerRemote.class.getName();
-	// String lookupName = "ejb:" + appName + "/" + moduleName + "/" +
-	// distinctName + "/" + beanName + "!" + viewClassName + "?stateful";
-	//
-	// System.out.println(lookupName);
-	// return (IPlayerRemote) context.lookup(lookupName);
-	// }
+//	 private IPlayerRemote doLookup() throws NamingException {
+//	 final Hashtable jndiProperties = new Hashtable<>();
+//	 jndiProperties.put(Context.URL_PKG_PREFIXES,
+//	 "org.jboss.ejb.client.naming");
+//	
+//	 final Context context = new InitialContext(jndiProperties);
+//	
+//	 final String appName = "";
+//	 final String moduleName = "rest";
+//	 final String distinctName = "";
+//	 final String beanName = PlayerBean.class.getSimpleName();
+//	 final String viewClassName = IPlayerRemote.class.getName();
+//	 String lookupName = "ejb:" + appName + "/" + moduleName + "/" +
+//	 distinctName + "/" + beanName + "!" + viewClassName + "?stateful";
+//	
+//	 System.out.println(lookupName);
+//	 return (IPlayerRemote) context.lookup(lookupName);
+//	 }
 
 	private Context getInitialContext() {
 		try {
@@ -80,7 +81,10 @@ public class Program implements MessageListener {
             final Properties env = new Properties();
             env.put(Context.INITIAL_CONTEXT_FACTORY, INITIAL_CONTEXT_FACTORY);
             env.put(Context.PROVIDER_URL, System.getProperty(Context.PROVIDER_URL, PROVIDER_URL));
+            env.put(Context.SECURITY_PRINCIPAL, "player");
+            env.put(Context.SECURITY_CREDENTIALS, "geheim");
             Context context = new InitialContext(env);
+
             return context;
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -90,8 +94,7 @@ public class Program implements MessageListener {
 
 	@Override
 	public void onMessage(Message arg0) {
-		// TODO Auto-generated method stub
-
+		System.out.println(arg0);
 	}
 
 }
