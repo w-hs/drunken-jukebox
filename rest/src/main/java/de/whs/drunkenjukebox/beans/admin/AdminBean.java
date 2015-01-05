@@ -3,12 +3,17 @@ package de.whs.drunkenjukebox.beans.admin;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -37,6 +42,8 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	private @Resource SessionContext ctx;
 	
 	private static final int PLAYLIST_LENGTH = 15;
 	private static final int DETLA_DI = 10;
@@ -69,6 +76,9 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 		PlaylistEntry entryToPlay = playlist.getEntries().iterator().next();
 		playlist.getEntries().remove(entryToPlay);
 		party.setCurrentSong(entryToPlay.getSong());
+		
+		ctx.getTimerService().createTimer(new Date(new Date().getTime() + entryToPlay.getSong().getDurationInSecs()*100), "Hello World");
+		System.out.println("Playing Song. Ends in "+entryToPlay.getSong().getDurationInSecs()+"sec");
 		
 		fillPlaylist(party, playlist);
 	}
@@ -195,5 +205,24 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 	public void deleteSong(Song s) {
 		Song mergedSong = em.merge(s);
 		em.remove(mergedSong);
+	}
+	
+	@Timeout
+	public void timeoutHandler(Timer timer)
+	{
+		System.out.println("Song Endet");
+		
+		Party party = Util.getCurrentParty(em);
+		PlayedSong ps = new PlayedSong();
+		ps.setSong(party.getCurrentSong());
+		ps.setTimestamp(Calendar.getInstance());
+		//ps.setVoteCount(ps.getVoteCount());
+		ps.setAverageDI(party.getCurrentAverageDi());
+		
+		em.persist(ps);
+		
+		this.chooseCurrentSong(party, party.getPlaylist());
+
+		timer.cancel();
 	}
 }
