@@ -1,0 +1,305 @@
+\documentclass[
+    12pt, % Schriftgröße
+    DIV10,
+    ngerman, % für Umlaute, Silbentrennung etc.
+    a4paper, % Papierformat
+    oneside, % einseitiges Dokument
+    titlepage, % es wird eine Titelseite verwendet
+    parskip=half, % Abstand zwischen Absätzen (halbe Zeile)
+    headings=normal, % Größe der Überschriften verkleinern
+    listof=totoc, % Verzeichnisse im Inhaltsverzeichnis aufführen
+    bibliography=totoc, % Literaturverzeichnis im Inhaltsverzeichnis aufführen
+    index=totoc, % Index im Inhaltsverzeichnis aufführen
+    captions=tableheading, % Beschriftung von Tabellen unterhalb ausgeben
+    final % Status des Dokuments (final/draft)
+]{scrartcl}
+
+% Pakete
+
+% Schrift ----------------------------------------------------------------------
+\usepackage{lmodern} % bessere Fonts
+
+% Paket für Kopfzeilen und Fußzeilen
+\usepackage[
+    automark, % Kapitelangaben in Kopfzeile automatisch erstellen
+    headsepline, % Trennlinie unter Kopfzeile
+    ilines % Trennlinie linksbündig ausrichten
+]{scrpage2}
+
+% Anpassung an Landessprache
+\usepackage[ngerman]{babel}
+
+% Umlaute ----------------------------------------------------------------------
+%   Umlaute/Sonderzeichen wie äöüß direkt im Quelltext verwenden (CodePage).
+%   Erlaubt automatische Trennung von Worten mit Umlauten.
+% ------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp} % Euro-Zeichen etc.
+
+\usepackage[babel,german=quotes]{csquotes}
+
+% Bei Änderungen müssen die *.aux und *.bbl Dateien manuell gelöscht werden
+% Sonst kommt es zu einem Fehler bei der Erstellung
+%\usepackage[round, sort, comma, numbers]{natbib}
+%\usepackage[round, numbers]{natbib}
+%\bibliographystyle{abbrvdin}
+%
+
+\usepackage{scrhack}
+
+\usepackage[citestyle=alphabetic,bibstyle=alphabetic,backend=biber]{biblatex}
+\bibliography{Bibliographie}
+\DefineBibliographyStrings{german}{
+  bibliography = {Literaturverzeichnis},
+}
+\setlength\bibitemsep{8pt}
+
+\usepackage{xpatch}
+\xpretobibmacro{author}{\mkbibbold\bgroup}{}{}
+\xapptobibmacro{author}{\egroup}{}{}
+\xpretobibmacro{editor}{\mkbibbold\bgroup}{}{}
+\xapptobibmacro{editor}{\egroup}{}{}
+\xpretobibmacro{editor+others}{\mkbibbold\bgroup}{}{}
+\xapptobibmacro{editor+others}{\egroup}{}{}
+\xpretobibmacro{bbx:editor}{\mkbibbold\bgroup}{}{}
+\xapptobibmacro{bbx:editor}{\egroup}{}{}
+
+% Grafiken ---------------------------------------------------------------------
+% Einbinden von JPG-Grafiken ermöglichen
+\usepackage[dvips,final]{graphicx}
+\graphicspath{{Bilder/}}
+
+% Paket zur Verwendung zusätzlicher Positionsbefehle
+\usepackage{float}
+
+% Befehle aus AMSTeX für mathematische Symbole z. B. \boldsymbol \mathbb --------
+\usepackage{amsmath,amsfonts}
+
+% Einfache Definition der Zeilenabstände und Seitenränder etc. -----------------
+\usepackage{setspace}
+\usepackage{geometry}
+
+% zum Umfließen von Bildern ----------------------------------------------------
+\usepackage{floatflt}
+
+% Farbdefinitionen
+\usepackage{xcolor} 
+\definecolor{hellgelb}{rgb}{1,1,0.9}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{1,0,0}
+\definecolor{colString}{rgb}{0,0.5,0}
+\definecolor{whgreen}{RGB}{113,177,41}
+\definecolor{dvBlue}{RGB}{0,85,160}
+
+% URL verlinken, lange URLs umbrechen etc. -------------------------------------
+\usepackage{url}
+
+% PDF-Optionen -----------------------------------------------------------------
+\usepackage[
+    bookmarks,
+    bookmarksopen=true,
+    colorlinks=true,
+% diese Farbdefinitionen zeichnen Links im PDF farblich aus
+    linkcolor=dvBlue, % einfache interne Verknï¿½pfungen
+    anchorcolor=black,% Ankertext
+    citecolor=dvBlue, % Verweise auf Literaturverzeichniseintrï¿½ge im Text
+    filecolor=magenta, % Verknï¿½pfungen, die lokale Dateien ï¿½ffnen
+    menucolor=dvBlue, % Acrobat-Menï¿½punkte
+    urlcolor=dvBlue, 
+% diese Farbdefinitionen sollten für den Druck verwendet werden (alles schwarz)
+%    linkcolor=black, % einfache interne Verknï¿½pfungen
+%    anchorcolor=black, % Ankertext
+%    citecolor=black, % Verweise auf Literaturverzeichniseintrï¿½ge im Text
+%    filecolor=black, % Verknï¿½pfungen, die lokale Dateien ï¿½ffnen
+%    menucolor=black, % Acrobat-Menï¿½punkte
+%    urlcolor=black, 
+    %backref, % Inkompatibel mit BibLateX
+    plainpages=false, % zur korrekten Erstellung der Bookmarks
+    pdfpagelabels, % zur korrekten Erstellung der Bookmarks
+    hypertexnames=false, % zur korrekten Erstellung der Bookmarks
+    linktocpage % Seitenzahlen anstatt Text im Inhaltsverzeichnis verlinken
+]{hyperref}
+
+% fortlaufendes Durchnummerieren der Fußnoten ----------------------------------
+\usepackage{chngcntr}
+%\counterwithout{footnote}{chapter}
+
+% Formatierung von Listen ändern -----------------------------------------------
+\usepackage{paralist} % itemize, enumerate
+
+% bei der Definition eigener Befehle benötigt
+\usepackage{ifthen} % Vielleicht nicht nötig
+
+% definiert u.a. die Befehle \ und \listoftodos
+\usepackage{todonotes}
+\reversemarginpar
+
+% sorgt dafür, dass Leerzeichen hinter parameterlosen Makros nicht als Makroendezeichen interpretiert werden
+\usepackage{xspace}
+
+\usepackage{tabularx} % Tabellenspalten mit variabler Breite
+\usepackage{wrapfig}  % Schriftumflossene Bilder
+
+
+% Seitenstil
+
+% Zeilenabstand 1,5 Zeilen
+\onehalfspacing
+
+% Seitenränder
+% bottom is 20 + X, weil Footer nicht berücksichtigt wird
+\geometry{paper=a4paper,left=30mm,right=20mm,top=20mm, bottom=38mm, footskip=8mm}
+
+% Kopf- und Fußzeilen ----------------------------------------------------------
+% Kopf- und Fußzeile auch auf Kapitelanfangsseiten
+%\renewcommand*{\chapterpagestyle}{scrheadings} 
+% Schriftform der Kopfzeile
+%\renewcommand{\headfont}{\normalfont}
+
+% Kopfzeile
+\ihead{\headmark} % links
+\chead{}
+\ohead{\includegraphics[scale=0.1]{Bilder/DJLogo.png}} % rechts
+\setlength{\headheight}{20mm} % Höhe der Kopfzeile
+% Kopfzeile über den Text hinaus verbreitern
+%\setheadwidth[0pt]{textwithmarginpar} 
+\setheadsepline[text]{0.4pt} % Trennlinie unter Kopfzeile
+
+% Fußzeile
+%\ifoot{} % links
+\cfoot{} % mitte
+\ofoot{\pagemark} % rechts
+%\setfootsepline[text]{0.4pt} % Trennlinie unter Kopfzeile
+
+
+
+% Schusterjungen und Hurenkinder vermeiden
+%\clubpenalty = 10000
+%\widowpenalty = 10000 
+%\displaywidowpenalty = 10000
+
+% Verringert den Abstand über den Überschriften
+%\renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}}
+
+% Irgendwas mit Silbentrennung in MonoSpace (texttt)
+\newcommand{\origttfamily}{}% sollte noch nicht definiert sein!
+\let\origttfamily=\ttfamily % alte Definition von \ttfamily sichern
+\renewcommand{\ttfamily}{\origttfamily \hyphenchar\font=`\-}
+
+
+% Eigene Befehle und typographische Auszeichnungen für diese
+
+\newcommand{\bs}{$\backslash$}
+
+% einige Befehle zum Zitieren --------------------------------------------------
+\newcommand{\Zitat}[2][\
+empty]{\ifthenelse{\equal{#1}{\empty}}{\citep{#2}}{\citep[#1]{#2}}}
+
+% zum Ausgeben von Autoren
+\newcommand{\AutorName}[1]{\textsc{#1}}
+\newcommand{\Autor}[1]{\AutorName{\citeauthor{#1}}}
+
+% Produktnamen
+\newcommand{\produkt}[1]{\textbf{#1}}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+% zum Einbinden von Programmcode -----------------------------------------------
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\lstset{
+    float=hbp,
+    basicstyle=\ttfamily\color{black}\small,
+    identifierstyle=\color{colIdentifier},
+    keywordstyle=\color{colKeys},
+    stringstyle=\color{colString},
+    commentstyle=\color{colComments},
+    columns=flexible,
+    tabsize=2,
+    frame=single,
+    extendedchars=true,
+    showspaces=false,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\ttfamily\small,
+    numbersep=5pt,
+    breaklines=true,
+    backgroundcolor=\color{hellgelb},
+    breakautoindent=true
+}
+
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+
+\usepackage{microtype}
+
+\renewcommand*{\dictumwidth}{.41\textwidth}
+\renewcommand*{\dictumrule}{}
+\renewcommand*{\dictumauthorformat}[1]{--- #1}
+\setkomafont{dictumauthor}{%
+\scshape
+}
+
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+
+\lstdefinestyle{csharp}
+{
+    language=[Sharp]C,
+    captionpos=b,
+    %numbers=left, %Nummerierung
+    %numberstyle=\tiny, % kleine Zeilennummern
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    breakatwhitespace=true,
+    escapeinside={(*@}{@*)},
+    commentstyle=\color{greencomments},
+    morekeywords={partial, var, value, get, set},
+    keywordstyle=\color{bluekeywords},
+    stringstyle=\color{redstrings},
+    basicstyle=\ttfamily\small,
+}
+
+\lstdefinestyle{xml}
+{
+    language=XML,
+    captionpos=b,
+    %numbers=left, %Nummerierung
+    %numberstyle=\tiny, % kleine Zeilennummern
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    breakatwhitespace=true,
+    escapeinside={(*@}{@*)},
+    commentstyle=\color{greencomments},
+    morekeywords={encoding},
+    keywordstyle=\color{bluekeywords},
+    stringstyle=\color{redstrings},
+    basicstyle=\ttfamily\small,
+}
+
+\usepackage{wasysym}
+\usepackage{ upgreek }
+
+%\usepackage{caption} 
+%\captionsetup[table]{skip=100pt}
