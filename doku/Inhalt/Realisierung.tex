@@ -1,6 +1,46 @@
 \section{Technische Realisierung}
 
 \subsection{Domänenmodell}
+Roles:
+Admin: 
+Verwaltet die Songs auf dem Server
+Party People:
+Voten die Songs
+Ist nach dem ersten Kontakt eindeutig identifizierbar (Party People ID)
+Jukebox: datenbankgestützte Wildfly-Anwendung
+Verwaltung der Songs und Song-Informationen
+Songs hinzufügen
+Songs löschen 
+Song-Informationen bearbeiten
+Generierung und Verwaltung der Playlist
+Song
+Hat Song-Information
+Muss abspielbar sein
+Pfad in Dateisystem
+Internetstream
+YouTube-Link
+Song-Information:
+Titel, Interpret, Genre, Album, Länge
+Current Song:
+Song der gerade gespielt wird.
+Wenn Current Song abgespielt ist, wird der erste Song aus der Playlist entfernt und zum Current Song.
+Playlist:
+Absteigend sortierte Song Liste auf Basis des Votings
+Playlist wird durch Playlist-Füll-Prozess generiert:
+Solange Größe Playlist nicht erreicht, wähle nächsten Song via Song-Selection
+Song-Selection
+Nächste Song wird auf Basis von DI, Party Time usw. ausgewählt
+Aus globaler Song Liste der Jukebox
+Voting
+Basiert auf Playlist
+Erlaubt Party People Songs innerhalb der Playlist zu bewerten:
+Up-Vote
+Down-Vote
+Vote v = Anzahl Up-Votes - Anzahl Down-Votes
+Party People darf pro Song max. einmal voten
+DI:
+Beschreibt den Betrunkenheitsgrad der Party People
+ganzzahliger Wert zw. 0 - 100
 
 
 \subsection{Architektur}
@@ -10,7 +50,28 @@
 
 \subsection{Datenmodell}
 
+- Kasten stellen Entity-Beans dar
+- Pfeile stellen die Beziehungen (Unidirektional, bidirektional) dar
+- Zwischen den Pfeilen stehen die Cascading Types
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{Bilder/EntityBeansModelMitCascading}
+\caption{}
+\label{fig:EntityBeansModelMitCascading}
+\end{figure}
+
+
 \subsection{Benutzerrollen}
+
+- Authentifizierung via Datenbank im Wildfly
+- Schritte zur Realisierung
+- Aufführung der Probleme
+
+
+\subsection{Exemplarische Darstellung}
+
+- Beschreibung eines Funktionsaufrufes z.B. start Party durch alle "`Schichten"' des Systems
 
 
 
