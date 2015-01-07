@@ -72,7 +72,29 @@ ganzzahliger Wert zw. 0 - 100
 
 
 \subsection{Benutzerrollen}
-\todo{Fabian}
+Die Authentifizierung und Autorisierung von Benutzer erfolgt über das Sicherheitskonzept im Wildfly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
+
+\subsubsection{Konzept}
+Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
+\begin{description}
+	\item[Admin]: Ein Administrator hat Zugriff auf das Admin-Bean und den Admin-Service, um Songs und Partys zu verwalten.
+	\item[Player]: Ein Player hat Zugriff auf das DJ-Topic, um Nachrichten zum Abspielen von Songs zu empfangen.
+	\item[PartyPeople]: PartyPeople haben als Gäste der Party Zugriff auf das Party-Bean und den Party-Service.
+\end{description}
+
+\subsubsection{Umsetzung}
+Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden die zwei Entitäten \texttt{Principal} und \texttt{Role} angelegt. In der Datenbank wird zur Zuordnung zwischen Benutzern und Rollen eine zusätzliche Verknüpfungstabelle angelegt. Die Tabellen werden in Abbildung \ref{fig:BenutzerRollen} dargestellt.
+
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=1.0\linewidth]{Bilder/BenutzerRollen}
+\caption{Tabellen für die Benutzerverwaltung}
+\label{fig:BenutzerRollen}
+\end{figure}
+
+Im Standard verwendet Wildfly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert werden. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
+
+\subsubsection{Probleme}
 
 ggf. umbenennen in Authentifizierung oder Authentifizierung der Benutzerrollen
 - Authentifizierung via Datenbank im Wildfly
