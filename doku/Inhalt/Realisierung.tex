@@ -128,12 +128,12 @@ Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden d
 
 Im Standard verwendet Wildfly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert werden. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
 
-\subsubsection{Probleme}
+Um denselben Authentifizierungsmechanismus für Remote-Verbindungen und HTTP-Anfragen gegen den REST-Service zu nutzen, haben wie eine eigene Security-Realm sowie -Domain definiert. Zusätzlich war die Einstellung für Passwort-Stacking wichtig, da sonst entweder nur die Anmeldung über die REST-Schnittstelle oder über Remote möglich war. Die Zuordnung der Security-Domain zu den Beans und Services erfolgt über Annotationen an den entsprechenden Java-Klassen. 
 
-ggf. umbenennen in Authentifizierung oder Authentifizierung der Benutzerrollen
-- Authentifizierung via Datenbank im Wildfly
-- Schritte zur Realisierung
-- Aufführung der Probleme
+\subsubsection{Probleme}
+Die Authentifizierung war das größte Problem im gesamten Projekt, das entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
+
+Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizierung einfach einzurichten waren. Sollte dieselbe Authentifizierung auch für REST-Service genutzt werden, mussten aufwendige und nicht dokumentierte Anpassungen an der Wildfly-Konfiguration vorgenommen werden. Als gegen Ende des Projekts auch das Messaging authentifiziert werden sollte, konnten wir keine Lösung finden, mit der alle drei Schnittstellen korrekt arbeiteten. Aktuell funktioniert die Authentifizierung für Remote- und HTTP-Verbindungen. 
 
 
 \subsection{Exemplarische Darstellung}
