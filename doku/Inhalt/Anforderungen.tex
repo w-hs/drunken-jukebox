@@ -1,35 +1,21 @@
-\todo{Chris}
 \section{Funktionale Anforderungen}
-
-
-
-- Einleitender Satz
-- Unterteilung der Anwender in:
-	- Gastgeber ist Admin
-	- Gast ist Party People
+Im folgenden Abschnitt betrachten wir die funktionalen Anforderungen an die Drunken-Jukebox. Dabei unterscheiden wir zwischen den Benutzerrollen Admin (dem Gastgeber) und Party-People (dem Gast).  
 
 \subsection{Anwendungsfälle}
+Für den Admin haben wir zwei Anwendungsfälle identifiziert. Als Gastgeber ist er für das Starten und Beenden einer Party verantwortlich. Darüber hinaus verwaltet er die Titelsammlung mit den Songs die auf der entsprechenden Party ausgewählt und abgespielt werden können.
 
-Party People:
-Möchte Playlist und Current Song einsehen können.
-Kann Songs innerhalb der Playlist voten.
-Kann seinen DI zurück melden
-Möchte Verlauf seines DIs abrufen können
-Möchte seine bisherigen Votings abrufen können
-Admin:
-Verwaltet globale Song Liste
-Kann eine Party starten und beenden
-
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.75\linewidth]{Bilder/AdminUseCase}
-\caption{}
+\caption{Anwendungsfälle des Admins}
 \label{fig:AdminUseCase}
 \end{figure}
 
-\begin{figure}
+Die Anforderungen aus Sicht der Party-People sind etwas umfangreicher. Als Gast der Party möchte er die Playlist und den aktuellen gespielten Song abrufen können. Innerhalb der Playlist möchte er die Songs bewerten und darüber hinaus seine bisherigen Bewertungen einsehen. Des Weiteren möchte er seinen Betrunkenheitsgrad melden und einsehen können.
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.95\linewidth]{Bilder/PartyPeopleUseCase}
-\caption{}
+\caption{Anwendungsfälle der Party-People}
 \label{fig:PartyPeopleUseCase}
 \end{figure}
