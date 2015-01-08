@@ -81,17 +81,27 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 
 \subsection{Architektur}
 
-\todo{Daniel}
+\todo{Daniel - Systemübersicht / Komponentendiagramm
+	- Beans und deren Aufgaben}
 
-- Systemübersicht / Komponentendiagramm
-- Beans und deren Aufgaben
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{Bilder/Komponentendiagramm}
-	\caption{}
+	\caption{Komponentendiagramm der Systemübersicht }
 	\label{fig:Komponentendiagramm}
 \end{figure}
+
+Abbildung 3 ist eine Systemübersicht der Drunken Jukebox. Es zeigt eine Schematische Darstellung der 4 Logik Schichten. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.\\ Die unterste Ebene mit dem Entity Model beinhaltet die Persistenz Logik. Mit Hilfe von Hibernate und einer Belibigen Datenbank werden die Daten verwaltet.\\
+Über dieser Ebene befinden sich die Beans. Alle Beans benutzen das Entity Model zur Persistierung der Daten. Es gibt einen Player Bean, einen Party Bean und einen Admin Bean.\\
+Der Player Bean stellt die zu spielenden Songs in die Topic. 
+Die Aufgaben des Admin Beans ist das Starten einer Party und die damit verbundene Initialisierung der Playlist und Auswahl der zu spielenden Songs. Beim initialisieren der Playlist wird diese mithilfe eines "Song Selection"-Algorithmuses gefüllt. Die Anzahl der Einträge in der Playlist ist im Admin Bean definiert. Weiter gehört zum starten einer Party die Auswahl eines zu spielenden Songs. Beim auswählen wird anhand der Song-Source  ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer persistiert den gespielten Song und wählt einen neuen aus. Bei jedem auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und durch einen neuen ersetzt.\\
+Das Party Bean verwaltet die Votes und die DI Werte der Party-People. Votes werden mit einem Song, einem Up-or-Down Ranking und der ID des Party-People persistiert. DI Werte werden mit der Party-People ID persistiert.\\
+Über den Beans befindet sich die Topic und die REST API. Eine Topic ist eine Eigenständige Liste in der das Player Bean Songs eintragen kann. Ein Player Client kann sich an eine Topic registrieren. Bei jedem neuen Eintrag erhält jeder Registrierte Client diesen Eintrag. Die REST API injected die Beans für das durchreichen der Anfragen. Diese Drei Schichten befinden sich im Application Server WildFly.\\
+Die letzte Schicht enthält die verschiedenen Clients. Der Player Client bekommt von der Topic die Song-Source und Spielt diese ab. Ein Party Client kann Votes und DI Werte an den Server senden. Der Admin Client kann Songs und Benutzer verwalten. In diesem Projekt wurde nur der Server und die Schnittstellen für die Clients Entwickelt.
+
+ 
 
 
 \subsection{Datenmodell}
