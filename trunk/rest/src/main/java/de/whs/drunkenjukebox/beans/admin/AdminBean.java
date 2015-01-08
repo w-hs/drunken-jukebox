@@ -77,7 +77,7 @@ public class AdminBean implements IAdminRemote, IAdminLocal {
 		playlist.getEntries().remove(entryToPlay);
 		party.setCurrentSong(entryToPlay.getSong());
 		
-		ctx.getTimerService().createTimer(new Date(new Date().getTime() + entryToPlay.getSong().getDurationInSecs()*100), "Hello World");
+		ctx.getTimerService().createTimer(new Date(new Date().getTime() + entryToPlay.getSong().getDurationInSecs()*1000), "Hello World");
 		System.out.println("Playing Song. Ends in "+entryToPlay.getSong().getDurationInSecs()+"sec");
 		
 		fillPlaylist(party, playlist);
