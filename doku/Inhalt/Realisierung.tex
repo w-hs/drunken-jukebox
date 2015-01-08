@@ -160,8 +160,7 @@ Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizieru
 
 
 \subsection{Exemplarische Darstellung}
-\todo{Daniel}
-- Beschreibung eines Funktionsaufrufes z.B. start Party durch alle "`Schichten"' des Systems
+Dieser Abschnitt beschreibt exemplarisch einen Funktionsaufruf der REST-API. Da die verschiedenen über REST bereitgestellten Funktionen prinzipiell gleich implementiert sind, zeigt Abbildung \ref{fig:AufrufSequenz} den Ablauf der Funktion "`Party starten"'.
 
 \begin{figure}[tbh]
 \centering
@@ -170,7 +169,4 @@ Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizieru
 \label{fig:AufrufSequenz}
 \end{figure}
 
-
-
-
-
+Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI /admin/party aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
