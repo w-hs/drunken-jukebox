@@ -185,3 +185,8 @@ Dieser Abschnitt beschreibt exemplarisch einen Funktionsaufruf der REST-API. Da 
 \end{figure}
 
 Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI /admin/party aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
+
+\subsection{Song-Selection-Algorithmus}
+\label{sec:SongSelect}
+Die Playlist wird über einen Algorithmus zur Auswahl von passenden Songs gefüllt. Dazu werden bekannte Kriterien über die aktuelle Party wie Uhrzeit und durchschnittlicher Betrunkenheitsgrad berücksichtigt. Die Auswahl erfolgt auf Basis von bereits abgeschlossenen Partys, bei denen zu den gespielten Songs die notwendigen Daten gespeichert wurden.
+
