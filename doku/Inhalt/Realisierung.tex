@@ -113,6 +113,19 @@ Abbildung \ref{fig:Datenmodell} zeigt die Entitäten sowie deren Beziehungen unt
 	verknüpfte Entität weitergeleitet (Aggregation).
 \end{description}
 
+Eine Anforderung an das Projekt ist es, möglichst alle Beziehungs- und Kardinalitätstypen sinnvoll anzuwenden. Aus diesem Grund werden im Folgenden relevante Beziehungen zwischen Entitäten und deren Kardinalitäten erläutert.
+
+\begin{description}
+	\item[One-To-One, Refresh] Eine Party kennt einen aktuellen Song. Da es immer nur eine laufende Party geben kann, ist ein Song auch maximal einer Party als aktueller Song zugeordnet. Der Cascading-Typ ist Refresh, weil beim Beenden einer Party der Song natürlich weiterhin in der Datenbank erhalten bleiben soll.
+	\item[One-To-One, All] Ein Song hat eine SongSource. Eine SongSource enthält die Informationen zum Abspielen des Songs. Wird der Song geändert oder gelöscht, so soll sich dies direkt auf die SongSource auswirken.
+	\item[Many-To-One, Refresh] Ein Vote kennt den Song, auf den sich die Bewertung bezieht. Ein Song kann von mehreren Votes bewertet worden sein. Änderungen oder Löschen eines Votes soll keinen Einfluss auf die betroffenen Song-Daten haben.
+	\item[One-To-Many, All] Eine Playlist besteht aus einer Liste von PlaylistEntry-Entitäten. Ein PlaylistEntry ist genau einer Playlist zugeordnet. Werden Änderungen an der Playlist vorgenommen, so sollen diese auch an die Einträge
+	in der Liste weitergeleitet werden.
+	\item[Many-To-Many, Refresh] Ein Song kann mehreren Genres zugeordnet werden. Zu einem einem Genre gehören beliebig viele Songs. Beim Löschen oder Ändern eines Songs soll das entsprechende Genre weiterhin bestehen bleiben und umgekehrt.
+	\item[Inheritance] Eine SongSource kann mehrere Ausprägungen haben. Eine LocalFileSource identifiziert eine lokale Datei, während eine YouTubeSource eine Video auf YouTube identifiziert.
+\end{description}
+
+
 
 \subsection{Benutzerrollen}
 \label{sec:Benutzerrollen}
@@ -121,9 +134,9 @@ Die Authentifizierung und Autorisierung von Benutzer erfolgt über das Sicherhei
 \subsubsection{Konzept}
 Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
 \begin{description}
-	\item[Admin]: Ein Administrator hat Zugriff auf das Admin-Bean und den Admin-Service, um Songs und Partys zu verwalten.
-	\item[Player]: Ein Player hat Zugriff auf das DJ-Topic, um Nachrichten zum Abspielen von Songs zu empfangen.
-	\item[PartyPeople]: PartyPeople haben als Gäste der Party Zugriff auf das Party-Bean und den Party-Service.
+	\item[Admin] Ein Administrator hat Zugriff auf das Admin-Bean und den Admin-Service, um Songs und Partys zu verwalten.
+	\item[Player] Ein Player hat Zugriff auf das DJ-Topic, um Nachrichten zum Abspielen von Songs zu empfangen.
+	\item[PartyPeople] PartyPeople haben als Gäste der Party Zugriff auf das Party-Bean und den Party-Service.
 \end{description}
 
 \subsubsection{Umsetzung}
