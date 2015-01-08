@@ -1,19 +1,19 @@
 \section{Webservice}
 \label{cha:Webservice}
-Für den Zugriff auf die Daten stellen wir einen Webservice zur Verfügung.
-Der Webservice besteht dabei aus zwei REST-Services:
-\begin{itemize}
-\item \texttt{AdminService}: Verwaltung der Party und der Song Sammlung
-\item \texttt{PartyService}: Bereitstellung aller Funktionen für den Party-People
-\end{itemize}
+Für den Zugriff auf die Daten stellen wir einen Webservice zur Verfügung, der aus folgenden REST-Services besteht:
+
+\begin{description}
+\item [Admin-Service] Stellt Funktionen zur Verwaltung der Party und der Songsammlung bereit
+\item [Party-Service] Stellt Funktionen für den Party-People bereit
+\end{description}
 
 
 \subsection{Grundlegendes}
-Bevor die Schnittstellen näher erläutert werden, werden noch grundlegende Objekte definiert, so dass die Benutzung im Folgenden verständlich ist.
+Im Folgenden werden zunächst grundlegende Objekte zur besseren Verständlichkeit der Schnittstelle erläutert.
 
 \subsubsection{SongDTO}
 \label{object:SongDTO}
-Das Data Transfer Object beinhaltet zur Repräsentation eines Songs folgende Objekte:
+Das Data-Transfer-Object beinhaltet zur Repräsentation eines Songs folgende Objekte:
 \begin{itemize}
 \item song: Enthält sämtliche Informationen zu einem \nameref{sec:Song}
 \item{youtube: Link zum YouTube Video}
@@ -40,7 +40,7 @@ Im JSON-Format sieht ein SongDTO beispielsweise wie folgt aus:
 
 \subsubsection{VoteDTO}
 \label{object:VoteDTO}
-Das Data Transfer Object beinhaltet zur Repräsentation eines Votes folgende Objekte:
+Das Data-Transfer-Object beinhaltet zur Repräsentation eines Votes folgende Objekte:
 \begin{itemize}
 \item{up: Boolscher Wert, der angibt, ob es sich um ein Up-Vote oder Down-Vote handelt.}
 \item{songId: Id des Songs, für den das Voting bestimmt ist.}
@@ -59,7 +59,7 @@ Im JSON-Format sieht ein VoteDTO beispielsweise wie folgt aus:
 
 \subsubsection{GetSongs}
 \label{service:GetSongs}
-Liefert alle Songs der Song Sammlung zurück.
+Gibt alle Songs zur Songsammlung zurück.
 
 GET
 \url{/rest/dj/admin/songs}
@@ -69,35 +69,35 @@ Rückgabewert: JSON-formatierte Liste von SongDTOs
 
 \subsubsection{AddSongs}
 \label{service:AddSongs}
-Fügt eine Liste von Songs der Song Sammlung hinzu.
+Fügt eine Liste von Songs zur Songsammlung hinzu.
 
 POST
 \url{/rest/dj/admin/addSongs}
 
-HTTP-Body: JSON formatierte Liste von \nameref{object:SongDTO}.
+HTTP-Body: JSON-formatierte Liste von \nameref{object:SongDTO}.
 
 \subsubsection{CreateSong}
 \label{service:CreateSong}
-Legt einen neuen Song anhand der übergebenen Informationen an und fügt diesen der Song Sammlung hinzu.
+Legt einen neuen Song anhand der übergebenen Informationen an und fügt diesen zur Songsammlung hinzu.
 
 POST
 \url{/rest/dj/admin/songs}
 
-HTTP-Body: JSON formatiertes \nameref{object:SongDTO}.
+HTTP-Body: JSON-formatiertes \nameref{object:SongDTO}.
 
 
 \subsubsection{UpdateSong}
 \label{service:UpdateSong}
-Updatet den Song mit der entsprechenden SongId entsprechend der übergebenen Songinformationen.
+Aktualisiert den Song mit der entsprechenden SongId anhand der übergebenen Songinformationen.
 
 PUT
 \url{/rest/dj/admin/songs/{id}}
 
-HTTP-Body: JSON formatiertes \nameref{object:SongDTO}.
+HTTP-Body: JSON-formatiertes \nameref{object:SongDTO}.
 
 Parameter:\\
 \begin{tabularx}{\textwidth}{|l|X|}
-\hline id & Id des Songs, der upgedatet werden soll. \\ 
+\hline id & Id des Songs, der aktualisiert werden soll. \\ 
 \hline 
 \end{tabularx}
 
@@ -132,25 +132,25 @@ DELETE
 
 \subsubsection{GetPlaylist}
 \label{service:GetPlaylist}
-Liefert die aktuelle Playlist zurück.
+Gibt die aktuelle Playlist zurück.
 
 GET
 \url{/rest/dj/party/playlist}
 
-Rückgabewert: Playlist JSON-formatiert
+Rückgabewert: JSON-formatierte Playlist
 
 \subsubsection{GetCurrentSong}
 \label{service:GetCurrentSong}
-Liefert den aktuellen Song zurück.
+Gibt den aktuellen Song zurück.
 
 GET
 \url{/rest/dj/party/currentSong}
 
-Rückgabewert: Song JSON-formatiert
+Rückgabewert: JSON-formatierter Song
 
 \subsubsection{GetDIValues}
 \label{service:GetDIValues}
-Liefert eine Liste von DIValues des entsprechenden Party-People zurück.
+Gibt eine Liste von DIValues des entsprechenden Party-People zurück.
 
 GET
 \url{/rest/dj/party/peoples/{partyPeopleId}/diValues}
@@ -165,7 +165,7 @@ Parameter:\\
 
 \subsubsection{GetVotes}
 \label{service:GetVotes}
-Liefert eine Liste von Votes des entsprechenden Party-People zurück.
+Gibt eine Liste von Votes des entsprechenden Party-People zurück.
 
 GET
 \url{/rest/dj/party/peoples/{partyPeopleId}/votes}
@@ -194,7 +194,7 @@ Für den Party-People mit der entsprechenden ID wird ein Voting abgegeben.
 POST
 \url{/rest/dj/party/peoples/{partyPeopleId}/votes}
 
-HTTP-Body: JSON formatiertes \nameref{object:VoteDTO}.
+HTTP-Body: JSON-formatiertes \nameref{object:VoteDTO}.
 
 Parameter:\\
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -209,7 +209,7 @@ Für den Party-People mit der entsprechenden Id wird ein DIValue hinzugefügt.
 POST
 \url{/rest/dj/party/peoples/{partyPeopleId}/diValues}
 
-HTTP-Body: JSON formatierter Integer Wert, der den DIValue repräsentiert.
+HTTP-Body: JSON-formatierter Integer-Wert, der den DIValue repräsentiert.
 
 Parameter:\\
 \begin{tabularx}{\textwidth}{|l|X|}
