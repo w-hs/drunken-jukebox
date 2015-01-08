@@ -7,13 +7,15 @@ Der Webservice besteht dabei aus zwei REST-Services:
 \item \texttt{PartyService}: Bereitstellung aller Funktionen für den Party-People
 \end{itemize}
 
+
+\subsection{Grundlegendes}
 Bevor die Schnittstellen näher erläutert werden, werden noch grundlegende Objekte definiert, so dass die Benutzung im Folgenden verständlich ist.
 
 \subsubsection{SongDTO}
 \label{object:SongDTO}
 Das Data Transfer Object beinhaltet zur Repräsentation eines Songs folgende Objekte:
 \begin{itemize}
-\item{song: Enthält sämtliche Songinformationen (s. \todo{nameref auf Song des Domänenmodells})}
+\item song: Enthält sämtliche Informationen zu einem \nameref{sec:Song}
 \item{youtube: Link zum YouTube Video}
 \item{localFile: Pfad zur lokalen Datei}
 \end{itemize}
