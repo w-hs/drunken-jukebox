@@ -78,7 +78,7 @@ Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung und das Star
 
 Das PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einem Up- oder Down-Ranking und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID persistiert.
 
-Über den Beans befindet sich das Topic und die REST-API. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. 
+Über den Beans befindet sich das Topic und die REST-API. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
 
 Die REST-API injectet die Beans für das Durchreichen der Anfragen. Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich im Applikationsserver WildFly.
 
