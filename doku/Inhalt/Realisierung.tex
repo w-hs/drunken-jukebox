@@ -160,7 +160,63 @@ Dieser Abschnitt beschreibt exemplarisch einen Funktionsaufruf der REST-API. Da 
 
 Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI /admin/party aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
 
-\subsection{Song-Selection-Algorithmus}
+\subsection{Song-Selection}
 \label{sec:SongSelect}
 Die Playlist wird über einen Algorithmus zur Auswahl von passenden Songs gefüllt. Dazu werden bekannte Kriterien über die aktuelle Party wie Uhrzeit und durchschnittlicher Betrunkenheitsgrad berücksichtigt. Die Auswahl erfolgt auf Basis von bereits abgeschlossenen Partys, bei denen zu den gespielten Songs die notwendigen Daten gespeichert wurden.
 
+\subsubsection{Definition}
+Zunächst werden eine Reihe von Kennzahlen definiert, die der Algorithmus zur Auswahl des besten Songs benötigt.
+
+\begin{description}
+	\item[CDI] Current Drunken Index: Durchschnittlicher DI auf der aktuellen Party. Dieser wird als arithmetisches Mittel über die DI-Werte aller Party-People gebildet.
+	\item[SDI] Song Drunken Index: Durchschnittlicher DI zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
+	\item[$\Delta$DI] Definiert die maximale Abweichung des SDI vom CDI, unter der der Song als passend angesehen wird.
+	\item[CTS] Current Timestamp: Aktueller Zeitstempel der laufenden Party.
+	\item[STS] Song Timestamp: Zeitstempel zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
+	\item[$\Delta$TS] Definiert die maximale Abweichung des SDS vom CTS, unter der der Song als passend angesehen wird.
+\end{description}
+
+\subsubsection{Algorithmus}
+Der Algorithmus besteht aus zwei Schritten.
+\begin{enumerate}
+	\item Auswahl einer Menge an passenden Songs
+	\item Auswahl des besten Songs aus den passenden Songs
+\end{enumerate}
+
+Zur Auswahl der passenden Songs werden gültige Bereiche von DI- und Timestamp-Werten definiert.
+Diese Bereiche werden vergrößert, wenn keine passenden Songs gefunden wurden. Um eine Endlosschleife
+zu vermeiden, wird diese Vergrößerung nur begrenzt oft durchgeführt. Konnten trotz mehrfacher 
+Versuche keine Songs ermittelt werden, wird ein zufälliger Song aus der Songsammlung ausgewählt.
+Wenn eine Menge von passenden Songs ermittelt werden konnte, wird der Song mit der besten
+Bewertung durch die Party-People auf vergangenen Partys ausgewählt. Bei gleichem Vote-Count
+entscheidet das Zufallsprinzip. 
+
+Folgender Pseudocode skizziert den Algorithmus:
+\begin{lstlisting}[language=C]
+CDI = getCurrentAverageDI()
+CTS = getCurrentTimestamp()
+tries = 1
+while (tries <= MAX_TRIES)
+{
+	ΔDI = tries * DI_STEP
+	ΔTS = tries * TS_STEP
+	
+	fittingSongs = SELECT * FROM PlayedSongs ps
+                    WHERE ps.averageDI BETWEEN CDI - ΔDI AND CDI + ΔDI
+                      AND ps.timestamp BETWEEN CTS - ΔTS AND CTS + ΔTS
+				   	 
+	Remove from fittingSongs: 
+	  Already played songs on this party
+	  Current song on this party
+	  Songs in current playlist
+		
+	if (fittingSongs is not empty)
+	{
+	  bestSong = choose song with max vote count from fittingSongs
+	  return bestSong
+	}
+	
+	tries = tries + 1
+}
+return randomSong()
+\end{lstlisting}
