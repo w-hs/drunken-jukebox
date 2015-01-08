@@ -83,13 +83,6 @@ Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich allesamt im 
 
 In diesem Abschnitt wird das Datenmodell beschrieben. Dieses besteht aus Entitäten für die Objekte aus dem \nameref{sec:Domaenenmodell}, die persistiert werden sollen. Benutzer- und Rollendaten werden im Abschnitt \ref{sec:Benutzerrollen} beschrieben.
 
-\begin{figure}[htb]
-\centering
-\includegraphics[width=1\linewidth]{Bilder/Datenmodell}
-\caption{Datenmodell mit Beziehungen und Cascading zwischen Entitäten}
-\label{fig:Datenmodell}
-\end{figure}
-
 Abbildung \ref{fig:Datenmodell} zeigt die Entitäten sowie deren Beziehungen untereinander. Neben der Kardinalität ist in dem Diagramm auch das Cascading-Verhalten dokumentiert. Wir haben zwei unterschiedliche Arten verwendet:
 \begin{description}
 	\item[Refresh] Eine Entität kennt eine andere Entität. Änderungen oder Löschoperationen werden nicht an die verknüpfte Entität weitergeleitet (Abhängigkeit).
@@ -97,6 +90,14 @@ Abbildung \ref{fig:Datenmodell} zeigt die Entitäten sowie deren Beziehungen unt
 	Änderungen oder Löschoperationen werden an die 
 	verknüpfte Entität weitergeleitet (Aggregation).
 \end{description}
+
+\vspace{8pt}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1\linewidth]{Bilder/Datenmodell}
+\caption{Datenmodell mit Beziehungen und Cascading zwischen Entitäten}
+\label{fig:Datenmodell}
+\end{figure}
 
 Eine Anforderung an das Projekt ist es, möglichst alle Beziehungs- und Kardinalitätstypen sinnvoll anzuwenden. Aus diesem Grund werden im Folgenden relevante Beziehungen zwischen Entitäten und deren Kardinalitäten erläutert.
 
@@ -106,15 +107,15 @@ Eine Anforderung an das Projekt ist es, möglichst alle Beziehungs- und Kardinal
 	\item[Many-To-One, Refresh] Ein Vote kennt den Song, auf den sich die Bewertung bezieht. Ein Song kann von mehreren Votes bewertet worden sein. Änderungen oder Löschen eines Votes soll keinen Einfluss auf die betroffenen Song-Daten haben.
 	\item[One-To-Many, All] Eine Playlist besteht aus einer Liste von PlaylistEntry-Entitäten. Ein PlaylistEntry ist genau einer Playlist zugeordnet. Werden Änderungen an der Playlist vorgenommen, so sollen diese auch an die Einträge
 	in der Liste weitergeleitet werden.
-	\item[Many-To-Many, Refresh] Ein Song kann mehreren Genres zugeordnet werden. Zu einem einem Genre gehören beliebig viele Songs. Beim Löschen oder Ändern eines Songs soll das entsprechende Genre weiterhin bestehen bleiben und umgekehrt.
-	\item[Inheritance] Eine SongSource kann mehrere Ausprägungen haben. Eine LocalFileSource identifiziert eine lokale Datei, während eine YouTubeSource eine Video auf YouTube identifiziert.
+	\item[Many-To-Many, Refresh] Ein Song kann mehreren Genres zugeordnet werden. Zu einem Genre gehören beliebig viele Songs. Beim Löschen oder Ändern eines Songs soll das entsprechende Genre weiterhin bestehen bleiben und umgekehrt.
+	\item[Inheritance] Eine SongSource kann mehrere Ausprägungen haben. Eine LocalFileSource identifiziert eine lokale Datei, während eine YouTubeSource ein Video auf YouTube identifiziert.
 \end{description}
 
 
 
 \subsection{Benutzerrollen}
 \label{sec:Benutzerrollen}
-Die Authentifizierung und Autorisierung von Benutzer erfolgt über das Sicherheitskonzept im WildFly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
+Die Authentifizierung und Autorisierung von Benutzern erfolgt über das Sicherheitskonzept im WildFly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
 
 \subsubsection{Konzept}
 Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
@@ -129,23 +130,23 @@ Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden d
 
 \begin{figure}[tbh]
 \centering
-\includegraphics[width=1.0\linewidth]{Bilder/BenutzerRollen}
+\includegraphics[width=0.8\linewidth]{Bilder/BenutzerRollen}
 \caption{Tabellen für die Benutzerverwaltung}
 \label{fig:BenutzerRollen}
 \end{figure}
 
-Im Standard verwendet WildFly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert werden. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
+Im Standard verwendet WildFly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul wird die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
 
-Um denselben Authentifizierungsmechanismus für Remote-Verbindungen und HTTP-Anfragen gegen den REST-Service zu nutzen, haben wie eine eigene Security-Realm sowie -Domain definiert. Zusätzlich war die Einstellung für Passwort-Stacking wichtig, da sonst entweder nur die Anmeldung über die REST-Schnittstelle oder über Remote möglich war. Die Zuordnung der Security-Domain zu den Beans und Services erfolgt über Annotationen an den entsprechenden Java-Klassen. 
+Um denselben Authentifizierungsmechanismus für Remote-Verbindungen und HTTP-Anfragen gegen den REST-Service zu nutzen, haben wir eine eigene Security-Realm sowie -Domain definiert. Zusätzlich war die Einstellung für Passwort-Stacking wichtig, da sonst entweder nur die Anmeldung über die REST-Schnittstelle oder über Remote möglich war. Die Zuordnung der Security-Domain zu den Beans und Services erfolgt über Annotationen an den entsprechenden Java-Klassen. 
 
 \subsubsection{Probleme}
-Die Authentifizierung war das größte Problem im gesamten Projekt, das entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
+Die Authentifizierung war das größte Problem im gesamten Projekt, dem entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
 
 Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizierung einfach einzurichten waren. Sollte dieselbe Authentifizierung auch für REST-Service genutzt werden, mussten aufwendige und nicht dokumentierte Anpassungen an der WildFly-Konfiguration vorgenommen werden. Als gegen Ende des Projekts auch das Messaging authentifiziert werden sollte, konnten wir keine Lösung finden, mit der alle drei Schnittstellen korrekt arbeiteten. Aktuell funktioniert die Authentifizierung für Remote- und HTTP-Verbindungen. 
 
 
 \subsection{Exemplarische Darstellung}
-Dieser Abschnitt beschreibt exemplarisch einen Funktionsaufruf der REST-API. Da die verschiedenen über REST bereitgestellten Funktionen prinzipiell gleich implementiert sind, zeigt Abbildung \ref{fig:AufrufSequenz} den Ablauf der Funktion "`Party starten"'.
+In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschrieben. Da die verschiedenen über REST bereitgestellten Funktionen prinzipiell gleich implementiert sind, zeigt Abbildung \ref{fig:AufrufSequenz} den Ablauf der Funktion "`Party starten"'.
 
 \begin{figure}[tbh]
 \centering
@@ -154,21 +155,21 @@ Dieser Abschnitt beschreibt exemplarisch einen Funktionsaufruf der REST-API. Da 
 \label{fig:AufrufSequenz}
 \end{figure}
 
-Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI /admin/party aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
+Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
 
 \subsection{Song-Selection}
 \label{sec:SongSelect}
-Die Playlist wird über einen Algorithmus zur Auswahl von passenden Songs gefüllt. Dazu werden bekannte Kriterien über die aktuelle Party wie Uhrzeit und durchschnittlicher Betrunkenheitsgrad berücksichtigt. Die Auswahl erfolgt auf Basis von bereits abgeschlossenen Partys, bei denen zu den gespielten Songs die notwendigen Daten gespeichert wurden.
+Die Playlist wird über einen Algorithmus zur Auswahl von passenden Songs gefüllt. Dazu werden bekannte Kriterien der aktuellen Party wie Uhrzeit und durchschnittlicher Betrunkenheitsgrad berücksichtigt. Die Auswahl erfolgt auf Basis von bereits abgeschlossenen Partys, bei denen zu den gespielten Songs die notwendigen Daten gespeichert wurden.
 
 \subsubsection{Definition}
 Zunächst werden eine Reihe von Kennzahlen definiert, die der Algorithmus zur Auswahl des besten Songs benötigt.
 
 \begin{description}
-	\item[CDI] Current Drunken Index: Durchschnittlicher DI auf der aktuellen Party. Dieser wird als arithmetisches Mittel über die DI-Werte aller Party-People gebildet.
-	\item[SDI] Song Drunken Index: Durchschnittlicher DI zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
+	\item[CDI] Current-Drunken-Index: Durchschnittlicher DI auf der aktuellen Party. Dieser wird als arithmetisches Mittel über die DI-Werte aller Party-People gebildet.
+	\item[SDI] Song-Drunken-Index: Durchschnittlicher DI zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
 	\item[$\Delta$DI] Definiert die maximale Abweichung des SDI vom CDI, unter der der Song als passend angesehen wird.
-	\item[CTS] Current Timestamp: Aktueller Zeitstempel der laufenden Party.
-	\item[STS] Song Timestamp: Zeitstempel zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
+	\item[CTS] Current-Timestamp: Aktueller Zeitstempel der laufenden Party.
+	\item[STS] Song-Timestamp: Zeitstempel zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
 	\item[$\Delta$TS] Definiert die maximale Abweichung des SDS vom CTS, unter der der Song als passend angesehen wird.
 \end{description}
 
