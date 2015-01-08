@@ -48,7 +48,7 @@ Der Current-Song ist der Song, der aktuell auf der Party abgespielt wird. Sobald
 Die Playlist ist eine Liste von Songs, die basierend auf den Votings absteigend sortiert ist. Sie hat eine feste Größe und wird durch die Song-Selection befüllt.
 
 \subsubsection{Song-Selection}
-Die Song-Selection ist für die Befüllung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Kapitel \nameref{sec:SongSelect} erklärt wird.
+Die Song-Selection ist für die Befüllung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Abschnitt \nameref{sec:SongSelect} erklärt wird.
 
 \subsubsection{Voting}
 Über Votings können Party-People Songs innerhalb der Playlist bewerten. Dabei wird zwischen dem positiven Up-Vote und dem negativen Down-Vote unterschieden. Ein Party-People kann pro Song nur einmal voten.
@@ -72,9 +72,9 @@ Die folgende Abbildung zeigt eine Systemübersicht der Drunken-Jukebox, die sich
 
 Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mithilfe der JPA (Java Persistence API) und einer beliebigen Datenbank werden die Daten verwaltet.
 
-Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.\\
-Die PlayerBean sendet die zu spielenden Songs an ein Topic.\\ 
-Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung und das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mithilfe des Song-Selection-Algorithmus (s. \ref{sec:SongSelect}) gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer initiiert die Persistierung des gespielten Songs für spätere Auswertungen und wählt den nächsten Song der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.\\
+Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.
+Die PlayerBean sendet die zu spielenden Songs an ein Topic.
+Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung, das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mithilfe des Song-Selection-Algorithmus (s. \ref{sec:SongSelect}) gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer initiiert die Persistierung des gespielten Songs für spätere Auswertungen und wählt den nächsten Song der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.
 Die PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einer positiven oder negativen Bewertung und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID gespeichert.
 
 Oberhalb der Bean-Ebene befindet sich das Topic, sowie die REST-API. Die Abhängigkeit der REST-API zu den Beans wird über Dependency-Injection aufgelöst. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt, und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
@@ -128,7 +128,7 @@ Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
 \end{description}
 
 \subsubsection{Umsetzung}
-Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden die zwei Entitäten \texttt{Principal} und \texttt{Role} angelegt. In der Datenbank wird zur Zuordnung zwischen Benutzern und Rollen eine zusätzliche Verknüpfungstabelle angelegt. Die Tabellen werden in Abbildung \ref{fig:BenutzerRollen} dargestellt.
+Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden die zwei Entitäten Principal und Role angelegt. In der Datenbank wird zur Zuordnung zwischen Benutzern und Rollen eine zusätzliche Verknüpfungstabelle angelegt. Die Tabellen werden in Abbildung \ref{fig:BenutzerRollen} dargestellt.
 
 \begin{figure}[tbh]
 \centering
@@ -142,7 +142,7 @@ Im Standard verwendet WildFly die lokalen Benutzerdaten in den *.properties-Date
 Um denselben Authentifizierungsmechanismus für Remote-Verbindungen und HTTP-Anfragen gegen den REST-Service zu nutzen, haben wir eine eigene Security-Realm sowie -Domain definiert. Zusätzlich war die Einstellung für Passwort-Stacking wichtig, da sonst entweder nur die Anmeldung über die REST-Schnittstelle oder über Remote möglich war. Die Zuordnung der Security-Domain zu den Beans und Services erfolgt über Annotationen an den entsprechenden Java-Klassen. 
 
 \subsubsection{Probleme}
-Die Authentifizierung war das größte Problem im gesamten Projekt, dem entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
+Die Authentifizierung war das größte Problem im gesamten Projekt und dem entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
 
 Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizierung einfach einzurichten waren. Sollte dieselbe Authentifizierung auch für REST-Service genutzt werden, mussten aufwendige und nicht dokumentierte Anpassungen an der WildFly-Konfiguration vorgenommen werden. Als gegen Ende des Projekts auch das Messaging authentifiziert werden sollte, konnten wir keine Lösung finden, mit der alle drei Schnittstellen korrekt arbeiteten. Aktuell funktioniert die Authentifizierung für Remote- und HTTP-Verbindungen. 
 
@@ -157,7 +157,7 @@ In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschri
 \label{fig:AufrufSequenz}
 \end{figure}
 
-Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
+Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 204 zurück.
 
 \subsection{Song-Selection}
 \label{sec:SongSelect}
