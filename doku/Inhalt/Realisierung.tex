@@ -3,81 +3,63 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 
 \subsection{Domänenmodell}
 \label{sec:Domaenenmodell}
+Damit innerhalb des Projektes Bezeichnungen einheitlich verwendet werden, definieren wir im Folgenden alle relevanten Begriffe.
+
+\subsubsection{Drunken-Jukebox}
+Unter der Drunken-Jukebox verstehen wir eine datenbankgestützte WildFly-Anwendung, die folgende Aufgaben beinhaltet:
+
+\begin{itemize}
+	\item Verwaltung der Songs und Song-Informationen.
+		\begin{itemize}
+			\item Songs hinzufügen.
+			\item Songs löschen.
+			\item Song-Informationen bearbeiten.
+		\end{itemize}
+	\item Generierung und Verwaltung der Playlist.
+\end{itemize}
+
+\subsubsection{Roles}
+Unter Roles verstehen wir die Benutzerrollen, die innerhalb der Drunken-Jukebox existieren:
 
 \begin{description}
-	\item [Roles]:
-	\begin{itemize}
-		\item Admin
-			\begin{itemize}
-				\item Verwaltet die Songs auf dem Server.
-			\end{itemize}
-		\item Party People
-			\begin{itemize}
-				\item Voten die Songs.
-				\item Ist nach dem ersten Kontakt eindeutig identifizierbar (Party People ID).
-			\end{itemize}
-	\end{itemize}
-	\item [Jukebox]: datenbankgestützte WildFly-Anwendung
-	\begin{itemize}
-		\item Verwaltung der Songs und Song-Informationen.
-			\begin{itemize}
-				\item Songs hinzufügen.
-				\item Songs löschen.
-				\item Song-Informationen bearbeiten.
-			\end{itemize}
-		\item Generierung und Verwaltung der Playlist.
-	\end{itemize}
-	\item [Song]:
-		\begin{itemize}
-			\item Hat Song-Information.
-			\item Muss abspielbar sein.
-				\begin{itemize}
-					\item Pfad in Dateisystem
-					\item Internetstream
-					\item YouTube-Link
-				\end{itemize}
-		\end{itemize}
-	\item [Song-Information]:
-		\begin{itemize}
-			\item Titel, Interpret, Genre, Album, Länge.
-		\end{itemize}
-	\item [Current Song]:
-		\begin{itemize}
-			\item Song der gerade gespielt wird.
-			\item Wenn Current Song abgespielt ist, wird der erste Song aus der Playlist entfernt und zum Current Song.
-		\end{itemize}
-	\item [Playlist]:
-		\begin{itemize}
-			\item Absteigend sortierte Song Liste auf Basis des Votings.
-			\item Playlist wird durch Playlist-Füll-Prozess generiert.
-				\begin{itemize}
-					\item Solange Größe Playlist nicht erreicht, wähle nächsten Song via Song-Selection.
-				\end{itemize}
-		\end{itemize}
-	\item [Song-Selection]:
-		\begin{itemize}
-			\item Nächste Song wird auf Basis von DI, Party Time usw. ausgewählt.
-			\item Aus globaler Song Liste der Jukebox.
-		\end{itemize}
-	\item [Voting]:
-		\begin{itemize}
-			\item Basiert auf Playlist.
-			\item Erlaubt Party People Songs innerhalb der Playlist zu bewerten.
-				\begin{itemize}
-					\item Up-Vote
-					\item Down-Vote
-				\end{itemize}
-			\item Vote v = Anzahl Up-Votes - Anzahl Down-Votes.
-			\item Party People darf pro Song max. einmal voten.
-		\end{itemize}
-	\item [DI] :
-		\begin{itemize}
-			\item Beschreibt den Betrunkenheitsgrad der Party People.
-			\item ganzzahliger Wert zw. 0 - 100.
-		\end{itemize}
+	\item [Admin] Verwaltet die Songs auf dem Server.
+	\item [Player] Ist für das Abspielen von Songs verantwortlich.
+	\item [Party-People] Gäste der Party, die eindeutig identifizierbar sind und Songs voten können.
 \end{description}
 
+\subsubsection{Party}
+Eine Party besteht aus folgenden Daten: Start- und Enddatum, Playlist und Party-People. Darüber hinaus enthält die Party eine Liste von bereits gespielten Songs. Innerhalb der Drunken-Jukebox kann es maximal nur eine laufende Party geben.
 
+\subsubsection{Song}
+Ein Song innerhalb der Drunken-Jukebox enthält folgende Daten: Titel, Interpret, Genre, Album und Länge. Darüber hinaus enthält der Song eine \nameref{Song-Source}.
+
+\subsubsection{Song-Source}
+\label{SongSource}
+
+Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen aus denen der Song abgespielt werden kann:
+\begin{itemize}
+	\item Pfad im Dateisystem
+	\item Internet-Stream
+	\item YouTube-Link
+\end{itemize}
+
+\subsubsection{Current-Song}
+Der Current-Song ist der Song, der aktuell auf der Party abgespielt wird. Sobald der aktuelle Song beendet ist, wird der erste Song aus der Playlist entfernt und zum neuen Current-Song. 
+
+\subsubsection{Playlist}
+Die Playlist ist eine Liste von Songs, die basierend auf den Votings absteigend sortiert ist. Sie hat eine feste Größe und wird durch die Song-Selection generiert.
+
+\subsubsection{Song-Selection}
+Die Song-Selection ist für die Generierung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Kapitel \nameref{sec:SongSelect} erklärt wird.
+
+\subsubsection{Voting}
+Über Votings können Party-People Songs innerhalb der Playlist bewerten. Dabei wird zwischen dem positiven Up-Vote und dem negativen Down-Vote unterschieden. Ein Party-People kann pro Song nur einmal voten.
+
+Insgesamt berechnet sich der Vote wie folgt:\\
+\textit{Vote v = Anzahl(Up-Votes) - Anzahl(Down-Votes)}
+
+\subsubsection{DI}
+Der DI ist ein ganzzahliger Wert zwischen 0 und 100 und beschreibt damit den Betrunkenheitsgrad eines Party-People.
 
 \subsection{Architektur}
 
