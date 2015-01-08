@@ -1,25 +1,25 @@
 \newpage
 \section{Funktionale Anforderungen}
-Im folgenden Abschnitt betrachten wir die funktionalen Anforderungen an die Drunken-Jukebox. Dabei unterscheiden wir zwischen den Benutzerrollen Admin (dem Gastgeber) und Party-People\footnote{Wir verwenden den Ausdruck Party-People in dieser Ausarbeitung gleichbedeutend mit einem Party-Gast. Das englische Wort ist Plural, die Verwendung ist allerdings Singular.} (dem Gast).  
+Im folgenden Abschnitt betrachten wir die funktionalen Anforderungen an die Drunken-Jukebox. Dabei unterscheiden wir zwischen den beiden Akteuren Gastgeber und Gast.
 
 \subsection{Anwendungsfälle}
-\subsubsection{Admin}
-Für den Admin haben wir zwei Anwendungsfälle identifiziert. Als Gastgeber ist er für das Starten und Beenden einer Party verantwortlich. Darüber hinaus verwaltet er die Songsammlung, aus der Songs für die entsprechende Party ausgewählt und abgespielt werden können.
+\subsubsection{Gastgeber}
+Für den Gastgeber haben wir drei Anwendungsfälle identifiziert. Als Gastgeber ist er für das Starten und Beenden einer Party verantwortlich, sowie für das Abspielen der Musik. Darüber hinaus verwaltet er die Songsammlung, aus der Songs für die entsprechende Party ausgewählt werden können. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\linewidth]{Bilder/AdminUseCase}
-\caption{Anwendungsfälle des Admins}
+\caption{Anwendungsfälle des Gastgebers}
 \label{fig:AdminUseCase}
 \end{figure}
 
 \newpage
-\subsubsection{Party-People}
-Die Anforderungen aus Sicht der Party-People sind etwas umfangreicher. Als Gast der Party möchte er die Playlist und den aktuellen gespielten Song abrufen können. Innerhalb der Playlist möchte er die Songs bewerten und darüber hinaus seine bisherigen Bewertungen einsehen. Des Weiteren möchte er seinen Betrunkenheitsgrad melden und einsehen können.
+\subsubsection{Gast}
+Die Anforderungen aus Sicht des Gastes sind etwas umfangreicher. Der Gast der Party möchte die Playlist und den aktuell abgespielten Song abrufen können. Innerhalb der Playlist möchte er die Songs bewerten und darüber hinaus seine bisherigen Bewertungen einsehen. Des Weiteren möchte er seinen Betrunkenheitsgrad melden und einsehen können.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\linewidth]{Bilder/PartyPeopleUseCase}
-\caption{Anwendungsfälle der Party-People}
+\caption{Anwendungsfälle des Gastes}
 \label{fig:PartyPeopleUseCase}
 \end{figure}
