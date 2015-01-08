@@ -104,7 +104,7 @@ Eine Anforderung an das Projekt ist es, möglichst alle Beziehungs- und Kardinal
 \begin{description}
 	\item[One-To-One, Refresh] Eine Party kennt einen aktuellen Song. Da es immer nur eine laufende Party geben kann, ist ein Song auch maximal einer Party als aktueller Song zugeordnet. Der Cascading-Typ ist Refresh, weil beim Beenden einer Party der Song natürlich weiterhin in der Datenbank erhalten bleiben soll.
 	\item[One-To-One, All] Ein Song hat eine SongSource. Eine SongSource enthält die Informationen zum Abspielen des Songs. Wird der Song geändert oder gelöscht, so soll sich dies direkt auf die SongSource auswirken.
-	\item[Many-To-One, Refresh] Ein Vote kennt den Song, auf den sich die Bewertung bezieht. Ein Song kann von mehreren Votes bewertet worden sein. Änderungen oder Löschen eines Votes soll keinen Einfluss auf die betroffenen Song-Daten haben.
+	\item[Many-To-One, Refresh] Ein Vote kennt den Song, auf den sich die Bewertung bezieht. Ein Song kann von mehreren Votes bewertet worden sein. Änderungen oder Löschen eines Votes sollen keinen Einfluss auf die betroffenen Song-Daten haben.
 	\item[One-To-Many, All] Eine Playlist besteht aus einer Liste von PlaylistEntry-Entitäten. Ein PlaylistEntry ist genau einer Playlist zugeordnet. Werden Änderungen an der Playlist vorgenommen, so sollen diese auch an die Einträge
 	in der Liste weitergeleitet werden.
 	\item[Many-To-Many, Refresh] Ein Song kann mehreren Genres zugeordnet werden. Zu einem Genre gehören beliebig viele Songs. Beim Löschen oder Ändern eines Songs soll das entsprechende Genre weiterhin bestehen bleiben und umgekehrt.
@@ -155,7 +155,7 @@ In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschri
 \label{fig:AufrufSequenz}
 \end{figure}
 
-Um eine Party zu starten führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
+Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 200 zurück.
 
 \subsection{Song-Selection}
 \label{sec:SongSelect}
