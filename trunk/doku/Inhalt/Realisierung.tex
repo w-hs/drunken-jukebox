@@ -1,5 +1,5 @@
 \section{Technische Realisierung}
-In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. Im Abschnitt Domänenmodell werden zunächst die verwendeten Begriffe definiert. Anschließend wird auf die Architektur, das Datenmodell und die Authentifizierung der Benutzerrollen eingegangen. Abschließend beschreiben wir exemplarisch einen Methodenaufruf, mit dem die wichtigsten Komponenten des Systems vorgestellt werden.
+In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. Im Abschnitt Domänenmodell werden zunächst die verwendeten Begriffe definiert. Anschließend wird auf die Architektur, das Datenmodell und die Authentifizierung der Benutzerrollen eingegangen. Daraufhin beschreiben wir exemplarisch einen Methodenaufruf, mit dem die wichtigsten Komponenten des Systems vorgestellt werden. Abschließend erläutern wir den Algorithmus zur Auswahl der Songs für die Playlist.
 
 \subsection{Domänenmodell}
 \label{sec:Domaenenmodell}
@@ -33,10 +33,9 @@ Ein Song innerhalb der Drunken-Jukebox enthält folgende Daten: Titel, Interpret
 \subsubsection{Song-Source}
 \label{sec:SongSource}
 
-Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen aus denen der Song abgespielt werden kann:
+Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen, aus denen der Song abgespielt werden kann:
 \begin{itemize}
-	\item Pfad im Dateisystem
-	\item Internet-Stream
+	\item Pfad im Dateisystem 
 	\item YouTube-Link
 \end{itemize}
 
@@ -44,10 +43,10 @@ Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen aus den
 Der Current-Song ist der Song, der aktuell auf der Party abgespielt wird. Sobald der aktuelle Song beendet ist, wird der erste Song aus der Playlist entfernt und zum neuen Current-Song. 
 
 \subsubsection{Playlist}
-Die Playlist ist eine Liste von Songs, die basierend auf den Votings absteigend sortiert ist. Sie hat eine feste Größe und wird durch die Song-Selection generiert.
+Die Playlist ist eine Liste von Songs, die basierend auf den Votings absteigend sortiert ist. Sie hat eine feste Größe und wird durch die Song-Selection befüllt.
 
 \subsubsection{Song-Selection}
-Die Song-Selection ist für die Generierung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Kapitel \nameref{sec:SongSelect} erklärt wird.
+Die Song-Selection ist für die Befüllung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Kapitel \nameref{sec:SongSelect} erklärt wird.
 
 \subsubsection{Voting}
 Über Votings können Party-People Songs innerhalb der Playlist bewerten. Dabei wird zwischen dem positiven Up-Vote und dem negativen Down-Vote unterschieden. Ein Party-People kann pro Song nur einmal voten.
@@ -56,11 +55,11 @@ Insgesamt berechnet sich der Vote wie folgt:\\
 \textit{Vote v = Anzahl(Up-Votes) - Anzahl(Down-Votes)}
 
 \subsubsection{DI}
-Der DI ist ein ganzzahliger Wert zwischen 0 und 100 der den Betrunkenheitsgrad der Party-People beschreibt.
+Der DI ist ein ganzzahliger Wert zwischen 0 und 100, der den Betrunkenheitsgrad der Party-People beschreibt.
 
 \subsection{Architektur}
 
-Die folgende Abbildung \ref{fig:Komponentendiagramm} zeigt eine Systemübersicht der Drunken-Jukebox und zeigt eine schematische Darstellung der vier Logikschichten. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
+Die folgende Abbildung zeigt eine Systemübersicht der Drunken-Jukebox, die sich schematische in vier Logikschichten unterteilt. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
 
 \begin{figure}[H]
 	\centering
@@ -69,20 +68,16 @@ Die folgende Abbildung \ref{fig:Komponentendiagramm} zeigt eine Systemübersicht
 	\label{fig:Komponentendiagramm}
 \end{figure}
 
-Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mit Hilfe von Hibernate und einer beliebigen Datenbank werden die Daten verwaltet.\\
-Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.
+Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mit Hilfe der JPA (Java Persistence API) und einer beliebigen Datenbank werden die Daten verwaltet.
 
-Die PlayerBean sendet die zu spielenden Songs an ein Topic.
- 
-Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung und das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mit Hilfe eines Song-Selection-Algorithmus gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer persistiert den gespielten Song für spätere Auswertungen und wählt den nächsten Song aus der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.
+Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.\\
+Die PlayerBean sendet die zu spielenden Songs an ein Topic.\\ 
+Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung und das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mit Hilfe des Song-Selection-Algorithmus (s. \ref{sec:SongSelect}) gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer initiiert die Persistierung des gespielten Songs für spätere Auswertungen und wählt den nächsten Song der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.\\
+Die PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einer positiven oder negativen Bewertung und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID gespeichert.
 
-Das PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einem Up- oder Down-Ranking und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID persistiert.
+Oberhalb der Bean-Ebene befindet sich das Topic, sowie die REST-API. Die Abhängigkeit der REST-API zu den Beans wird über Dependency-Injection aufgelöst. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt, und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
 
-Über den Beans befindet sich das Topic und die REST-API. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
-
-Die REST-API injectet die Beans für das Durchreichen der Anfragen. Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich im Applikationsserver WildFly.
-
-Die letzte und oberste Schicht enthält die verschiedenen Clients. Der Player-Client bekommt von dem Topic die Song-Source und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Partys verwalten. Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.
+Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich allesamt im Applikationsserver WildFly, während die oberste Schicht\footnote{Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.} die verschiedenen Clients enthält. Der Player-Client empfängt die Song-Source vom Topic und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Partys verwalten.
 
 \subsection{Datenmodell}
 
