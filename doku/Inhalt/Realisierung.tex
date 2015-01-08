@@ -60,6 +60,8 @@ Der DI ist ein ganzzahliger Wert zwischen 0 und 100 der den Betrunkenheitsgrad d
 
 \subsection{Architektur}
 
+Die folgende Abbildung \ref{fig:Komponentendiagramm} zeigt eine Systemübersicht der Drunken-Jukebox und zeigt eine schematische Darstellung der vier Logikschichten. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{Bilder/Komponentendiagramm}
@@ -67,21 +69,20 @@ Der DI ist ein ganzzahliger Wert zwischen 0 und 100 der den Betrunkenheitsgrad d
 	\label{fig:Komponentendiagramm}
 \end{figure}
 
-Abbildung \ref{fig:Komponentendiagramm} ist eine Systemübersicht der Drunken-Jukebox. Es zeigt eine schematische Darstellung der vier Logikschichten. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
+Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mit Hilfe von Hibernate und einer beliebigen Datenbank werden die Daten verwaltet.\\
+Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.
 
-Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mit Hilfe von Hibernate und einer beliebigen Datenbank werden die Daten verwaltet.
-Über dieser Ebene befinden sich die Beans. Alle Beans benutzen das Entity-Model zur  Persistierung der Daten. Es gibt einen PlayerBean, einen PartyBean und einen AdminBean.
+Die PlayerBean sendet die zu spielenden Songs an ein Topic.
+ 
+Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung und das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mit Hilfe eines Song-Selection-Algorithmus gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer persistiert den gespielten Song für spätere Auswertungen und wählt den nächsten Song aus der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.
 
-Der PlayerBean sendet die zu spielenden Songs an das Topic. 
-Die Aufgaben des AdminBean ist das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mithilfe eines Song-Selection-Algorithmus gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source  ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer persistiert den gespielten Song für spätere Auswertungen und wählt den nächsten Song aus der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.
+Das PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einem Up- oder Down-Ranking und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID persistiert.
 
-Das PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einem Up-or-Down-Ranking und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID persistiert.
+Über den Beans befindet sich das Topic und die REST-API. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. 
 
-Über den Beans befindet sich die Topic und die REST API. Eine Topic ist eine eigenständige Liste in der das PlayerBean Songs eintragen kann. Ein Player-Client kann sich an dem Topic registrieren. Bei jedem neuen Eintrag erhält jeder registrierte Client diesen Eintrag. 
+Die REST-API injectet die Beans für das Durchreichen der Anfragen. Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich im Applikationsserver WildFly.
 
-Die REST-API injected die Beans für das Durchreichen der Anfragen. Diese Drei Schichten befinden sich im Application-Server WildFly.
-
-Die letzte Schicht enthält die verschiedenen Clients. Der Player-Client bekommt von dem Topic die Song-Source und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Benutzer verwalten. In diesem Projekt wurde nur der Server und die Schnittstellen für die Clients entwickelt.
+Die letzte und oberste Schicht enthält die verschiedenen Clients. Der Player-Client bekommt von dem Topic die Song-Source und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Partys verwalten. Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.
 
 \subsection{Datenmodell}
 
