@@ -2,7 +2,7 @@
 In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. Im Abschnitt Domänenmodell werden zunächst die verwendeten Begriffe definiert. Anschließend wird auf die Architektur, das Datenmodell und die Authentifizierung der Benutzerrollen eingegangen. Abschließend beschreiben wir exemplarisch einen Methodenaufruf, mit dem die wichtigsten Komponenten des Systems vorgestellt werden.
 
 \subsection{Domänenmodell}
-
+\label{sec:Domaenenmodell}
 
 \begin{description}
 	\item [Roles]:
@@ -17,7 +17,7 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 				\item Ist nach dem ersten Kontakt eindeutig identifizierbar (Party People ID).
 			\end{itemize}
 	\end{itemize}
-	\item [Jukebox]: datenbankgestützte Wildfly-Anwendung
+	\item [Jukebox]: datenbankgestützte WildFly-Anwendung
 	\begin{itemize}
 		\item Verwaltung der Songs und Song-Informationen.
 			\begin{itemize}
@@ -96,22 +96,27 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 
 \subsection{Datenmodell}
 
-\todo{Chris}
-
-- Kasten stellen Entity-Beans dar
-- Pfeile stellen die Beziehungen (Unidirektional, bidirektional) dar
-- Zwischen den Pfeilen stehen die Cascading Types
+In diesem Abschnitt wird das Datenmodell beschrieben. Dieses besteht aus Entitäten für die Objekte aus dem \nameref{sec:Domaenenmodell}, die persistiert werden sollen. Benutzer- und Rollendaten werden im Abschnitt \ref{sec:Benutzerrollen} beschrieben.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1\linewidth]{Bilder/Datenmodell}
-\caption{Datenmodell mit Beziehungen und Cascading zwischen Entities}
-\label{fig:EntityBeansModelMitCascading}
+\caption{Datenmodell mit Beziehungen und Cascading zwischen Entitäten}
+\label{fig:Datenmodell}
 \end{figure}
+
+Abbildung \ref{fig:Datenmodell} zeigt die Entitäten sowie deren Beziehungen untereinander. Neben der Kardinalität ist in dem Diagramm auch das Cascading-Verhalten dokumentiert. Wir haben zwei unterschiedliche Arten verwendet:
+\begin{description}
+	\item[Refresh] Eine Entität kennt eine andere Entität. Änderungen oder Löschoperationen werden nicht an die verknüpfte Entität weitergeleitet (Abhängigkeit).
+	\item[All] Eine Entität besitzt eine andere Entität. 
+	Änderungen oder Löschoperationen werden an die 
+	verknüpfte Entität weitergeleitet (Aggregation).
+\end{description}
 
 
 \subsection{Benutzerrollen}
-Die Authentifizierung und Autorisierung von Benutzer erfolgt über das Sicherheitskonzept im Wildfly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
+\label{sec:Benutzerrollen}
+Die Authentifizierung und Autorisierung von Benutzer erfolgt über das Sicherheitskonzept im WildFly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
 
 \subsubsection{Konzept}
 Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
@@ -131,14 +136,14 @@ Die Benutzer- und Rollendaten werden in der Datenbank gespeichert. Dazu wurden d
 \label{fig:BenutzerRollen}
 \end{figure}
 
-Im Standard verwendet Wildfly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert werden. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
+Im Standard verwendet WildFly die lokalen Benutzerdaten in den *.properties-Dateien. Um das Verhalten zu ändern, muss ein neues Login-Modul in der standalone.xml angelegt werden. In dieses Datenbank-Login-Modul die Datenquelle zusammen mit den SQL-Abfragen zur Bestimmung von Passwörtern und Rollen definiert werden. Aktuell werden die Passwörter im Klartext gespeichert. Für den produktiven Einsatz sollte hier auf ein aktuelles Hash-Verfahren wie SHA-2 umgestellt werden.
 
 Um denselben Authentifizierungsmechanismus für Remote-Verbindungen und HTTP-Anfragen gegen den REST-Service zu nutzen, haben wie eine eigene Security-Realm sowie -Domain definiert. Zusätzlich war die Einstellung für Passwort-Stacking wichtig, da sonst entweder nur die Anmeldung über die REST-Schnittstelle oder über Remote möglich war. Die Zuordnung der Security-Domain zu den Beans und Services erfolgt über Annotationen an den entsprechenden Java-Klassen. 
 
 \subsubsection{Probleme}
 Die Authentifizierung war das größte Problem im gesamten Projekt, das entsprechend auch mit dem höchsten Arbeitsaufwand verbunden. Selbst nach stundenlanger Recherche konnten einige Probleme aufgrund der eher mangelhaften Dokumentation und der wenig hilfreichen Fehlermeldungen nicht oder nur teilweise gelöst werden.
 
-Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizierung einfach einzurichten waren. Sollte dieselbe Authentifizierung auch für REST-Service genutzt werden, mussten aufwendige und nicht dokumentierte Anpassungen an der Wildfly-Konfiguration vorgenommen werden. Als gegen Ende des Projekts auch das Messaging authentifiziert werden sollte, konnten wir keine Lösung finden, mit der alle drei Schnittstellen korrekt arbeiteten. Aktuell funktioniert die Authentifizierung für Remote- und HTTP-Verbindungen. 
+Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizierung einfach einzurichten waren. Sollte dieselbe Authentifizierung auch für REST-Service genutzt werden, mussten aufwendige und nicht dokumentierte Anpassungen an der WildFly-Konfiguration vorgenommen werden. Als gegen Ende des Projekts auch das Messaging authentifiziert werden sollte, konnten wir keine Lösung finden, mit der alle drei Schnittstellen korrekt arbeiteten. Aktuell funktioniert die Authentifizierung für Remote- und HTTP-Verbindungen. 
 
 
 \subsection{Exemplarische Darstellung}
