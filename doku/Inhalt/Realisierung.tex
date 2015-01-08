@@ -80,6 +80,7 @@ Die PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werde
 Oberhalb der Bean-Ebene befindet sich das Topic, sowie die REST-API. Die Abhängigkeit der REST-API zu den Beans wird über Dependency-Injection aufgelöst. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt, und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
 
 Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich allesamt im Applikationsserver WildFly, während die oberste Schicht\footnote{Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.} die verschiedenen Clients enthält. Der Player-Client empfängt die Song-Source vom Topic und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Partys verwalten.
+\newpage
 
 \subsection{Datenmodell}
 
@@ -119,6 +120,7 @@ Eine Anforderung an das Projekt ist es, möglichst alle Beziehungs- und Kardinal
 \label{sec:Benutzerrollen}
 Die Authentifizierung und Autorisierung von Benutzern erfolgt über das Sicherheitskonzept im WildFly. Dazu werden Benutzerrollen für die unterschiedlichen Anwender definiert. Der Zugriff auf Beans sowie die REST-Services wird über diese Rollen geregelt. 
 
+\newpage
 \subsubsection{Konzept}
 Es gibt drei Benutzerrollen: Admin, Player und PartyPeople.
 \begin{description}
@@ -177,10 +179,11 @@ Zunächst werden eine Reihe von Kennzahlen definiert, die der Algorithmus zur Au
 
 \subsubsection{Algorithmus}
 Der Algorithmus besteht aus zwei Schritten.
-\begin{enumerate}
+\begin{compactenum}
+	
 	\item Auswahl einer Menge an passenden Songs
 	\item Auswahl des besten Songs aus den passenden Songs
-\end{enumerate}
+\end{compactenum}
 
 Zur Auswahl der passenden Songs werden gültige Bereiche von DI- und Timestamp-Werten definiert.
 Diese Bereiche werden vergrößert, wenn keine passenden Songs gefunden wurden. Um eine Endlosschleife
@@ -190,28 +193,25 @@ Wenn eine Menge von passenden Songs ermittelt werden konnte, wird der Song mit d
 Bewertung durch die Party-People auf vergangenen Partys ausgewählt. Bei gleichem Vote-Count
 entscheidet das Zufallsprinzip. 
 
-\newpage
 Folgender Pseudocode skizziert den Algorithmus:
 \begin{lstlisting}[language=C]
 CDI = getCurrentAverageDI()
 CTS = getCurrentTimestamp()
 tries = 1
-while (tries <= MAX_TRIES)
-{
+while (tries <= MAX_TRIES) {
 	ΔDI = tries * DI_STEP
 	ΔTS = tries * TS_STEP
 	
 	fittingSongs = SELECT * FROM PlayedSongs ps
                     WHERE ps.averageDI BETWEEN CDI - ΔDI AND CDI + ΔDI
-                      AND ps.timestamp BETWEEN CTS - ΔTS AND CTS + ΔTS
+                    AND    ps.timestamp BETWEEN CTS - ΔTS AND CTS + ΔTS
 				   	 
 	Remove from fittingSongs: 
 	  Already played songs on this party
 	  Current song on this party
 	  Songs in current playlist
 		
-	if (fittingSongs is not empty)
-	{
+	if (fittingSongs is not empty) {
 	  bestSong = choose song with max vote count from fittingSongs
 	  return bestSong
 	}
