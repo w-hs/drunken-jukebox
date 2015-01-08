@@ -3,19 +3,15 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 
 \subsection{Domänenmodell}
 \label{sec:Domaenenmodell}
-Damit innerhalb des Projektes Bezeichnungen einheitlich verwendet werden, definieren wir im Folgenden alle relevanten Begriffe.
+Damit innerhalb des Projektes Bezeichnungen einheitlich verwendet werden, definieren wir zunächst alle relevanten Begriffe.
 
 \subsubsection{Drunken-Jukebox}
 Unter der Drunken-Jukebox verstehen wir eine datenbankgestützte WildFly-Anwendung, die folgende Aufgaben beinhaltet:
 
 \begin{itemize}
-	\item Verwaltung der Songs und Song-Informationen.
-		\begin{itemize}
-			\item Songs hinzufügen.
-			\item Songs löschen.
-			\item Song-Informationen bearbeiten.
-		\end{itemize}
-	\item Generierung und Verwaltung der Playlist.
+	\item Starten und Stoppen von Partys
+	\item Verwaltung von Songs (hinzufügen, bearbeiten und löschen)
+	\item Generierung und Verwaltung der Playlist
 \end{itemize}
 
 \subsubsection{Roles}
@@ -28,14 +24,14 @@ Unter Roles verstehen wir die Benutzerrollen, die innerhalb der Drunken-Jukebox 
 \end{description}
 
 \subsubsection{Party}
-Eine Party besteht aus folgenden Daten: Start- und Enddatum, Playlist und Party-People. Darüber hinaus enthält die Party eine Liste von bereits gespielten Songs. Innerhalb der Drunken-Jukebox kann es maximal nur eine laufende Party geben.
+Eine Party besteht aus folgenden Daten: Start- und Enddatum, einer Playlist und Party-People. Darüber hinaus enthält die Party eine Liste von bereits gespielten Songs. Innerhalb der Drunken-Jukebox kann es maximal nur eine laufende Party geben.
 
 \subsubsection{Song}
 \label{sec:Song}
-Ein Song innerhalb der Drunken-Jukebox enthält folgende Daten: Titel, Interpret, Genre, Album und Länge. Darüber hinaus enthält der Song eine \nameref{Song-Source}.
+Ein Song innerhalb der Drunken-Jukebox enthält folgende Daten: Titel, Interpret, Genre, Album und Länge. Darüber hinaus enthält der Song eine \nameref{sec:SongSource}.
 
 \subsubsection{Song-Source}
-\label{SongSource}
+\label{sec:SongSource}
 
 Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen aus denen der Song abgespielt werden kann:
 \begin{itemize}
@@ -60,7 +56,7 @@ Insgesamt berechnet sich der Vote wie folgt:\\
 \textit{Vote v = Anzahl(Up-Votes) - Anzahl(Down-Votes)}
 
 \subsubsection{DI}
-Der DI ist ein ganzzahliger Wert zwischen 0 und 100 und beschreibt damit den Betrunkenheitsgrad eines Party-People.
+Der DI ist ein ganzzahliger Wert zwischen 0 und 100 der den Betrunkenheitsgrad der Party-People beschreibt.
 
 \subsection{Architektur}
 
