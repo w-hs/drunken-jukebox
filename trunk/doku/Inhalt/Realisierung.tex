@@ -1,5 +1,6 @@
+\newpage
 \section{Technische Realisierung}
-In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. Im Abschnitt Domänenmodell werden zunächst die verwendeten Begriffe definiert. Anschließend wird auf die Architektur, das Datenmodell und die Authentifizierung der Benutzerrollen eingegangen. Daraufhin beschreiben wir exemplarisch einen Methodenaufruf, mit dem die wichtigsten Komponenten des Systems vorgestellt werden. Abschließend erläutern wir den Algorithmus zur Auswahl der Songs für die Playlist.
+In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. Im Abschnitt Domänenmodell werden zunächst die verwendeten Begriffe definiert. Anschließend wird auf die Architektur, das Datenmodell und die Authentifizierung der Benutzerrollen eingegangen. Daraufhin beschreiben wir exemplarisch einen Methodenaufruf, mit dem die Arbeitsweise der wichtigsten Komponenten des Systems vorgestellt wird. Abschließend erläutern wir den Algorithmus zur Auswahl der Songs für die Playlist.
 
 \subsection{Domänenmodell}
 \label{sec:Domaenenmodell}
@@ -18,7 +19,7 @@ Unter der Drunken-Jukebox verstehen wir eine datenbankgestützte WildFly-Anwendu
 Unter Roles verstehen wir die Benutzerrollen, die innerhalb der Drunken-Jukebox existieren:
 
 \begin{description}
-	\item [Admin] Verwaltet die Songs auf dem Server.
+	\item [Admin] Verwaltet Partys und Songs auf dem Server.
 	\item [Player] Ist für das Abspielen von Songs verantwortlich.
 	\item [Party-People\footnote{Wir verwenden den Ausdruck Party-People in dieser Ausarbeitung gleichbedeutend mit einem Party-Gast. Das englische Wort ist Plural, die Verwendung ist allerdings Singular.}] Gäste der Party, die eindeutig identifizierbar sind und Songs voten können.
 \end{description}
@@ -188,6 +189,7 @@ Wenn eine Menge von passenden Songs ermittelt werden konnte, wird der Song mit d
 Bewertung durch die Party-People auf vergangenen Partys ausgewählt. Bei gleichem Vote-Count
 entscheidet das Zufallsprinzip. 
 
+\newpage
 Folgender Pseudocode skizziert den Algorithmus:
 \begin{lstlisting}[language=C]
 CDI = getCurrentAverageDI()
