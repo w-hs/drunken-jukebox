@@ -157,7 +157,7 @@ Besonders auffällig war, dass die einzelnen Features wie Remote-Authentifizieru
 
 
 \subsection{Exemplarische Darstellung}
-In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschrieben. Da die verschiedenen über REST bereitgestellten Funktionen prinzipiell gleich implementiert sind, zeigt Abbildung \ref{fig:AufrufSequenz} den Ablauf der Funktion "`Party starten"'.
+In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschrieben. Da die verschiedenen über REST bereitgestellten Funktionen prinzipiell gleich implementiert sind, zeigt Abbildung \ref{fig:AufrufSequenz} den Ablauf der Funktion "`Party starten"'. Die genaue Beschreibung der REST-API erfolgt im Anhang \ref{cha:Webservice}.
 
 \begin{figure}[tbh]
 \centering
@@ -166,7 +166,7 @@ In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschri
 \label{fig:AufrufSequenz}
 \end{figure}
 
-Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 204 zurück.
+Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 204 zurück. Ein Inhalt ist nicht erforderlich, da es immer nur eine laufende Party geben kann. Existiert bereits eine laufende Party, wird der HTTP-Status-Code 500 zurückgegeben.
 
 \subsection{Song-Selection-Algorithmus}
 \label{sec:SongSelect}
@@ -180,22 +180,22 @@ Zunächst werden eine Reihe von Kennzahlen definiert, die der Algorithmus zur Au
 	\item[SDI] Song-Drunken-Index: Durchschnittlicher DI zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
 	\item[$\Delta$DI] Definiert die maximale Abweichung des SDI vom CDI, unter der der Song als passend angesehen wird.
 	\item[CTS] Current-Timestamp: Aktueller Zeitstempel der laufenden Party.
-	\item[STS] Song-Timestamp: Zeitstempel zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
+	\item[STS] Song-Timestamp: Zeitstempel\footnote{Wir verwenden absolute Zeitstempel, welche für ähnliche Partys, die zur selben Zeit starten, sinnvoll sind.} zu einem gespielten Song auf früheren Partys. Dieser Wert wurde beim Abspielen des Songs auf einer früheren Party in der Datenbank gespeichert.
 	\item[$\Delta$TS] Definiert die maximale Abweichung des SDS vom CTS, unter der der Song als passend angesehen wird.
 \end{description}
 
 \subsubsection{Algorithmus}
 Der Algorithmus besteht aus zwei Schritten.
-\begin{compactenum}
-	
+\begin{enumerate}
 	\item Auswahl einer Menge an passenden Songs
 	\item Auswahl des besten Songs aus den passenden Songs
-\end{compactenum}
+\end{enumerate}
 
 Zur Auswahl der passenden Songs werden gültige Bereiche von DI- und Timestamp-Werten definiert.
 Diese Bereiche werden vergrößert, wenn keine passenden Songs gefunden wurden. Um eine Endlosschleife
 zu vermeiden, wird diese Vergrößerung nur begrenzt oft durchgeführt. Konnten trotz mehrfacher 
 Versuche keine Songs ermittelt werden, wird ein zufälliger Song aus der Songsammlung ausgewählt.
+
 Wenn eine Menge von passenden Songs ermittelt werden konnte, wird der Song mit der besten
 Bewertung durch die Party-People auf vergangenen Partys ausgewählt. Bei gleichem Vote-Count
 entscheidet das Zufallsprinzip. 
