@@ -7,6 +7,7 @@ In diesem Kapitel gehen wir auf die technische Realisierung des Projektes ein. I
 Damit innerhalb des Projektes Bezeichnungen einheitlich verwendet werden, definieren wir zunächst alle relevanten Begriffe.
 
 \subsubsection{Drunken-Jukebox}
+\label{sec:drunkenJukebox}
 Unter der Drunken-Jukebox verstehen wir eine datenbankgestützte WildFly-Anwendung, die folgende Aufgaben beinhaltet:
 
 \begin{itemize}
@@ -19,48 +20,54 @@ Unter der Drunken-Jukebox verstehen wir eine datenbankgestützte WildFly-Anwendu
 Unter Roles verstehen wir die Benutzerrollen, die innerhalb der Drunken-Jukebox existieren:
 
 \begin{description}
-	\item [Admin] Verwaltet Partys und Songs auf dem Server.
+	\item [Admin] Verwaltet als Gastgeber Partys und Songs auf dem Server.
 	\item [Player] Ist für das Abspielen von Songs verantwortlich.
 	\item [Party-People\footnotemark] Gäste der Party, die eindeutig identifizierbar sind und Songs voten können.
 \end{description}
 \footnotetext{Wir verwenden den Ausdruck Party-People in dieser Ausarbeitung gleichbedeutend mit einem Party-Gast. Das englische Wort ist Plural, die Verwendung ist allerdings Singular.}
 
 \subsubsection{Party}
-Eine Party besteht aus folgenden Daten: Start- und Enddatum, einer Playlist und Party-People. Darüber hinaus enthält die Party eine Liste von bereits gespielten Songs. Innerhalb der Drunken-Jukebox kann es maximal nur eine laufende Party geben.
+\label{sec:Party}
+Eine Party besteht aus folgenden Daten: Start- und Enddatum, einer \nameref{sec:Playlist}, einem \nameref{sec:currentSong} und Party-People. Darüber hinaus enthält die Party eine Liste von bereits gespielten \nameref{sec:Song}s. Innerhalb der \nameref{sec:drunkenJukebox} kann es maximal nur eine laufende Party geben.
 
 \subsubsection{Song}
 \label{sec:Song}
-Ein Song innerhalb der Drunken-Jukebox enthält folgende Daten: Titel, Interpret, Genre, Album und Länge. Darüber hinaus enthält der Song eine \nameref{sec:SongSource}.
+Ein Song innerhalb der \nameref{sec:drunkenJukebox} enthält folgende Daten: Titel, Interpret, Genre, Album und Länge. Darüber hinaus enthält der Song eine \nameref{sec:SongSource}.
 
 \subsubsection{Song-Source}
 \label{sec:SongSource}
 
-Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen, aus denen der Song abgespielt werden kann:
+Bei der Song-Source unterscheiden wir zwischen unterschiedlichen Quellen, aus denen der \nameref{sec:Song} abgespielt werden kann:
 \begin{itemize}
 	\item Pfad im Dateisystem 
 	\item YouTube-Link
 \end{itemize}
 
 \subsubsection{Current-Song}
-Der Current-Song ist der Song, der aktuell auf der Party abgespielt wird. Sobald der aktuelle Song beendet ist, wird der erste Song aus der Playlist entfernt und zum neuen Current-Song. 
+\label{sec:currentSong}
+Der Current-Song ist der \nameref{sec:Song}, der aktuell auf der laufenden \nameref{sec:Party} abgespielt wird. Sobald der aktuelle Song beendet ist, wird der erste Song aus der \nameref{sec:Playlist} entfernt und zum neuen Current-Song. 
 
 \subsubsection{Playlist}
-Die Playlist ist eine Liste von Songs, die basierend auf den Votings absteigend sortiert ist. Sie hat eine feste Größe und wird durch die Song-Selection befüllt.
+\label{sec:Playlist}
+Die Playlist ist eine Liste von \nameref{sec:Song}s, die basierend auf den \nameref{sec:Voting} absteigend sortiert ist. Sie hat eine feste Größe und wird durch die \nameref{sec:songSelection} befüllt.
 
 \subsubsection{Song-Selection}
-Die Song-Selection ist für die Befüllung der Playlist zuständig. Für die Auswahl der Songs haben wir einen eigenen Algorithmus entwickelt, der im Abschnitt \nameref{sec:SongSelect} erklärt wird.
+\label{sec:songSelection}
+Die Song-Selection ist für die Befüllung der \nameref{sec:Playlist} zuständig. Für die Auswahl der \nameref{sec:Song}s haben wir einen eigenen Algorithmus entwickelt, der im Abschnitt \nameref{sec:SongSelect} erklärt wird.
 
 \subsubsection{Voting}
-Über Votings können Party-People Songs innerhalb der Playlist bewerten. Dabei wird zwischen dem positiven Up-Vote und dem negativen Down-Vote unterschieden. Ein Party-People kann pro Song nur einmal voten.
+\label{sec:Voting}
+Über Votings können Party-People \nameref{sec:Song}s innerhalb der \nameref{sec:Playlist} bewerten. Dabei wird zwischen dem positiven Up-Vote und dem negativen Down-Vote unterschieden. Ein Party-People kann pro Song nur einmal voten.
 
 Insgesamt berechnet sich der Vote wie folgt:\\
 \textit{Vote v = Anzahl(Up-Votes) - Anzahl(Down-Votes)}
 
 \subsubsection{DI}
+\label{sec:DI}
 Der DI ist ein ganzzahliger Wert zwischen 0 und 100, der den Betrunkenheitsgrad der Party-People beschreibt.
 
 \subsection{Architektur}
-
+\label{sec:Architektur}
 Die folgende Abbildung zeigt eine Systemübersicht der Drunken-Jukebox, die sich schematische in vier Logikschichten unterteilt. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
 
 \begin{figure}[H]
@@ -161,7 +168,7 @@ In diesem Abschnitt wird exemplarisch einen Funktionsaufruf der REST-API beschri
 
 Um eine Party zu starten, führt der Admin-Client einen HTTP-POST-Request unter der URI \textit{/admin/party} aus. Daraufhin wird im Admin-Service die startParty-Methode des Admin-Beans aufgerufen. Die Abhängigkeiten der Service- und der Bean-Klasse werden dabei über Dependency-Injection aufgelöst. Innerhalb des Admin-Beans wird eine neue Instanz der Entität Party erstellt und in der Datenbank persistiert. Abschließend gibt der Admin-Service den HTTP-Status-Code 204 zurück.
 
-\subsection{Song-Selection}
+\subsection{Song-Selection-Algorithmus}
 \label{sec:SongSelect}
 Die Playlist wird über einen Algorithmus zur Auswahl von passenden Songs gefüllt. Dazu werden bekannte Kriterien der aktuellen Party wie Uhrzeit und durchschnittlicher Betrunkenheitsgrad berücksichtigt. Die Auswahl erfolgt auf Basis von bereits abgeschlossenen Partys, bei denen zu den gespielten Songs die notwendigen Daten gespeichert wurden.
 
