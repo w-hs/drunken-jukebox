@@ -68,26 +68,59 @@ Der DI ist ein ganzzahliger Wert zwischen 0 und 100, der den Betrunkenheitsgrad 
 
 \subsection{Architektur}
 \label{sec:Architektur}
-Die folgende Abbildung zeigt eine Systemübersicht der Drunken-Jukebox, die sich schematische in vier Logikschichten unterteilt. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
+Die Beschreibung der Architektur beginnt mit einer groben Übersicht über die verschiedenen Schichten und endet mit einer detaillierten Darstellung der Kommunikationen zwischen diesen.
+
+\subsubsection{Schichten}
+Die folgende Abbildung zeigt eine Systemübersicht der Drunken-Jukebox, die sich schematische in vier Schichten unterteilt. Diese Schichten sind horizontal im Komponentendiagramm dargestellt.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\linewidth]{Bilder/Komponentendiagramm_praesi}
-	\caption{Komponentendiagramm der Systemübersicht }
-	\label{fig:Komponentendiagramm}
+	\includegraphics[width=0.7\linewidth]{Bilder/Architektur}
+	\caption{Übersicht der Architektur in Form eines Komponentendiagramm}
+	\label{fig:Architekturdiagramm}
 \end{figure}
 
-Die unterste Ebene mit dem Entity-Model beinhaltet die Persistenz-Logik. Mithilfe der JPA (Java Persistence API) und einer beliebigen Datenbank werden die Daten verwaltet.
+\begin{description}
+\item [Clients] Auf oberster Ebene befinden sich die Clients der Drunken-Jukebox:
+	\begin{itemize}
+	\item Admin-Client dient zur Verwaltung der Songsammlung und der Partys
+	\item Party-Client ist eine Anwendung für die Party-People zur Bewertung der Songs
+	\item Player-Client ist eine Anwendung zur Wiedergabe der Songs
+	\end{itemize}
+\item [Schnittstellen] Die Schicht umfasst zwei Schnittstellen, mit denen die Clients mit der Drunken-Jukebox kommunizieren.
+	\begin{itemize}
+	\item Topic stellt die abzuspielenden Songs für den Player-Client zur Verfügung
+	\item REST-API stellt Methoden für den Admin- und Party-Client bereit
+	\end{itemize}
+\item [Anwendungslogik]Diese Schicht umfasst die Beans, in denen die Anwendungslogik implementiert ist.
+	\begin{itemize}
+	\item Admin-Bean implementiert die Logik zur Verwaltung der Songsammlung und der Partys
+	\item Party-Bean setzt die Methoden zur Bewertung der Songs und zum Abrufen der Playlist um
+	\item Player-Bean verwaltet Nachrichten zur Songwiedergabe
+	\end{itemize}
+\item [Persistenz] Die unterste Schicht implementiert die Persistenz, die von WildFly bereitgestellt wird. Unsere Daten werden dabei datenbankunabhängig in Form von Entitäten beschrieben.
+\end{description}
 
-Oberhalb dieser Ebene befinden sich die Beans, die allesamt das Entity-Model zur Persistierung der Daten benutzen. Es gibt eine PlayerBean, eine PartyBean und eine AdminBean.
-Die PlayerBean sendet die zu spielenden Songs an ein Topic.
-Die Aufgaben des AdminBeans umfassen das Verwalten der Songsammlung, das Starten einer Party, die damit verbundene Initialisierung der Playlist und die Auswahl der zu spielenden Songs. Beim Initialisieren der Playlist wird diese mithilfe des Song-Selection-Algorithmus (s. \ref{sec:SongSelect}) gefüllt. Die Anzahl der Einträge in der Playlist ist im AdminBean definiert. Weiter gehört zum Starten einer Party die Auswahl eines zu spielenden Songs. Beim Auswählen wird anhand der Song-Source ein Timer eingestellt, der nach der Länge (in Sekunden) des Songs ausgelöst wird. Dieser Timer initiiert die Persistierung des gespielten Songs für spätere Auswertungen und wählt den nächsten Song der Playlist aus. Bei jedem Auswählen eines zu spielenden Songs wird dieser aus der Playlist entfernt und über den Song-Selection-Algorithmus ersetzt.
-Die PartyBean verwaltet die Votes und die DI-Werte der Party-People. Votes werden mit einem Song, einer positiven oder negativen Bewertung und der ID des Party-People persistiert. DI-Werte werden mit der Party-People-ID gespeichert.
+Die Schichten Persistenz, Anwendungslogik und Schnittstellen befinden sich im Applikationsserver WildFly, während die oberste Schicht\footnote{Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.} die verschiedenen Clients enthält.
 
-Oberhalb der Bean-Ebene befindet sich das Topic, sowie die REST-API. Die Abhängigkeit der REST-API zu den Beans wird über Dependency-Injection aufgelöst. Ein Topic ist ein Messaging-Service, an den das PlayerBean den zu spielenden Song schickt, und der diesen an alle zu dem Zeitpunkt registrierten Player-Clients weiterleitet. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll.
+\subsubsection{Kommunikation}
+Im Nachfolgenden wird das Architekturdiagramm um die Kommunikation erweitert. Das Diagramm \ref{fig:ArchitekturGesamtDiagramm} stellt die Abhängigkeiten der Schichten der Drunken-Jukebox detailliert dar.
 
-Diese drei Schichten (Persistenz, Beans und REST-API) befinden sich allesamt im Applikationsserver WildFly, während die oberste Schicht\footnote{Diese Schicht wurde in diesem Projekt allerdings nicht mehr implementiert.} die verschiedenen Clients enthält. Der Player-Client empfängt die Song-Source vom Topic und spielt diese ab. Ein Party-Client kann Votes und DI-Werte an den Server senden. Der Admin-Client kann Songs und Partys verwalten.
-\newpage
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Bilder/ArchitekturGesamt}
+	\caption{Komponentendiagramm der Systemübersicht }
+	\label{fig:ArchitekturGesamtDiagramm}
+\end{figure}
+
+Es gibt zwei unterschiedliche Kommunikationswege, die durch die Schnittstellen definiert werden. 
+
+\begin{description}
+\item [Topic] Über das Topic teilt das PlayerBean dem Player-Client mit, wenn ein neuer Song abgespielt werden soll. Dies wird mithilfe des Song-Timers initiiert. Wir haben uns bewusst für ein Topic entschieden, da die Nachricht zum Abspielen eines Songs nur für einen kurzen Zeitraum relevant ist und nicht wie in einer Queue zwischengespeichert und zu einem späteren Zeitpunkt ausgeliefert werden soll. 
+\item [REST-API]
+Über die REST-API kommunizieren der Party-Client und der Admin-Client mit den jeweiligen Beans (PartyBean und AdminBean). Die Beans werden über Dependency Injection in den REST-Services verwendet. 
+\end{description}
+
 
 \subsection{Datenmodell}
 
