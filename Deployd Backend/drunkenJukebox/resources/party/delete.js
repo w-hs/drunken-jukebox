@@ -1,0 +1,1 @@
+//alle nötigen werte löschen (people diValue)

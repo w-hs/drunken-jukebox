@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"title": {
+			"name": "title",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "title",
+			"order": 0
+		},
+		"length": {
+			"name": "length",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "length",
+			"order": 1
+		},
+		"artist": {
+			"name": "artist",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "artist",
+			"order": 2
+		},
+		"source": {
+			"name": "source",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "source",
+			"order": 3
+		},
+		"sourceType": {
+			"name": "sourceType",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "sourceType",
+			"order": 4
+		}
+	}
+}

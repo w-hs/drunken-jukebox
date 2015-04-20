@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"songID": {
+			"name": "songID",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "songID",
+			"order": 0
+		},
+		"position": {
+			"name": "position",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "position",
+			"order": 1
+		},
+		"votes": {
+			"name": "votes",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "votes",
+			"order": 2
+		}
+	}
+}

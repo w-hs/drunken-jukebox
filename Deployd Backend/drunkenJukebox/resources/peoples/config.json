@@ -1,0 +1,13 @@
+{
+	"type": "UserCollection",
+	"properties": {
+		"diValue": {
+			"name": "diValue",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "diValue",
+			"order": 0
+		}
+	}
+}
