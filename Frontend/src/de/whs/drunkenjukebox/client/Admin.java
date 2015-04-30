@@ -6,6 +6,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
+import de.whs.drunkenjukebox.client.admin.PartyTabPage;
+
 public class Admin implements EntryPoint {
 
 	@Override

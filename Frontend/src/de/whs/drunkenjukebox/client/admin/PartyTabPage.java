@@ -1,18 +1,19 @@
-package de.whs.drunkenjukebox.client;
+package de.whs.drunkenjukebox.client.admin;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.HTML;
 
 public class PartyTabPage extends Composite {
 
-	private final SongWidget songWidget = new SongWidget();
+	private final SongListWidget songWidget = new SongListWidget();
+	private final SongDetailWidget detailWidget = new SongDetailWidget();
 
 	public PartyTabPage() {
 
 		HorizontalPanel panel = new HorizontalPanel();
+		panel.setSpacing(8);
 		panel.add(songWidget);
-		panel.add(new HTML("TODO"));
+		panel.add(detailWidget);
 
 		initWidget(panel);
 	}
