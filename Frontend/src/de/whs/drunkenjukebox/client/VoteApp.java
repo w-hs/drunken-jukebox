@@ -68,7 +68,7 @@ public class VoteApp implements EntryPoint {
 		    
 		   
 			DISlider diSlider = new DISlider(20,"100%");
-			diSlider.drawMarks("white",6);		    
+			//diSlider.drawMarks("white",6);		    
 			
 			
 			VerticalPanel mainPanel = new VerticalPanel();
