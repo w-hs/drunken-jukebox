@@ -6,14 +6,19 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class SongListEntry extends Composite {
+import de.whs.drunkenjukebox.model.PlayListEntry;
+
+public class PlayListEntryView extends Composite {
 	
-	public SongListEntry() {
+	PlayListEntry playlistEntry;
+	
+	public PlayListEntryView(PlayListEntry p) {
+		playlistEntry = p;
 		HorizontalPanel mainPanel = new HorizontalPanel();
 		
 		VerticalPanel namePanel = new VerticalPanel();
-		Label songName = new Label("Last Christmas");
-		Label interpreterName = new Label("Wham");
+		Label songName = new Label(p.getSongName());
+		Label interpreterName = new Label(p.getInterpreter());
 		namePanel.add(songName);
 		namePanel.add(interpreterName);
 		
@@ -26,4 +31,6 @@ public class SongListEntry extends Composite {
 		
 		initWidget(mainPanel);
 	}
+	
+	
 }

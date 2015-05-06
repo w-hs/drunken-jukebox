@@ -7,20 +7,24 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
+import de.whs.drunkenjukebox.client.admin.view.SongDetailView;
+import de.whs.drunkenjukebox.client.admin.view.SongListView;
 import de.whs.drunkenjukebox.client.voteapp.DISlider;
-import de.whs.drunkenjukebox.client.voteapp.SongList;
+import de.whs.drunkenjukebox.client.voteapp.PlayListView;
+import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
+
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class VoteApp implements EntryPoint {
 	
-
+	
 	
 
 	/**
@@ -41,8 +45,11 @@ public class VoteApp implements EntryPoint {
 		RootPanel root = RootPanel.get("root");
 		root.add(diButton);
 		
-		SongList songs = new SongList();
-		root.add(songs);
+		//PlayListView songs = new PlayListView();
+		//root.add(songs);
+		
+		VoteAppPresenter presenter = new VoteAppPresenter( new PlayListView());
+		presenter.go(root);
 		
 	}
 	

@@ -6,13 +6,6 @@ public class PlayListEntry implements Serializable {
 
 	private static final long serialVersionUID = -8853457992660690992L;
 	
-	private enum VoteResult
-	{
-		NOT_VOTED,
-		UP_VOTED,
-		DOWN_VOTED
-	}
-	
 	private String songName;
 	private String interpreter;
 	private VoteResult voteResult;
