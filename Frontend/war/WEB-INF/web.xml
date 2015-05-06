@@ -11,9 +11,19 @@
     <servlet-class>de.whs.drunkenjukebox.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>songsServlet</servlet-name>
+  	<servlet-class>de.whs.drunkenjukebox.server.SongsServiceImpl</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/frontend/greet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>songsServlet</servlet-name>
+  	<url-pattern>/admin/songs</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

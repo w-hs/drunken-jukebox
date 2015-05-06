@@ -1,4 +1,4 @@
-package de.whs.drunkenjukebox.client.admin;
+package de.whs.drunkenjukebox.client.admin.view;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -11,11 +11,14 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SongDetailWidget extends Composite {
+import de.whs.drunkenjukebox.client.admin.InputBox;
+import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter.SongDetailDisplay;
+
+public class SongDetailView extends Composite implements SongDetailDisplay {
 
 	private final Button buttonSave = new Button("Speichern");
 
-	public SongDetailWidget() {
+	public SongDetailView() {
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
 

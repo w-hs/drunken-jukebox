@@ -1,4 +1,6 @@
-package de.whs.drunkenjukebox.client.admin;
+package de.whs.drunkenjukebox.client.admin.view;
+
+import java.util.List;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -9,14 +11,17 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class SongListWidget extends Composite {
+import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
+import de.whs.drunkenjukebox.shared.Song;
+
+public class SongListView extends Composite implements SongPresenter.SongListDisplay {
 
 	private final TextBox textBoxSearch = new TextBox();
 	private final ListBox listBoxSongs = new ListBox(false);
 	private final Button buttonCreate = new Button("Erstellen");
 	private final Button buttonRemove = new Button("Entfernen");
 	
-	public SongListWidget() {	  
+	public SongListView() {	  
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
 		
@@ -41,5 +46,15 @@ public class SongListWidget extends Composite {
 	    DecoratorPanel decPanel = new DecoratorPanel();
 	    decPanel.setWidget(panel);
 		initWidget(decPanel);
-	}	
+	}
+
+	@Override
+	public void setSongs(List<String> songs) {
+		listBoxSongs.clear();
+		
+		for (String s : songs) {
+			listBoxSongs.addItem(s);
+		}
+		
+	}
 }
