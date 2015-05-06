@@ -10,6 +10,8 @@ import de.whs.drunkenjukebox.shared.Song;
 
 public class SongsServiceImpl extends RemoteServiceServlet implements SongsService {
 
+	private static final long serialVersionUID = -8457486819910574309L;
+
 	@Override
 	public ArrayList<Song> getSongList() {
 		ArrayList<Song> songs = new ArrayList<Song>();
