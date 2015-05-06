@@ -11,9 +11,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
-import de.whs.drunkenjukebox.client.admin.view.SongDetailView;
-import de.whs.drunkenjukebox.client.admin.view.SongListView;
 import de.whs.drunkenjukebox.client.voteapp.DISlider;
 import de.whs.drunkenjukebox.client.voteapp.PlayListView;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
