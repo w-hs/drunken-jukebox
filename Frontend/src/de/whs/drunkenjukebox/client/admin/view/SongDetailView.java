@@ -13,19 +13,25 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.client.admin.InputBox;
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter.SongDetailDisplay;
+import de.whs.drunkenjukebox.shared.Song;
 
 public class SongDetailView extends Composite implements SongDetailDisplay {
 
+	private final InputBox interpret = new InputBox("Interpret");
+	private final InputBox title = new InputBox("Titel");
+	private final InputBox genre = new InputBox("Genre");
+	private final InputBox length = new InputBox("Länge");
+	
 	private final Button buttonSave = new Button("Speichern");
 
 	public SongDetailView() {
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
 
-		panel.add(new InputBox("Interpret"));
-		panel.add(new InputBox("Titel"));
-		panel.add(new InputBox("Genre"));
-		panel.add(new InputBox("Länge"));
+		panel.add(interpret);
+		panel.add(title);
+		panel.add(genre);
+		panel.add(length);
 
 		panel.add(getSourcePanel());
 
@@ -57,5 +63,19 @@ public class SongDetailView extends Composite implements SongDetailDisplay {
 		decPanel.setWidth("100%");
 		decPanel.setWidget(panel);
 		return decPanel;
+	}
+
+	@Override
+	public void setSong(Song song) {
+		title.setText(song.getTitle());
+		interpret.setText(song.getTitle());
+		
+		String genres = "";
+		for (String s : song.getGenres())
+			genres += s + ", ";
+		genres = genres.substring(0, genres.length() - 2);
+		
+		genre.setText(genres);
+		length.setText(new Integer(song.getDurationInSecs()).toString());
 	}
 }

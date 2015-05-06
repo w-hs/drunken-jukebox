@@ -3,6 +3,9 @@ package de.whs.drunkenjukebox.client.admin.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -19,11 +22,14 @@ public class SongPresenter implements Presenter {
 	private Song currentSong;
 	
 	public interface SongListDisplay {
-		Widget asWidget();
 		void setSongs(List<String> songs);
+		HasChangeHandlers getSongsListBox();
+		int getSelectedIndex();
+		Widget asWidget();
 	}
 	
 	public interface SongDetailDisplay {
+		void setSong(Song song);
 		Widget asWidget();
 	}
 	
@@ -40,8 +46,19 @@ public class SongPresenter implements Presenter {
 
 	@Override
 	public void bind() {
-		// TODO Auto-generated method stub
-		
+		songListDisplay.getSongsListBox().addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent event) {
+				onSelectedSongChange();
+			}
+		});
+	}
+
+	private void onSelectedSongChange() {
+		int index = songListDisplay.getSelectedIndex();
+		currentSong = songs.get(index);
+
+		songDetailDisplay.setSong(currentSong);
 	}
 
 	@Override

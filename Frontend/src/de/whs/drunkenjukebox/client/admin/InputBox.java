@@ -10,6 +10,10 @@ public class InputBox extends Composite {
 
 	private final TextBox textBox = new TextBox();
 	
+	public void setText(String text) {
+		textBox.setText(text);
+	}
+	
 	public String getText() { 
 		return textBox.getText(); 
 	}

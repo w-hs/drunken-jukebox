@@ -1,7 +1,9 @@
 package de.whs.drunkenjukebox.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -9,24 +11,30 @@ import de.whs.drunkenjukebox.client.admin.SongsService;
 import de.whs.drunkenjukebox.shared.Song;
 
 public class SongsServiceImpl extends RemoteServiceServlet implements SongsService {
-
+	
+	private static final long serialVersionUID = 1L;
+	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
+	
+	public SongsServiceImpl() {
+		songs.put(1, createSong(1, "Jingle Bells"));
+		songs.put(2, createSong(2, "Last Christmas"));
+		songs.put(3, createSong(3, "Wonderful Dream"));
+	}	
+	
 	@Override
 	public ArrayList<Song> getSongList() {
-		ArrayList<Song> songs = new ArrayList<Song>();
-		songs.add(getLastChristmas());
-		
-		return songs;
+		return new ArrayList<>(songs.values());
 	}
 
-	private Song getLastChristmas() {
+	private Song createSong(int id, String title) {
 		List<String> genres = new ArrayList<String>();
 		genres.add("Classic");
 		genres.add("Pop");
 		
 		Song song = new Song();
-		song.setId(1);
+		song.setId(id);
 		song.setInterpret("Wham");
-		song.setTitle("Last Christmas");
+		song.setTitle(title);
 		song.setGenres(genres);
 		song.setSongSource("https://www.youtube.com/");
 		song.setDurationInSecs(186);
@@ -35,13 +43,14 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 	}
 
 	@Override
-	public Song getSong(String id) {
-		return getLastChristmas();
+	public Song getSong(String id) {		
+		return songs.containsKey(id) ? songs.get(id) : null;
 	}
 
 	@Override
 	public Song updateSong(Song song) {
-		return getLastChristmas();
+		songs.put(song.getId(), song);
+		return songs.get(song.getId());
 	}
 
 }

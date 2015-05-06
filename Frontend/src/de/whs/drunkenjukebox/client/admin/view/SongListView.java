@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.client.admin.view;
 
 import java.util.List;
 
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -12,7 +13,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
-import de.whs.drunkenjukebox.shared.Song;
 
 public class SongListView extends Composite implements SongPresenter.SongListDisplay {
 
@@ -51,10 +51,17 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 	@Override
 	public void setSongs(List<String> songs) {
 		listBoxSongs.clear();
-		
-		for (String s : songs) {
+		for (String s : songs)
 			listBoxSongs.addItem(s);
-		}
-		
+	}
+
+	@Override
+	public HasChangeHandlers getSongsListBox() {
+		return listBoxSongs;
+	}
+
+	@Override
+	public int getSelectedIndex() {
+		return listBoxSongs.getSelectedIndex();
 	}
 }
