@@ -4,6 +4,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
+import de.whs.drunkenjukebox.client.voteapp.SongList;
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -22,12 +24,10 @@ public class VoteApp implements EntryPoint {
 		
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("root").add(nameField);
-	
-
+		RootPanel root = RootPanel.get("root");
+		root.add(nameField);
 		
-
-	
-
+		SongList songs = new SongList();
+		root.add(songs);
 	}
 }
