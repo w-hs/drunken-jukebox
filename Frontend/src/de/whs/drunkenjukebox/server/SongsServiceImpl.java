@@ -21,6 +21,8 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 		songs.put(3, createSong(3, "Wonderful Dream"));
 	}	
 	
+	private static final long serialVersionUID = -8457486819910574309L;
+
 	@Override
 	public ArrayList<Song> getSongList() {
 		return new ArrayList<>(songs.values());
