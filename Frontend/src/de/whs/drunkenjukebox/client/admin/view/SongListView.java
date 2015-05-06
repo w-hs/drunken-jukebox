@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
-import de.whs.drunkenjukebox.shared.Song;
 
 public class SongListView extends Composite implements SongPresenter.SongListDisplay {
 
