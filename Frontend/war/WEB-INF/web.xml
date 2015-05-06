@@ -13,12 +13,12 @@
   
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/frontend/greet</url-pattern>
+    <url-pattern>/voteapp/greet</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>Frontend.html</welcome-file>
+    <welcome-file>VoteApp.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

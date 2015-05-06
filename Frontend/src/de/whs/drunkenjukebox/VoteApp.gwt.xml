@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.0//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.6.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to='frontend'>
+<module rename-to='voteapp'>
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User' />
 
@@ -20,7 +20,7 @@
 	<!-- Other module inherits                                      -->
 
 	<!-- Specify the app entry point class.                         -->
-	<entry-point class='de.whs.drunkenjukebox.client.Frontend' />
+	<entry-point class='de.whs.drunkenjukebox.client.VoteApp' />
 
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client' />
