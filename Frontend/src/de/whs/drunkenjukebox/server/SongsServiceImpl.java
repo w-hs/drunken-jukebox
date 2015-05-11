@@ -12,7 +12,7 @@ import de.whs.drunkenjukebox.shared.Song;
 
 public class SongsServiceImpl extends RemoteServiceServlet implements SongsService {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8457486819910574309L;
 	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
 	
 	public SongsServiceImpl() {
@@ -21,8 +21,7 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 		songs.put(3, createSong(3, "Wonderful Dream"));
 	}	
 	
-	private static final long serialVersionUID = -8457486819910574309L;
-
+	
 	@Override
 	public ArrayList<Song> getSongList() {
 		return new ArrayList<>(songs.values());
