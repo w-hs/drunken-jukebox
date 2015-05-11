@@ -9,14 +9,14 @@ import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.client.admin.PlaceholderTextBox;
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
 
 public class SongListView extends Composite implements SongPresenter.SongListDisplay {
 
-	private final TextBox textBoxSearch = new TextBox();
+	private final PlaceholderTextBox textBoxSearch = new PlaceholderTextBox("Suche...");
 	private final ListBox listBoxSongs = new ListBox(false);
 	private final Button buttonCreate = new Button("Erstellen");
 	private final Button buttonRemove = new Button("Entfernen");
@@ -25,7 +25,6 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
 		
-		textBoxSearch.setText("Suche...");
 		panel.add(textBoxSearch);
 		
 		listBoxSongs.addItem("Jingle Bells");
