@@ -1,41 +1,37 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.model.PlayList;
-import de.whs.drunkenjukebox.model.PlayListEntry;
-import de.whs.drunkenjukebox.model.VoteResult;
+import de.whs.drunkenjukebox.shared.VoteAppService;
+import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
 public class VoteAppPresenter {
 
 	private Display display;
+	private VoteAppService service;
 	
-	public VoteAppPresenter(Display display)
+	public VoteAppPresenter(final Display display, VoteAppServiceAsync service)
 	{
 		this.display = display;
-		display.setPlaylist(getPlaylist());
+		service.getPlayList(new AsyncCallback<PlayList>() {	
+			@Override
+			public void onSuccess(PlayList result) {
+				display.setPlaylist(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO: Error handling
+			}
+		});
 	}
 	
 	public void go(HasWidgets container)
 	{
 		container.add(display.asWidget());
-	}
-	
-	
-	private PlayList getPlaylist()
-	{
-		PlayList pl = new PlayList();
-		PlayListEntry entry = new PlayListEntry();
-		entry.setSongName("Last Christmas");
-		entry.setInterpreter("WHAMMMMMM");
-		entry.setVoteResult(VoteResult.DOWN_VOTED);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		return pl;
 	}
 	
 	public interface Display
