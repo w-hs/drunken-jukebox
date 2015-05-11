@@ -47,8 +47,6 @@ public class SongPresenter implements Presenter {
 		this.songsSerivce = songsSerivce;
 		this.songListDisplay = songListDisplay;
 		this.songDetailDisplay = songDetailDisplay;
-
-		bind();
 	}
 
 	@Override
@@ -58,7 +56,8 @@ public class SongPresenter implements Presenter {
 			public void onChange(ChangeEvent event) {
 				onSelectedSongChange();
 			}
-		});		
+		});
+		
 		songListDisplay.getSearchTextBox().addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -91,6 +90,7 @@ public class SongPresenter implements Presenter {
 
 	@Override
 	public void go(HasWidgets container) {
+		bind();
 		container.add(songListDisplay.asWidget());
 		container.add(songDetailDisplay.asWidget());
 		fetchSongs();
