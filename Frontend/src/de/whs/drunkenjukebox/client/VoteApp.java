@@ -1,6 +1,7 @@
 package de.whs.drunkenjukebox.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -14,6 +15,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.whs.drunkenjukebox.client.voteapp.DISlider;
 import de.whs.drunkenjukebox.client.voteapp.PlayListView;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
+import de.whs.drunkenjukebox.shared.VoteAppService;
+import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
 
 /**
@@ -21,9 +24,8 @@ import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
  */
 public class VoteApp implements EntryPoint {
 	
+	private VoteAppServiceAsync service;
 	
-	
-
 	/**
 	 * This is the entry point method.
 	 */
@@ -45,7 +47,8 @@ public class VoteApp implements EntryPoint {
 		//PlayListView songs = new PlayListView();
 		//root.add(songs);
 		
-		VoteAppPresenter presenter = new VoteAppPresenter( new PlayListView());
+		service = GWT.create(VoteAppService.class);
+		VoteAppPresenter presenter = new VoteAppPresenter(new PlayListView(), service);
 		presenter.go(root);
 		
 	}

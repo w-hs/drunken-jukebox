@@ -7,23 +7,23 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.whs.drunkenjukebox.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet>
   	<servlet-name>songsServlet</servlet-name>
   	<servlet-class>de.whs.drunkenjukebox.server.SongsServiceImpl</servlet-class>
   </servlet>
   
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/voteapp/greet</url-pattern>
-  </servlet-mapping>
+  <servlet>
+  	<servlet-name>voteAppServlet</servlet-name>
+  	<servlet-class>de.whs.drunkenjukebox.server.VoteAppServiceImpl</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>songsServlet</servlet-name>
   	<url-pattern>/admin/songs</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>voteAppServlet</servlet-name>
+  	<url-pattern>/voteapp/app</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
