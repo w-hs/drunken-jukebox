@@ -3,20 +3,22 @@ package de.whs.drunkenjukebox.client.admin.view;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.whs.drunkenjukebox.client.admin.PlaceholderTextBox;
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
 
 public class SongListView extends Composite implements SongPresenter.SongListDisplay {
 
-	private final PlaceholderTextBox textBoxSearch = new PlaceholderTextBox("Suche...");
+	private final TextBox textBoxSearch = new TextBox();
 	private final ListBox listBoxSongs = new ListBox(false);
 	private final Button buttonCreate = new Button("Erstellen");
 	private final Button buttonRemove = new Button("Entfernen");
@@ -25,6 +27,7 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
 		
+		textBoxSearch.getElement().setPropertyString("placeholder", "Suche...");
 		panel.add(textBoxSearch);
 		
 		listBoxSongs.addItem("Jingle Bells");
@@ -62,5 +65,15 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 	@Override
 	public int getSelectedIndex() {
 		return listBoxSongs.getSelectedIndex();
+	}
+
+	@Override
+	public HasKeyUpHandlers getSearchTextBox() {
+		return textBoxSearch;
+	}
+
+	@Override
+	public HasValue<String> getSearchText() {
+		return textBoxSearch;
 	}
 }

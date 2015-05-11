@@ -6,8 +6,12 @@ import java.util.List;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasKeyUpHandlers;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,12 +22,15 @@ public class SongPresenter implements Presenter {
 	private SongsServiceAsync songsSerivce;
 	private SongListDisplay songListDisplay;
 	private SongDetailDisplay songDetailDisplay;
-	private List<Song> songs;
+	private List<Song> internalSongList;
+	private List<Song> visibleSongs;
 	private Song currentSong;
 	
 	public interface SongListDisplay {
 		void setSongs(List<String> songs);
 		HasChangeHandlers getSongsListBox();
+		HasKeyUpHandlers getSearchTextBox();
+		HasValue<String> getSearchText();
 		int getSelectedIndex();
 		Widget asWidget();
 	}
@@ -51,12 +58,33 @@ public class SongPresenter implements Presenter {
 			public void onChange(ChangeEvent event) {
 				onSelectedSongChange();
 			}
+		});		
+		songListDisplay.getSearchTextBox().addKeyUpHandler(new KeyUpHandler() {
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				onSearchTextChange();
+			}
 		});
+	}
+
+	protected void onSearchTextChange() {
+		String searchText = songListDisplay.getSearchText().getValue();
+		if (searchText.equals("")) {
+			visibleSongs = new ArrayList<Song>(internalSongList);
+		} else {
+			visibleSongs.clear();
+			for (Song s : internalSongList) {
+				if (s.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
+					visibleSongs.add(s);
+				}
+			}
+		}
+		songListDisplay.setSongs(getVisibleSongTitles());
 	}
 
 	private void onSelectedSongChange() {
 		int index = songListDisplay.getSelectedIndex();
-		currentSong = songs.get(index);
+		currentSong = visibleSongs.get(index);
 
 		songDetailDisplay.setSong(currentSong);
 	}
@@ -73,11 +101,9 @@ public class SongPresenter implements Presenter {
 
 			@Override
 			public void onSuccess(ArrayList<Song> result) {
-				songs = result;
-				List<String> data = new ArrayList<String>();
-				for (Song s : result)
-					data.add(s.getTitle());
-				songListDisplay.setSongs(data);
+				internalSongList = new ArrayList<Song>(result);
+				visibleSongs = new ArrayList<Song>(result);
+				songListDisplay.setSongs(getVisibleSongTitles());
 			}
 
 			@Override
@@ -85,5 +111,12 @@ public class SongPresenter implements Presenter {
 				Window.alert("Error fetching songs: " + caught.getMessage());
 			}
 		});
+	}
+	
+	private List<String> getVisibleSongTitles() {
+		List<String> titles = new ArrayList<String>();
+		for (Song s : visibleSongs)
+			titles.add(s.getTitle());
+		return titles;
 	}
 }
