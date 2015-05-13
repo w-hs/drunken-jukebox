@@ -12,4 +12,5 @@ public interface SongsService extends RemoteService {
 	ArrayList<Song> getSongList();
 	Song getSong(String id);
 	Song updateSong(Song song);
+	void removeSong(int songId);
 }

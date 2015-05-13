@@ -18,6 +18,10 @@ public class InputBox extends Composite {
 		return textBox.getText(); 
 	}
 	
+	public void clear() {
+		textBox.setText("");
+	}
+	
 	public InputBox(String caption) {
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setWidth("100%");

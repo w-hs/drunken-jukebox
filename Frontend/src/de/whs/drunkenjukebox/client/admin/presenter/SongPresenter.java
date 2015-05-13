@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -30,6 +33,7 @@ public class SongPresenter implements Presenter {
 		void setSongs(List<String> songs);
 		HasChangeHandlers getSongsListBox();
 		HasKeyUpHandlers getSearchTextBox();
+		HasClickHandlers getRemoveButton();
 		HasValue<String> getSearchText();
 		int getSelectedIndex();
 		Widget asWidget();
@@ -37,6 +41,7 @@ public class SongPresenter implements Presenter {
 	
 	public interface SongDetailDisplay {
 		void setSong(Song song);
+		void clear();
 		Widget asWidget();
 	}
 	
@@ -64,6 +69,13 @@ public class SongPresenter implements Presenter {
 				onSearchTextChange();
 			}
 		});
+		
+		songListDisplay.getRemoveButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				onRemoveSongClick();
+			}
+		});
 	}
 
 	protected void onSearchTextChange() {
@@ -81,11 +93,30 @@ public class SongPresenter implements Presenter {
 		songListDisplay.setSongs(getVisibleSongTitles());
 	}
 
-	private void onSelectedSongChange() {
+	protected void onSelectedSongChange() {
 		int index = songListDisplay.getSelectedIndex();
 		currentSong = visibleSongs.get(index);
 
 		songDetailDisplay.setSong(currentSong);
+	}
+	
+	protected void onRemoveSongClick() {
+		int index = songListDisplay.getSelectedIndex();
+		if (index < 0)
+			return;
+		
+		final Song songToRemove = visibleSongs.get(index);		
+		songsSerivce.removeSong(songToRemove.getId(), new AsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				fetchSongs();
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				String message = "Failed to remove Song: " + songToRemove.getTitle();
+				Window.alert(message);
+			}
+		});
 	}
 
 	@Override
@@ -97,6 +128,7 @@ public class SongPresenter implements Presenter {
 	}
 	
 	private void fetchSongs() {	
+		songDetailDisplay.clear();
 		songsSerivce.getSongList(new AsyncCallback<ArrayList<Song>>() {
 
 			@Override

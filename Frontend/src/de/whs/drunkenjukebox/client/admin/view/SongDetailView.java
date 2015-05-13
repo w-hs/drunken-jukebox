@@ -78,4 +78,12 @@ public class SongDetailView extends Composite implements SongDetailDisplay {
 		genre.setText(genres);
 		length.setText(new Integer(song.getDurationInSecs()).toString());
 	}
+
+	@Override
+	public void clear() {
+		title.clear();
+		interpret.clear();
+		genre.clear();
+		length.clear();
+	}
 }

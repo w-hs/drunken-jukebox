@@ -2,7 +2,10 @@ package de.whs.drunkenjukebox.client.admin.view;
 
 import java.util.List;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -30,9 +33,6 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 		textBoxSearch.getElement().setPropertyString("placeholder", "Suche...");
 		panel.add(textBoxSearch);
 		
-		listBoxSongs.addItem("Jingle Bells");
-		listBoxSongs.addItem("Last Christmas");
-		listBoxSongs.addItem("Wonderful Dream");	
 		listBoxSongs.setVisibleItemCount(10);
 		listBoxSongs.setWidth("100%");
 		panel.add(listBoxSongs);
@@ -55,6 +55,11 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 		listBoxSongs.clear();
 		for (String s : songs)
 			listBoxSongs.addItem(s);
+		 
+		if (songs.size() > 0) {
+			listBoxSongs.setSelectedIndex(0);
+			DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxSongs);
+		}
 	}
 
 	@Override
@@ -75,5 +80,10 @@ public class SongListView extends Composite implements SongPresenter.SongListDis
 	@Override
 	public HasValue<String> getSearchText() {
 		return textBoxSearch;
+	}
+
+	@Override
+	public HasClickHandlers getRemoveButton() {
+		return buttonRemove;
 	}
 }

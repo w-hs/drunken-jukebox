@@ -54,4 +54,8 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 		return songs.get(song.getId());
 	}
 
+	@Override
+	public void removeSong(int songId) {
+		songs.remove(songId);
+	}
 }
