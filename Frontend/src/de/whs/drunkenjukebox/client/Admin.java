@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 import de.whs.drunkenjukebox.client.admin.SongsService;
 import de.whs.drunkenjukebox.client.admin.SongsServiceAsync;
 import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
+import de.whs.drunkenjukebox.client.admin.view.PartyTabPage;
 import de.whs.drunkenjukebox.client.admin.view.SongDetailView;
 import de.whs.drunkenjukebox.client.admin.view.SongListView;
 
@@ -28,9 +29,8 @@ public class Admin implements EntryPoint {
 		tabLayoutPanel.setAnimationDuration(1000);
 	    tabLayoutPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	       
-		tabLayoutPanel.add(new HTML("Party"), "Party");
+		tabLayoutPanel.add(new PartyTabPage(), "Party");
 		tabLayoutPanel.add(getSongsTabPage(), "Songs");
-		tabLayoutPanel.add(new HTML("Über"), "Über");
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		rp.add(tabLayoutPanel);	
 	}

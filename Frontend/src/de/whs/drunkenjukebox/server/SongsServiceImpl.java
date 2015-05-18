@@ -21,7 +21,6 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 		songs.put(3, createSong(3, "Wonderful Dream"));
 	}	
 	
-	
 	@Override
 	public ArrayList<Song> getSongList() {
 		return new ArrayList<>(songs.values());
@@ -50,8 +49,7 @@ public class SongsServiceImpl extends RemoteServiceServlet implements SongsServi
 
 	@Override
 	public Song updateSong(Song song) {
-		songs.put(song.getId(), song);
-		return songs.get(song.getId());
+		return songs.put(song.getId(), song);
 	}
 
 	@Override

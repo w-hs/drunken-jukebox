@@ -8,6 +8,7 @@
 <module rename-to='admin'>
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User' />
+	
 
 	<!-- Inherit the default GWT style sheet.  You can change       -->
 	<!-- the theme of your GWT application by uncommenting          -->
@@ -20,6 +21,7 @@
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client' />
 	<source path='shared' />
+	<source path='model' />
 
 	<!-- allow Super Dev Mode -->
 	<add-linker name="xsiframe" />
