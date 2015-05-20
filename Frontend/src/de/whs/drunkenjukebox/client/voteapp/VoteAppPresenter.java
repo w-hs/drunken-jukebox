@@ -25,6 +25,7 @@ public class VoteAppPresenter {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO: Error handling
+				
 			}
 		});
 	}
