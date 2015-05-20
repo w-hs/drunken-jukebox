@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 	
 	private Button acceptButton = new Button("OK");
-	private Button cancelButton = new Button("Schlieﬂen");
+	private Button cancelButton = new Button("Schlie\u00DFen");
 	private DISlider diSlider = new DISlider(20,"100%");
 	
 	public DIDialogViewImpl() {
