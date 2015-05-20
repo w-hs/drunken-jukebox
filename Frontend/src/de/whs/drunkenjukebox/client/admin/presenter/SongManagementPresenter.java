@@ -47,12 +47,50 @@ public class SongManagementPresenter {
 			}
 		});
 		
-		songListView.getRemoveButton().addClickHandler(new ClickHandler() {
+		songListView.getCreateButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				onClickCreateButton();				
+			}
+		});
+		
+		songDetailView.getRemoveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				onRemoveSongClick();
 			}
+		});	
+		
+		songDetailView.getSaveButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				onSaveButtonClick();
+			}
 		});
+	}
+
+	protected void onSaveButtonClick() {
+		AsyncCallback<Song> asyncCallback = new AsyncCallback<Song>() {
+			@Override
+			public void onSuccess(Song result) {
+				Window.alert("result: " + result.toString());
+				fetchSongs();
+			}				
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fehler beim Speichern: " + caught);
+			}
+		};
+			
+		if (currentSong == null) {
+			songsSerivce.addSong(songDetailView.getSong(), asyncCallback);
+		} else {
+			int songId = currentSong.getId();
+			currentSong = songDetailView.getSong();
+			currentSong.setId(songId);
+			
+			songsSerivce.updateSong(currentSong, asyncCallback);
+		}	
 	}
 
 	protected void onSearchTextChange() {
@@ -72,9 +110,15 @@ public class SongManagementPresenter {
 
 	protected void onSelectedSongChange() {
 		int index = songListView.getSelectedIndex();
-		currentSong = visibleSongs.get(index);
-
-		songDetailView.setSong(currentSong);
+		
+		if (index >= 0) {
+			currentSong = visibleSongs.get(index);
+			songDetailView.setSong(currentSong);
+		}
+		else {
+			currentSong = null;
+			songDetailView.clear();
+		}
 	}
 	
 	protected void onRemoveSongClick() {
@@ -86,6 +130,7 @@ public class SongManagementPresenter {
 		songsSerivce.removeSong(songToRemove.getId(), new AsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				songListView.getSearchText().setValue("");
 				fetchSongs();
 			}
 			@Override
@@ -94,6 +139,11 @@ public class SongManagementPresenter {
 				Window.alert(message);
 			}
 		});
+	}
+	
+	protected void onClickCreateButton() {
+		songListView.setSelectedIndex(-1);
+		songDetailView.setFocusToInterpretBox();
 	}
 
 	public void go() {

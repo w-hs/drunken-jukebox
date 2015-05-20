@@ -10,12 +10,14 @@ import com.google.gwt.user.client.ui.Widget;
 
 public interface SongListView {
 	void setSongs(List<String> songs);
+	
+	void setSelectedIndex(int index);
 
+	HasClickHandlers getCreateButton();
+	
 	HasChangeHandlers getSongsListBox();
 
 	HasKeyUpHandlers getSearchTextBox();
-
-	HasClickHandlers getRemoveButton();
 
 	HasValue<String> getSearchText();
 

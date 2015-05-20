@@ -13,13 +13,18 @@ import de.whs.drunkenjukebox.shared.Song;
 public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
 	
 	private static final long serialVersionUID = -8457486819910574309L;
+	private static int lastInsertId;
 	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
 	
 	public AdminServiceImpl() {
-		songs.put(1, createSong(1, "Jingle Bells"));
-		songs.put(2, createSong(2, "Last Christmas"));
-		songs.put(3, createSong(3, "Wonderful Dream"));
+		songs.put(getId(), createSong(1, "Jingle Bells"));
+		songs.put(getId(), createSong(2, "Last Christmas"));
+		songs.put(getId(), createSong(3, "Wonderful Dream"));
 	}	
+	
+	static int getId() {
+		return ++lastInsertId;
+	}
 	
 	@Override
 	public ArrayList<Song> getSongList() {
@@ -55,5 +60,12 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 	@Override
 	public void removeSong(int songId) {
 		songs.remove(songId);
+	}
+
+	@Override
+	public Song addSong(Song song) {
+		song.setId(getId());
+		songs.put(song.getId(), song);
+		return song;
 	}
 }

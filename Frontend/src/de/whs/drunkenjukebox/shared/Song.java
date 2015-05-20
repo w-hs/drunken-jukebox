@@ -65,4 +65,9 @@ public class Song implements Serializable {
 	public void setSongSource(String songSource) {
 		this.songSource = songSource;
 	}
+	
+	@Override
+	public String toString() {
+		return "Id: " + id + " Title: " + title + " Interpret: " + interpret;
+	}
 }

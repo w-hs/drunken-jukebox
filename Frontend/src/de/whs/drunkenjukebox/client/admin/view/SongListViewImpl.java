@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -22,29 +21,25 @@ public class SongListViewImpl extends Composite implements SongListView {
 	private final TextBox textBoxSearch = new TextBox();
 	private final ListBox listBoxSongs = new ListBox(false);
 	private final Button buttonCreate = new Button("Erstellen");
-	private final Button buttonRemove = new Button("Entfernen");
-	
-	public SongListViewImpl() {	  
+
+	public SongListViewImpl() {
 		VerticalPanel panel = new VerticalPanel();
 		panel.setSpacing(8);
-		
+
 		textBoxSearch.getElement().setPropertyString("placeholder", "Suche...");
 		panel.add(textBoxSearch);
-		
+
 		listBoxSongs.setVisibleItemCount(10);
 		listBoxSongs.setWidth("100%");
 		panel.add(listBoxSongs);
-		
-		HorizontalPanel buttonPanel = new HorizontalPanel();
-		buttonPanel.add(buttonCreate);
-		buttonPanel.add(buttonRemove);
-		buttonPanel.setCellHorizontalAlignment(buttonRemove, HasHorizontalAlignment.ALIGN_RIGHT);
-		buttonPanel.setWidth("100%");
-		panel.add(buttonPanel);
-		
-	    // Wrap the content in a DecoratorPanel
-	    DecoratorPanel decPanel = new DecoratorPanel();
-	    decPanel.setWidget(panel);
+
+		panel.add(buttonCreate);
+		panel.setCellHorizontalAlignment(buttonCreate,
+				HasHorizontalAlignment.ALIGN_RIGHT);
+
+		// Wrap the content in a DecoratorPanel
+		DecoratorPanel decPanel = new DecoratorPanel();
+		decPanel.setWidget(panel);
 		initWidget(decPanel);
 	}
 
@@ -54,10 +49,8 @@ public class SongListViewImpl extends Composite implements SongListView {
 		for (String s : songs)
 			listBoxSongs.addItem(s);
 		 
-		if (songs.size() > 0) {
-			listBoxSongs.setSelectedIndex(0);
-			DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxSongs);
-		}
+		if (songs.size() > 0)
+			setSelectedIndex(0);
 	}
 
 	@Override
@@ -81,7 +74,13 @@ public class SongListViewImpl extends Composite implements SongListView {
 	}
 
 	@Override
-	public HasClickHandlers getRemoveButton() {
-		return buttonRemove;
+	public HasClickHandlers getCreateButton() {
+		return buttonCreate;
+	}
+
+	@Override
+	public void setSelectedIndex(int index) {
+		listBoxSongs.setSelectedIndex(index);
+		DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxSongs);
 	}
 }

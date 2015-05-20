@@ -10,6 +10,7 @@ import de.whs.drunkenjukebox.shared.Song;
 @RemoteServiceRelativePath("admin")
 public interface AdminService extends RemoteService {
 	ArrayList<Song> getSongList();
+	Song addSong(Song song);
 	Song getSong(String id);
 	Song updateSong(Song song);
 	void removeSong(int songId);

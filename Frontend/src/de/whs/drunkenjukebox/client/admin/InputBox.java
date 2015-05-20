@@ -22,6 +22,10 @@ public class InputBox extends Composite {
 		textBox.setText("");
 	}
 	
+	public void setFocus(boolean focused) {
+		textBox.setFocus(focused);
+	}
+	
 	public InputBox(String caption) {
 		HorizontalPanel panel = new HorizontalPanel();
 		panel.setWidth("100%");
