@@ -35,7 +35,8 @@ public class VoteAppPresenter {
 		this.service.getCurrentSong(new AsyncCallback<Song>() {	
 			@Override
 			public void onSuccess(Song result) {
-				
+				view.getCurrentSong().setInterpreter(result.getInterpret());
+				view.getCurrentSong().setSongName(result.getTitle());
 			}
 			
 			@Override
