@@ -13,8 +13,10 @@ dpd.playlist.get(function (result, err) {
   {
        
     if(result[i].votes >= votes)
-     votes  = result[i].votes;
-     songID = result[i].songID;
+     {
+         votes  = result[i].votes;
+        songID = result[i].songID;
+     }
   }
   
   this.songID = songID;
