@@ -14,9 +14,11 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	private final Button diButton = new Button("Send DI");
 	private final VerticalPanel mainPanel = new VerticalPanel();
 	private final DIDialogView diDialog = new DIDialogViewImpl();
+	private final CurrentSongWidget currentSong = new CurrentSongWidget();
 	
 	public VoteAppViewImpl() {
 		mainPanel.add(diButton);
+		mainPanel.add(currentSong);
 		mainPanel.add(songTable);
 		initWidget(mainPanel);
 	}
@@ -27,7 +29,7 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 		for(PlayListEntry p : pl.getEntries())
 		{
 			int numRows = songTable.getRowCount();
-			songTable.setWidget(numRows, 0, new PlayListEntryView(p));
+			songTable.setWidget(numRows, 0, new PlayListEntryWidget(p));
 		}
 	}
 
@@ -39,5 +41,10 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	@Override
 	public DIDialogView getDIDialog() {
 		return diDialog;
+	}
+
+	@Override
+	public CurrentSongWidget getCurrentSong() {
+		return currentSong;
 	}
 }

@@ -60,6 +60,8 @@ public class VoteAppPresenter {
 	public void go(HasWidgets container)
 	{
 		container.add(view.asWidget());
+		
+		view.getCurrentSong().setInterpreter("Neuer Interpreter");
 	}
 	
 }

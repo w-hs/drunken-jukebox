@@ -8,11 +8,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.shared.PlayListEntry;
 
-public class PlayListEntryView extends Composite {
+public class PlayListEntryWidget extends Composite {
 	
 	PlayListEntry playlistEntry;
 	
-	public PlayListEntryView(PlayListEntry p) {
+	public PlayListEntryWidget(PlayListEntry p) {
 		playlistEntry = p;
 		HorizontalPanel mainPanel = new HorizontalPanel();
 		
