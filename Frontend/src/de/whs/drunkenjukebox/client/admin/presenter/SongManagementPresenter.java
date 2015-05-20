@@ -7,70 +7,47 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasChangeHandlers;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
-import de.whs.drunkenjukebox.client.admin.SongsServiceAsync;
+import de.whs.drunkenjukebox.client.admin.AdminServiceAsync;
+import de.whs.drunkenjukebox.client.admin.view.SongDetailView;
+import de.whs.drunkenjukebox.client.admin.view.SongListView;
+import de.whs.drunkenjukebox.client.admin.view.SongManagementView;
 import de.whs.drunkenjukebox.shared.Song;
 
-public class SongPresenter implements Presenter {
-	private SongsServiceAsync songsSerivce;
-	private SongListDisplay songListDisplay;
-	private SongDetailDisplay songDetailDisplay;
+public class SongManagementPresenter {
+	private AdminServiceAsync songsSerivce;
+	private SongListView songListView;
+	private SongDetailView songDetailView;
 	private List<Song> internalSongList;
 	private List<Song> visibleSongs;
 	private Song currentSong;
-	
-	public interface SongListDisplay {
-		void setSongs(List<String> songs);
-		HasChangeHandlers getSongsListBox();
-		HasKeyUpHandlers getSearchTextBox();
-		HasClickHandlers getRemoveButton();
-		HasValue<String> getSearchText();
-		int getSelectedIndex();
-		Widget asWidget();
-	}
-	
-	public interface SongDetailDisplay {
-		void setSong(Song song);
-		void clear();
-		Widget asWidget();
-	}
-	
-	
-	public SongPresenter(SongsServiceAsync songsSerivce,
-			SongListDisplay songListDisplay, SongDetailDisplay songDetailDisplay) {
 		
+	public SongManagementPresenter(AdminServiceAsync songsSerivce, SongManagementView songManagementView) {
 		this.songsSerivce = songsSerivce;
-		this.songListDisplay = songListDisplay;
-		this.songDetailDisplay = songDetailDisplay;
+		this.songListView = songManagementView.getListView();
+		this.songDetailView = songManagementView.getDetailView();
 	}
 
-	@Override
 	public void bind() {
-		songListDisplay.getSongsListBox().addChangeHandler(new ChangeHandler() {
+		songListView.getSongsListBox().addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				onSelectedSongChange();
 			}
 		});
 		
-		songListDisplay.getSearchTextBox().addKeyUpHandler(new KeyUpHandler() {
+		songListView.getSearchTextBox().addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				onSearchTextChange();
 			}
 		});
 		
-		songListDisplay.getRemoveButton().addClickHandler(new ClickHandler() {
+		songListView.getRemoveButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				onRemoveSongClick();
@@ -79,7 +56,7 @@ public class SongPresenter implements Presenter {
 	}
 
 	protected void onSearchTextChange() {
-		String searchText = songListDisplay.getSearchText().getValue();
+		String searchText = songListView.getSearchText().getValue();
 		if (searchText.equals("")) {
 			visibleSongs = new ArrayList<Song>(internalSongList);
 		} else {
@@ -90,18 +67,18 @@ public class SongPresenter implements Presenter {
 				}
 			}
 		}
-		songListDisplay.setSongs(getVisibleSongTitles());
+		songListView.setSongs(getVisibleSongTitles());
 	}
 
 	protected void onSelectedSongChange() {
-		int index = songListDisplay.getSelectedIndex();
+		int index = songListView.getSelectedIndex();
 		currentSong = visibleSongs.get(index);
 
-		songDetailDisplay.setSong(currentSong);
+		songDetailView.setSong(currentSong);
 	}
 	
 	protected void onRemoveSongClick() {
-		int index = songListDisplay.getSelectedIndex();
+		int index = songListView.getSelectedIndex();
 		if (index < 0)
 			return;
 		
@@ -119,23 +96,20 @@ public class SongPresenter implements Presenter {
 		});
 	}
 
-	@Override
-	public void go(HasWidgets container) {
+	public void go() {
 		bind();
-		container.add(songListDisplay.asWidget());
-		container.add(songDetailDisplay.asWidget());
 		fetchSongs();
 	}
 	
 	private void fetchSongs() {	
-		songDetailDisplay.clear();
+		songDetailView.clear();
 		songsSerivce.getSongList(new AsyncCallback<ArrayList<Song>>() {
 
 			@Override
 			public void onSuccess(ArrayList<Song> result) {
 				internalSongList = new ArrayList<Song>(result);
 				visibleSongs = new ArrayList<Song>(result);
-				songListDisplay.setSongs(getVisibleSongTitles());
+				songListView.setSongs(getVisibleSongTitles());
 			}
 
 			@Override

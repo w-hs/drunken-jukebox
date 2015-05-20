@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 
-public class PartyTabPage extends Composite {
+public class PartyManagementViewImpl extends Composite implements PartyManagementView {
 
 	private final Button buttonStart = new Button("Start");
 	private final Button buttonStop = new Button("Stopp");
@@ -26,7 +26,7 @@ public class PartyTabPage extends Composite {
 	private final Label labelDrunkenIndex = new Label("Drunken-Index: ");
 	private final CellTable<GlobalPlaylistEntry> table = new CellTable<>();
 
-	public PartyTabPage() {
+	public PartyManagementViewImpl() {
 		HorizontalPanel panel = new HorizontalPanel();
 		
 		initLeftSide(panel);
