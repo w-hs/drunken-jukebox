@@ -13,8 +13,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.client.voteapp.DISlider;
-import de.whs.drunkenjukebox.client.voteapp.PlayListView;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
+import de.whs.drunkenjukebox.client.voteapp.VoteAppView;
+import de.whs.drunkenjukebox.client.voteapp.VoteAppViewImpl;
 import de.whs.drunkenjukebox.shared.VoteAppService;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
@@ -34,21 +35,18 @@ public class VoteApp implements EntryPoint {
 		dialogBox.setGlassEnabled(true);
 		dialogBox.setAnimationEnabled(true);
 		
-		Button diButton = new Button("Send DI",new ClickHandler() { public void onClick(ClickEvent sender) {
-			dialogBox.center();
-	        dialogBox.show();
-	    }});
-		
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
 		RootPanel root = RootPanel.get("root");
-		root.add(diButton);
 		
 		//PlayListView songs = new PlayListView();
 		//root.add(songs);
 		
 		service = GWT.create(VoteAppService.class);
-		VoteAppPresenter presenter = new VoteAppPresenter(new PlayListView(), service);
+		VoteAppView view = new VoteAppViewImpl();
+
+		VoteAppPresenter presenter = new VoteAppPresenter(view, service);
+		presenter.bind();
 		presenter.go(root);
 		
 	}
