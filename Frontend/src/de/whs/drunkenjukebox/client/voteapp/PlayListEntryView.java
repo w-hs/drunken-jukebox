@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.whs.drunkenjukebox.model.PlayListEntry;
+import de.whs.drunkenjukebox.shared.PlayListEntry;
 
 public class PlayListEntryView extends Composite {
 	

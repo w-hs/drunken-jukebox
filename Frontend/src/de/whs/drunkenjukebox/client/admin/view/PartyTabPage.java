@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.whs.drunkenjukebox.model.GlobalPlaylistEntry;
+import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 
 public class PartyTabPage extends Composite {
 

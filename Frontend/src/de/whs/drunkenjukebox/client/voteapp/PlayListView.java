@@ -3,8 +3,8 @@ package de.whs.drunkenjukebox.client.voteapp;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 
-import de.whs.drunkenjukebox.model.PlayList;
-import de.whs.drunkenjukebox.model.PlayListEntry;
+import de.whs.drunkenjukebox.shared.PlayList;
+import de.whs.drunkenjukebox.shared.PlayListEntry;
 
 public class PlayListView extends Composite implements VoteAppPresenter.Display {
 	private final FlexTable songTable = new FlexTable();

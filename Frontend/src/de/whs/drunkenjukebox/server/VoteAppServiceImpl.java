@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.whs.drunkenjukebox.model.PlayList;
-import de.whs.drunkenjukebox.model.PlayListEntry;
-import de.whs.drunkenjukebox.model.VoteResult;
+import de.whs.drunkenjukebox.shared.PlayList;
+import de.whs.drunkenjukebox.shared.PlayListEntry;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.Vote;
 import de.whs.drunkenjukebox.shared.VoteAppService;
+import de.whs.drunkenjukebox.shared.VoteResult;
 
 public class VoteAppServiceImpl extends RemoteServiceServlet implements VoteAppService {
 

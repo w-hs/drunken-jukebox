@@ -1,4 +1,4 @@
-package de.whs.drunkenjukebox.model;
+package de.whs.drunkenjukebox.shared;
 
 import java.io.Serializable;
 

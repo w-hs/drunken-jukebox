@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
-import de.whs.drunkenjukebox.model.PlayList;
+import de.whs.drunkenjukebox.shared.PlayList;
 import de.whs.drunkenjukebox.shared.VoteAppService;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
