@@ -12,5 +12,7 @@ public interface VoteAppView {
 	
 	DIDialogView getDIDialog();
 	
+	CurrentSongWidget getCurrentSong();
+	
 	Widget asWidget();
 }
