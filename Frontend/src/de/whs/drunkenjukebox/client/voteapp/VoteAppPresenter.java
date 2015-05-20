@@ -1,25 +1,27 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.shared.PlayList;
-import de.whs.drunkenjukebox.shared.VoteAppService;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
 public class VoteAppPresenter {
 
-	private Display display;
-	private VoteAppService service;
+	private VoteAppView view;
+	private VoteAppServiceAsync service;
 	
-	public VoteAppPresenter(final Display display, VoteAppServiceAsync service)
+	public VoteAppPresenter(final VoteAppView view, VoteAppServiceAsync service)
 	{
-		this.display = display;
-		service.getPlayList(new AsyncCallback<PlayList>() {	
+		this.view = view;
+		this.service = service;
+		this.service.getPlayList(new AsyncCallback<PlayList>() {	
 			@Override
 			public void onSuccess(PlayList result) {
-				display.setPlaylist(result);
+				view.setPlaylist(result);
 			}
 			
 			@Override
@@ -30,15 +32,34 @@ public class VoteAppPresenter {
 		});
 	}
 	
-	public void go(HasWidgets container)
+	public void bind() 
 	{
-		container.add(display.asWidget());
+		final DialogBox dialog = view.getDIDialog().asDialogBox(); 
+		
+		view.getDIButton().addClickHandler(new ClickHandler() { public void onClick(ClickEvent sender) {
+			dialog.center();
+			dialog.show();
+	    }});
+		
+		view.getDIDialog().getAcceptButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO: DI senden
+				dialog.hide();
+			}
+		});
+		
+		view.getDIDialog().getCancelButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				dialog.hide();
+			}
+		});
 	}
 	
-	public interface Display
+	public void go(HasWidgets container)
 	{
-		void setPlaylist(PlayList pl);
-		Widget asWidget();
+		container.add(view.asWidget());
 	}
 	
 }
