@@ -7,8 +7,8 @@
 
   <!-- Servlets -->
   <servlet>
-  	<servlet-name>songsServlet</servlet-name>
-  	<servlet-class>de.whs.drunkenjukebox.server.SongsServiceImpl</servlet-class>
+  	<servlet-name>adminServlet</servlet-name>
+  	<servlet-class>de.whs.drunkenjukebox.server.AdminServiceImpl</servlet-class>
   </servlet>
   
   <servlet>
@@ -17,8 +17,8 @@
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>songsServlet</servlet-name>
-  	<url-pattern>/admin/songs</url-pattern>
+  	<servlet-name>adminServlet</servlet-name>
+  	<url-pattern>/admin/admin</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>

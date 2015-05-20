@@ -3,45 +3,42 @@ package de.whs.drunkenjukebox.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
-import com.google.gwt.user.client.ui.Widget;
 
-import de.whs.drunkenjukebox.client.admin.SongsService;
-import de.whs.drunkenjukebox.client.admin.SongsServiceAsync;
-import de.whs.drunkenjukebox.client.admin.presenter.SongPresenter;
-import de.whs.drunkenjukebox.client.admin.view.PartyTabPage;
-import de.whs.drunkenjukebox.client.admin.view.SongDetailView;
-import de.whs.drunkenjukebox.client.admin.view.SongListView;
+import de.whs.drunkenjukebox.client.admin.AdminService;
+import de.whs.drunkenjukebox.client.admin.AdminServiceAsync;
+import de.whs.drunkenjukebox.client.admin.presenter.PartyManagementPresenter;
+import de.whs.drunkenjukebox.client.admin.presenter.SongManagementPresenter;
+import de.whs.drunkenjukebox.client.admin.view.PartyManagementView;
+import de.whs.drunkenjukebox.client.admin.view.PartyManagementViewImpl;
+import de.whs.drunkenjukebox.client.admin.view.SongManagementView;
+import de.whs.drunkenjukebox.client.admin.view.SongManagementViewImpl;
 
 public class Admin implements EntryPoint {
 	
-	private SongsServiceAsync rpcService;
+	private AdminServiceAsync rpcService;
+	private final SongManagementView songManagementView = new SongManagementViewImpl();
+	private final PartyManagementView partyManagementView = new PartyManagementViewImpl();
 	
 	@Override
 	public void onModuleLoad() {
+		rpcService = GWT.create(AdminService.class);
 		
-		rpcService = GWT.create(SongsService.class);
+		SongManagementPresenter songManagementPresenter = new SongManagementPresenter(rpcService, songManagementView);
+		songManagementPresenter.go();
 		
+		PartyManagementPresenter partyManagementPresenter = new PartyManagementPresenter();
+		partyManagementPresenter.go();
+				
 		TabLayoutPanel tabLayoutPanel = new TabLayoutPanel(2.5, Unit.EM);
 		tabLayoutPanel.setAnimationDuration(1000);
 	    tabLayoutPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	       
-		tabLayoutPanel.add(new PartyTabPage(), "Party");
-		tabLayoutPanel.add(getSongsTabPage(), "Songs");
+		tabLayoutPanel.add(partyManagementView.asWidget(), "Party");
+		tabLayoutPanel.add(songManagementView.asWidget(), "Songs");
 		RootLayoutPanel rp = RootLayoutPanel.get();
+		
 		rp.add(tabLayoutPanel);	
-	}
-	
-	private Widget getSongsTabPage() {
-		HorizontalPanel panel = new HorizontalPanel();
-		panel.setSpacing(8);
-		
-		SongPresenter presenter = new SongPresenter(rpcService, new SongListView(), new SongDetailView());
-		presenter.go(panel);
-		
-		return panel;
 	}
 }

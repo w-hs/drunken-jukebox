@@ -7,15 +7,15 @@ import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.whs.drunkenjukebox.client.admin.SongsService;
+import de.whs.drunkenjukebox.client.admin.AdminService;
 import de.whs.drunkenjukebox.shared.Song;
 
-public class SongsServiceImpl extends RemoteServiceServlet implements SongsService {
+public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
 	
 	private static final long serialVersionUID = -8457486819910574309L;
 	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
 	
-	public SongsServiceImpl() {
+	public AdminServiceImpl() {
 		songs.put(1, createSong(1, "Jingle Bells"));
 		songs.put(2, createSong(2, "Last Christmas"));
 		songs.put(3, createSong(3, "Wonderful Dream"));
