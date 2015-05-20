@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Console;
+import com.google.gwt.dev.jjs.ast.js.JsonObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.whs.drunkenjukebox.shared.PlayList;
@@ -32,19 +33,14 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public Song getCurrentSong() {
 		// TODO: Wirklich implementieren
-		Song song = new Song();
-		
+		Song song = new Song(); 
 		JSONArray currentSongArray = getJsonArray(ServerURL+"curentsong");
 		if(currentSongArray != null)
 		{
 			
 			try {
 				String songID = currentSongArray.getJSONObject(0).getString("songID");
-				JSONObject currentSong = getJsonObject(ServerURL+"songs/"+songID);
-				
-				
-				song.setInterpret(currentSong.getString("artist"));
-				song.setTitle(currentSong.getString("title"));
+				song = getSongFromID(songID);
 				
 				
 			} catch (JSONException e) {
@@ -107,16 +103,50 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 		// TODO: Wirklich implementieren
 
 		PlayList pl = new PlayList();
-		PlayListEntry entry = new PlayListEntry();
-		entry.setSongName("Last Christmas");
-		entry.setInterpreter("WHAMMMMMM");
-		entry.setVoteResult(VoteResult.DOWN_VOTED);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
-		pl.getEntries().add(entry);
+		JSONArray playlistArray = getJsonArray(ServerURL+"playlist");
+		if(playlistArray != null)
+		{
+			
+			try {
+				
+				for(int i = 0 ; i< playlistArray.length(); i++ )
+				{
+					JSONObject playlistEntry = playlistArray.getJSONObject(i);
+					Song song = getSongFromID(playlistEntry.getString("songID"));
+					PlayListEntry entry = new PlayListEntry();
+					entry.setSongName(song.getTitle());
+					entry.setInterpreter(song.getInterpret());
+					entry.setVoteResult(VoteResult.NOT_VOTED);
+					pl.getEntries().add(entry);
+					
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return pl;
+	}
+
+	private Song getSongFromID(String songID) {
+		Song song = new Song();
+		
+		JSONObject currentSong = getJsonObject(ServerURL+"songs/"+songID);
+		
+		
+		try {
+			song.setInterpret(currentSong.getString("artist"));
+			song.setTitle(currentSong.getString("title"));
+			song.setDurationInSecs(Integer.parseInt(currentSong.getString("length")));
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return song;
 	}
 
 	@Override
