@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 import de.whs.drunkenjukebox.shared.PlayList;
+import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
 public class VoteAppPresenter {
@@ -27,6 +28,18 @@ public class VoteAppPresenter {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO: Error handling
+				
+			}
+		});
+		
+		this.service.getCurrentSong(new AsyncCallback<Song>() {	
+			@Override
+			public void onSuccess(Song result) {
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
 				
 			}
 		});
