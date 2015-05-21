@@ -28,7 +28,7 @@ public class Admin implements EntryPoint {
 		SongManagementPresenter songManagementPresenter = new SongManagementPresenter(rpcService, songManagementView);
 		songManagementPresenter.go();
 		
-		PartyManagementPresenter partyManagementPresenter = new PartyManagementPresenter();
+		PartyManagementPresenter partyManagementPresenter = new PartyManagementPresenter(rpcService, partyManagementView);
 		partyManagementPresenter.go();
 				
 		TabLayoutPanel tabLayoutPanel = new TabLayoutPanel(2.5, Unit.EM);

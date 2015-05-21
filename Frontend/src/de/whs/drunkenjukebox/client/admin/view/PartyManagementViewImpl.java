@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -88,6 +89,23 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 		panelButtons.add(buttonStart);
 		panelButtons.add(buttonStop);
 		panel.add(panelButtons);
+	}
+
+	@Override
+	public HasClickHandlers getStartButton() {
+		return buttonStart;
+	}
+
+	@Override
+	public HasClickHandlers getStopButton() {
+		return buttonStop;
+	}
+
+	@Override
+	public void setButtonEnabled(boolean startButtonEnabled,
+			boolean stoppButtonEnabled) {
+		buttonStart.setEnabled(startButtonEnabled);
+		buttonStop.setEnabled(stoppButtonEnabled);
 	}
 
 }

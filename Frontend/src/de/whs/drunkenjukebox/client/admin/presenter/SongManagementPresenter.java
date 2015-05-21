@@ -73,7 +73,6 @@ public class SongManagementPresenter {
 		AsyncCallback<Song> asyncCallback = new AsyncCallback<Song>() {
 			@Override
 			public void onSuccess(Song result) {
-				Window.alert("result: " + result.toString());
 				fetchSongs();
 			}				
 			@Override
