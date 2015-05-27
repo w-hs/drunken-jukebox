@@ -35,8 +35,8 @@
 		},
 		"sourceType": {
 			"name": "sourceType",
-			"type": "string",
-			"typeLabel": "string",
+			"type": "integer",
+			"typeLabel": "integer",
 			"required": false,
 			"id": "sourceType",
 			"order": 4
