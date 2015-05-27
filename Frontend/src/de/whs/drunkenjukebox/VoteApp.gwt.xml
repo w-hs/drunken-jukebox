@@ -4,7 +4,7 @@
 	so that your app can take advantage of the latest GWT module capabilities.
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.0//EN"
-  "http://google-web-toolkit.googlecode.com/svn/tags/2.6.0/distro-source/core/src/gwt-module.dtd">
+  "http://gwtproject.org/doctype/2.6.0/gwt-module.dtd">
 <module rename-to='voteapp'>
 	<!-- Inherit the core Web Toolkit stuff.                        -->
 	<inherits name='com.google.gwt.user.User' />
@@ -19,6 +19,11 @@
 
 	<!-- Other module inherits                                      -->
 	<inherits name="com.kiouri.sliderbar.SliderBarMVP"/>
+	
+	<!-- GSS aktivieren -->
+	<inherits name="com.google.gwt.resources.Resources" />
+	<set-configuration-property  name="CssResource.enableGss" value="true" />
+	
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='de.whs.drunkenjukebox.client.VoteApp' />
 
@@ -26,6 +31,7 @@
 	<source path='client' />
 	<source path='shared' />
 	<source path='model' />
+	<source path='resources' />
 
 	<!-- allow Super Dev Mode -->
 	<add-linker name="xsiframe" />

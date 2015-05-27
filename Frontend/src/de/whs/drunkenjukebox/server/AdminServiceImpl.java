@@ -12,6 +12,7 @@ import de.whs.drunkenjukebox.client.admin.AdminService;
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 import de.whs.drunkenjukebox.shared.Party;
 import de.whs.drunkenjukebox.shared.Song;
+import de.whs.drunkenjukebox.shared.SongSourceType;
 
 public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
 	
@@ -46,6 +47,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		song.setGenres(genres);
 		song.setSongSource("https://www.youtube.com/");
 		song.setDurationInSecs(186);
+		song.setSongSourceType(SongSourceType.youtube);
 	
 		return song;
 	}

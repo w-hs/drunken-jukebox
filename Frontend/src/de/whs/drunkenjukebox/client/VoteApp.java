@@ -16,6 +16,7 @@ import de.whs.drunkenjukebox.client.voteapp.DISlider;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppPresenter;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppView;
 import de.whs.drunkenjukebox.client.voteapp.VoteAppViewImpl;
+import de.whs.drunkenjukebox.resources.AppResources;
 import de.whs.drunkenjukebox.shared.VoteAppService;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
@@ -31,6 +32,9 @@ public class VoteApp implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		AppResources resources = GWT.create(AppResources.class);
+		resources.voteAppStyle().ensureInjected();
+		
 		final DialogBox dialogBox = createDialogBox();
 		dialogBox.setGlassEnabled(true);
 		dialogBox.setAnimationEnabled(true);

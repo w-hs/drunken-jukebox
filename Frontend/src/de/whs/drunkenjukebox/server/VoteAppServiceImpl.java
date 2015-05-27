@@ -2,8 +2,6 @@ package de.whs.drunkenjukebox.server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,8 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Console;
-import com.google.gwt.dev.jjs.ast.js.JsonObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.whs.drunkenjukebox.shared.PlayList;

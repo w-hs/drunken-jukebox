@@ -1,0 +1,5 @@
+@def PRIMARY_COLOR red;
+
+body {
+  background-color: PRIMARY_COLOR;
+}
