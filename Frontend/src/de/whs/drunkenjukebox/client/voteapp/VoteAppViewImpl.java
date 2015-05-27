@@ -15,13 +15,14 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	private final Button diButton = new Button("Send DI");
 	private final VerticalPanel mainPanel = new VerticalPanel();
 	private final DIDialogView diDialog = new DIDialogViewImpl();
-	private final CurrentSongWidget currentSong = new CurrentSongWidget();
+	private final CurrentSongWidget currentSong;
 	private final VoteAppStyle style;
 	
 	public VoteAppViewImpl(VoteAppStyle style) {
 		this.style = style;
 		diButton.addStyleName(style.sendDi());
 		mainPanel.add(diButton);
+		currentSong = new CurrentSongWidget(style);
 		currentSong.addStyleName(style.currentTrack());
 		mainPanel.add(currentSong);
 		mainPanel.add(songTable);
