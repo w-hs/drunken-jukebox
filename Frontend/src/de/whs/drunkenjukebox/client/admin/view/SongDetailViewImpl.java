@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.client.admin.InputBox;
 import de.whs.drunkenjukebox.shared.Song;
+import de.whs.drunkenjukebox.shared.SongSourceType;
 
 public class SongDetailViewImpl extends Composite implements SongDetailView {
 
@@ -27,6 +28,9 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	
 	private final Button buttonSave = new Button("Speichern");
 	private final Button buttonRemove = new Button("Entfernen");
+	
+	private final RadioButton radioYoutube = new RadioButton("SongSource", "YouTube");
+	private final RadioButton radioLocal = new RadioButton("SongSource", "Lokal");
 
 	public SongDetailViewImpl() {
 		VerticalPanel panel = new VerticalPanel();
@@ -59,8 +63,8 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		panel.add(new Label("Quelle"));
 
 		HorizontalPanel radioButtons = new HorizontalPanel();
-		radioButtons.add(new RadioButton("SongSource", "YouTube"));
-		radioButtons.add(new RadioButton("SongSource", "Lokal"));
+		radioButtons.add(radioYoutube);
+		radioButtons.add(radioLocal);
 		panel.add(radioButtons);
 
 		panel.add(songSource);
@@ -85,6 +89,11 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		genre.setText(genres);
 		length.setText(new Integer(song.getDurationInSecs()).toString());
 		songSource.setText(song.getSongSource());
+		
+		if (song.getSongSourceType()==SongSourceType.local)
+			radioLocal.setValue(true);
+		else if (song.getSongSourceType()==SongSourceType.youtube)
+			radioYoutube.setValue(true);	
 	}
 
 	@Override
@@ -94,6 +103,8 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		genre.clear();
 		length.clear();
 		songSource.setText("");
+		radioLocal.setValue(false);
+		radioYoutube.setValue(false);
 	}
 	
 	@Override
@@ -110,7 +121,10 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		song.setInterpret(interpret.getText());
 		song.setTitle(title.getText());
 		song.setSongSource(songSource.getText());
-		
+		if (radioLocal.getValue())
+			song.setSongSourceType(SongSourceType.local);
+		else if (radioYoutube.getValue())
+			song.setSongSourceType(SongSourceType.youtube);
 		return song;
 	}
 

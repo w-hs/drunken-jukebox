@@ -13,6 +13,7 @@ public class Song implements Serializable {
 	private int durationInSecs;
 	private List<String> genres = new ArrayList<String>();
 	private String songSource;
+	private SongSourceType songSourceType;
 
 	public Song() {
 
@@ -64,6 +65,14 @@ public class Song implements Serializable {
 
 	public void setSongSource(String songSource) {
 		this.songSource = songSource;
+	}
+	
+	public SongSourceType getSongSourceType() {
+		return songSourceType;
+	}
+
+	public void setSongSourceType(SongSourceType songSourceType) {
+		this.songSourceType = songSourceType;
 	}
 	
 	@Override
