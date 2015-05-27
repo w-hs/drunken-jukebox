@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SongListViewImpl extends Composite implements SongListView {
 
 	private final TextBox textBoxSearch = new TextBox();
-	private final ListBox listBoxSongs = new ListBox(false);
+	private final ListBox listBoxSongs = new ListBox();
 	private final Button buttonCreate = new Button("Erstellen");
 
 	public SongListViewImpl() {

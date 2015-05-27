@@ -1,6 +1,10 @@
 package de.whs.drunkenjukebox.shared;
 
-public class GlobalPlaylistEntry {
+import java.io.Serializable;
+
+public class GlobalPlaylistEntry implements Serializable {
+	
+	private static final long serialVersionUID = -5246711876414629328L;
 	
 	private int index;
 	private String title;

@@ -12,6 +12,7 @@ public interface PartyManagementView {
 	HasClickHandlers getStartButton();
 	HasClickHandlers getStopButton();
 	
+	void clear();
 	void setParty(Party p);
 	void setPlaylist(List<GlobalPlaylistEntry> entries);
 	void setButtonEnabled(boolean startButtonEnabled, boolean stoppButtonEnabled);

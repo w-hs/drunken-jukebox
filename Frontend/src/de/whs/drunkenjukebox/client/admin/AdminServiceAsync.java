@@ -1,11 +1,10 @@
 package de.whs.drunkenjukebox.client.admin;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
+import de.whs.drunkenjukebox.shared.GlobalPlaylist;
 import de.whs.drunkenjukebox.shared.Party;
 import de.whs.drunkenjukebox.shared.Song;
 
@@ -17,5 +16,5 @@ public interface AdminServiceAsync {
 	void addSong(Song song, AsyncCallback<Song> callback);
 	void startParty(AsyncCallback<Party> callback);
 	void stoppParty(Party p, AsyncCallback<Party> callback);
-	void getPlaylist(AsyncCallback<List<GlobalPlaylistEntry>> callback);
+	void getPlaylist(AsyncCallback<GlobalPlaylist> callback);
 }

@@ -1,5 +1,6 @@
 package de.whs.drunkenjukebox.client.admin.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.cell.client.NumberCell;
@@ -118,5 +119,14 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 	@Override
 	public void setPlaylist(List<GlobalPlaylistEntry> entries) {
 		table.setRowData(entries);
+	}
+
+	@Override
+	public void clear() {
+		table.setRowData(new ArrayList<GlobalPlaylistEntry>());
+		
+		labelStart.setText(startText);
+		labelDrunkenIndex.setText(drunkenIndexText);
+		labelPartyPeopleCount.setText(partyPeopleText);
 	}
 }
