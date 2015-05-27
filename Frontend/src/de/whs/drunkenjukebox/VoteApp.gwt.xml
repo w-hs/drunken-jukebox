@@ -19,6 +19,11 @@
 
 	<!-- Other module inherits                                      -->
 	<inherits name="com.kiouri.sliderbar.SliderBarMVP"/>
+	
+	<!-- GSS aktivieren -->
+	<inherits name="com.google.gwt.resources.Resources" />
+	<set-configuration-property  name="CssResource.enableGss" value="true" />
+	
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='de.whs.drunkenjukebox.client.VoteApp' />
 
@@ -26,6 +31,7 @@
 	<source path='client' />
 	<source path='shared' />
 	<source path='model' />
+	<source path='resources' />
 
 	<!-- allow Super Dev Mode -->
 	<add-linker name="xsiframe" />
