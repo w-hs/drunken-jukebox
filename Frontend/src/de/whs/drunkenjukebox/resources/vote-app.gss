@@ -38,15 +38,20 @@ body {
 
 .current-track {
 	border: 1px solid #8A8A8A;
-	background-color: #CFCFCF;
+	/*background-color: #CFCFCF;*/
 	margin-top:4px;
 	margin-bottom: 4px;
 	width:100%;
 	padding: 5px;
+	border-radius: 3px;
+}
+
+.current-track div {
+	text-align: center;
 }
 
 .playlist-entry {
-	border: 1px solid #ABABAB;
+	border-bottom: 1px solid #ABABAB;
 	padding: 5px;
 	width:100%;
 }
@@ -66,6 +71,8 @@ body {
 .up-vote { 
   @mixin coolButton(OK_BUTTON_COLOR, OK_BUTTON_BORDER);
   padding:10px;
+  width: 80px;
+  margin-right:5px;
 } 
  
 .up-vote:hover, 
@@ -78,6 +85,8 @@ body {
 .down-vote { 
   @mixin coolButton(CANCEL_BUTTON_COLOR, CANCEL_BUTTON_BORDER);
   padding:10px;
+  width: 80px;
+   margin-right:5px;
 } 
  
 .down-vote:hover, 
@@ -101,3 +110,8 @@ body {
   @mixin coolButtonActive(SEND_BUTTON_ACTIVE, SEND_BUTTON_BORDER);
 } 
 
+
+.full-width
+{
+	width:100%;
+}

@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.resources.AppResources.VoteAppStyle;
@@ -26,6 +27,10 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 		currentSong.addStyleName(style.currentTrack());
 		mainPanel.add(currentSong);
 		mainPanel.add(songTable);
+		
+		songTable.addStyleName(style.fullWidth());
+		mainPanel.addStyleName(style.fullWidth());
+		
 		initWidget(mainPanel);
 	}
 	

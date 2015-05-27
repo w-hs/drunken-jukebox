@@ -1,7 +1,11 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import javafx.scene.layout.FlowPane;
+
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -30,9 +34,15 @@ public class PlayListEntryWidget extends Composite {
 		Button downButton = new Button("Down");
 		downButton.addStyleName(style.downVote());
 		
+		FlowPanel buttonsPannel = new FlowPanel();
+		
+		
+		buttonsPannel.add(upButton);
+		buttonsPannel.add(downButton);
+		
 		mainPanel.add(namePanel);
-		mainPanel.add(upButton);
-		mainPanel.add(downButton);
+		mainPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		mainPanel.add(buttonsPannel);
 		mainPanel.addStyleName(style.playlistEntry());
 		
 		initWidget(mainPanel);
