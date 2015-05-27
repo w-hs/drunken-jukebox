@@ -9,12 +9,13 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.whs.drunkenjukebox.resources.AppResources;
 
 public class SongListViewImpl extends Composite implements SongListView {
 
@@ -22,25 +23,22 @@ public class SongListViewImpl extends Composite implements SongListView {
 	private final ListBox listBoxSongs = new ListBox();
 	private final Button buttonCreate = new Button("Erstellen");
 
-	public SongListViewImpl() {
+	public SongListViewImpl(AppResources.AdminStyle style) {
 		VerticalPanel panel = new VerticalPanel();
-		panel.setSpacing(8);
+		panel.addStyleName(style.songListView());
 
 		textBoxSearch.getElement().setPropertyString("placeholder", "Suche...");
 		panel.add(textBoxSearch);
-
-		listBoxSongs.setVisibleItemCount(10);
-		listBoxSongs.setWidth("100%");
+		
+		listBoxSongs.setVisibleItemCount(2);
+		listBoxSongs.addStyleName(style.listBoxSongs());
 		panel.add(listBoxSongs);
 
 		panel.add(buttonCreate);
 		panel.setCellHorizontalAlignment(buttonCreate,
 				HasHorizontalAlignment.ALIGN_RIGHT);
 
-		// Wrap the content in a DecoratorPanel
-		DecoratorPanel decPanel = new DecoratorPanel();
-		decPanel.setWidget(panel);
-		initWidget(decPanel);
+		initWidget(panel);
 	}
 
 	@Override

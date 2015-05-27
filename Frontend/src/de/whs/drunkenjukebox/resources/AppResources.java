@@ -28,7 +28,23 @@ public interface AppResources extends ClientBundle {
 	}
 	
 	public interface AdminStyle extends CssResource {
+		@ClassName("songManagementView")
+		String managementView();
 		
+		@ClassName("songListView")
+		String songListView();
+		
+		@ClassName("songDetailView")
+		String songDetailView();
+		
+		@ClassName("inputBoxLabel")
+		String inputBoxLabel();
+		
+		@ClassName("inputBoxText")
+		String inputBoxText();
+		
+		@ClassName("listBoxSongs")
+		String listBoxSongs();
 	}
 	
 	@Source("admin.gss")

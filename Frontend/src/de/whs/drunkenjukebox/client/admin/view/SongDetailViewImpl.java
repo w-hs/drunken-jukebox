@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -15,15 +16,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.client.admin.InputBox;
+import de.whs.drunkenjukebox.resources.AppResources;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.SongSourceType;
 
 public class SongDetailViewImpl extends Composite implements SongDetailView {
 
-	private final InputBox interpret = new InputBox("Interpret");
-	private final InputBox title = new InputBox("Titel");
-	private final InputBox genre = new InputBox("Genre");
-	private final InputBox length = new InputBox("Länge");
+	private final InputBox interpret;
+	private final InputBox title;
+	private final InputBox genre;
+	private final InputBox length;
 	private final TextBox songSource = new TextBox();
 	
 	private final Button buttonSave = new Button("Speichern");
@@ -32,13 +34,20 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	private final RadioButton radioYoutube = new RadioButton("SongSource", "YouTube");
 	private final RadioButton radioLocal = new RadioButton("SongSource", "Lokal");
 
-	public SongDetailViewImpl() {
+	public SongDetailViewImpl(AppResources.AdminStyle style) {
 		VerticalPanel panel = new VerticalPanel();
-		panel.setSpacing(8);
+		panel.addStyleName(style.songDetailView());
 
+		interpret = new InputBox("Interpret", style);
 		panel.add(interpret);
+		
+		title = new InputBox("Titel", style);
 		panel.add(title);
+		
+		genre = new InputBox("Genre", style);
 		panel.add(genre);
+		
+		length = new InputBox("Länge", style);
 		panel.add(length);
 
 		panel.add(getSourcePanel());
@@ -48,12 +57,10 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		buttonPanel.add(buttonRemove);
 		buttonPanel.setCellHorizontalAlignment(buttonRemove, HasHorizontalAlignment.ALIGN_RIGHT);
 		buttonPanel.setWidth("100%");
+		panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 		panel.add(buttonPanel);
-		
-		// Wrap the content in a DecoratorPanel
-		DecoratorPanel decPanel = new DecoratorPanel();
-		decPanel.setWidget(panel);
-		initWidget(decPanel);
+
+		initWidget(panel);
 	}
 
 	public Widget getSourcePanel() {

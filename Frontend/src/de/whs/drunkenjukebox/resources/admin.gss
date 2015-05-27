@@ -1,6 +1,54 @@
 @def PRIMARY_COLOR white;
+@def STANDARD_MARGIN 8px;
+@def STANDARD_PADDING 8px;
+@def HEIGHT 400px;
+@def WIDTH add(LEFT, RIGHT);
+@def LEFT 200px;
+@def RIGHT 400px;
+
+@defmixin border() {
+	border: 1px solid #bbb;
+	border-radius: 3px;
+}
 
 body {
   background-color: PRIMARY_COLOR;
   font-family: verdana,arial,helvetica;
+}
+
+.songManagementView {
+	height: HEIGHT;
+	width: WIDTH;
+}
+
+.songListView {
+	height: sub(HEIGHT, STANDARD_MARGIN, STANDARD_MARGIN);
+	width: sub(LEFT, STANDARD_MARGIN, STANDARD_MARGIN);
+	margin: STANDARD_MARGIN;
+	padding: STANDARD_PADDING;
+	@mixin border();
+}
+
+.songDetailView {
+	height: sub(HEIGHT, STANDARD_MARGIN, STANDARD_MARGIN);
+	width: sub(RIGHT, STANDARD_MARGIN, STANDARD_MARGIN);
+	margin: STANDARD_MARGIN;
+	padding: STANDARD_PADDING;
+	@mixin border();
+}
+
+.inputBoxLabel {
+	width: 40px;
+	font-weight: bold;
+}
+
+.inputBoxText {
+	width: 95%;
+}
+
+.listBoxSongs {
+	width: 100%;
+	height: 290px;
+	margin-top: STANDARD_MARGIN;
+	margin-bottom: STANDARD_MARGIN;
 }

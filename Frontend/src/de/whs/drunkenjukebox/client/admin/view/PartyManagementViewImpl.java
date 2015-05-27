@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppResources.AdminStyle;
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 import de.whs.drunkenjukebox.shared.Party;
 
@@ -34,9 +35,8 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 	private final String drunkenIndexText = "Drunken-Index: ";
 	private final Label labelDrunkenIndex = new Label(drunkenIndexText);
 
-	public PartyManagementViewImpl() {
+	public PartyManagementViewImpl(AdminStyle style) {
 		HorizontalPanel panel = new HorizontalPanel();
-		
 		initLeftSide(panel);
 		initRightSide(panel);
 

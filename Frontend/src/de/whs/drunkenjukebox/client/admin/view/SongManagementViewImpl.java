@@ -3,14 +3,19 @@ package de.whs.drunkenjukebox.client.admin.view;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
+import de.whs.drunkenjukebox.resources.AppResources;
+
 public class SongManagementViewImpl extends Composite implements SongManagementView {
 	
-	private final SongDetailView detailView = new SongDetailViewImpl();
-	private final SongListView listView = new SongListViewImpl();
+	private final SongDetailView detailView;
+	private final SongListView listView;
 
-	public SongManagementViewImpl() {
+	public SongManagementViewImpl(AppResources.AdminStyle style) {
+		detailView = new SongDetailViewImpl(style);
+		listView = new SongListViewImpl(style);
+		
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setSpacing(8);
+		panel.addStyleName(style.managementView());
 		
 		panel.add(listView.asWidget());
 		panel.add(detailView.asWidget());
@@ -27,5 +32,4 @@ public class SongManagementViewImpl extends Composite implements SongManagementV
 	public SongListView getListView() {
 		return listView;
 	}
-
 }
