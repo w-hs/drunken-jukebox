@@ -25,6 +25,9 @@ public interface AppResources extends ClientBundle {
 		
 		@ClassName("send-di")
 		String sendDi();
+		
+		@ClassName("full-width")
+		String fullWidth();
 	}
 	
 	public interface AdminStyle extends CssResource {
