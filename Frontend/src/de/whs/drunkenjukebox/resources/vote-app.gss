@@ -3,3 +3,34 @@
 body {
   background-color: PRIMARY_COLOR;
 }
+
+.current-track {
+	border: 1px solid black;
+	background-color: green;
+}
+
+.playlist-entry {
+	border: 1px solid black;
+	background-color: blue;
+}
+
+.title {
+	
+}
+
+.artist {
+	
+}
+
+.up-vote {
+	
+}
+
+.down-vote {
+	
+}
+
+.send-di {
+	
+}
+

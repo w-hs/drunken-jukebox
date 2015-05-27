@@ -33,7 +33,8 @@ public class VoteApp implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		AppResources resources = GWT.create(AppResources.class);
-		resources.voteAppStyle().ensureInjected();
+		AppResources.VoteAppStyle style = resources.voteAppStyle();
+		style.ensureInjected();
 		
 		final DialogBox dialogBox = createDialogBox();
 		dialogBox.setGlassEnabled(true);
@@ -47,7 +48,7 @@ public class VoteApp implements EntryPoint {
 		//root.add(songs);
 		
 		service = GWT.create(VoteAppService.class);
-		VoteAppView view = new VoteAppViewImpl();
+		VoteAppView view = new VoteAppViewImpl(style);
 
 		VoteAppPresenter presenter = new VoteAppPresenter(view, service);
 		presenter.bind();
