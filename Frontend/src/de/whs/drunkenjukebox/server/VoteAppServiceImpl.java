@@ -1,12 +1,5 @@
 package de.whs.drunkenjukebox.server;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,13 +23,13 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 	public Song getCurrentSong() {
 		// TODO: Wirklich implementieren
 		Song song = new Song(); 
-		JSONArray currentSongArray = getJsonArray(ServerURL+"curentsong");
+		JSONArray currentSongArray = Snippets.getJsonArray(ServerURL+"curentsong");
 		if(currentSongArray != null)
 		{
 			
 			try {
 				String songID = currentSongArray.getJSONObject(0).getString("songID");
-				song = getSongFromID(songID);
+				song = Snippets.getSongFromID(songID, ServerURL);
 				
 				
 			} catch (JSONException e) {
@@ -48,58 +41,12 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 		return song;
 	}
 
-	private JSONObject getJsonObject(String url) {
-		try {
-			@SuppressWarnings({ "deprecation", "resource" })
-			HttpClient client = new DefaultHttpClient();
-			HttpGet request = new HttpGet(url);
-			HttpResponse response = client.execute(request);
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent()));
-			String line = "";
-			String JsonString = "";
-			while ((line = rd.readLine()) != null) {
-				//System.out.println(line);
-				JsonString+=line;
-			}
-			
-			return new JSONObject(JsonString);
-			
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	private JSONArray getJsonArray(String url) {
-		try {
-			@SuppressWarnings({ "deprecation", "resource" })
-			HttpClient client = new DefaultHttpClient();
-			HttpGet request = new HttpGet(url);
-			HttpResponse response = client.execute(request);
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent()));
-			String line = "";
-			String JsonString = "";
-			while ((line = rd.readLine()) != null) {
-				//System.out.println(line);
-				JsonString+=line;
-			}
-			
-			return new JSONArray(JsonString);
-			
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	@Override
 	public PlayList getPlayList() {
 		// TODO: Wirklich implementieren
 
 		PlayList pl = new PlayList();
-		JSONArray playlistArray = getJsonArray(ServerURL+"playlist");
+		JSONArray playlistArray = Snippets.getJsonArray(ServerURL+"playlist");
 		if(playlistArray != null)
 		{
 			
@@ -108,7 +55,7 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 				for(int i = 0 ; i< playlistArray.length(); i++ )
 				{
 					JSONObject playlistEntry = playlistArray.getJSONObject(i);
-					Song song = getSongFromID(playlistEntry.getString("songID"));
+					Song song = Snippets.getSongFromID(playlistEntry.getString("songID"), ServerURL);
 					PlayListEntry entry = new PlayListEntry();
 					entry.setSongName(song.getTitle());
 					entry.setInterpreter(song.getInterpret());
@@ -125,24 +72,6 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 		}
 		
 		return pl;
-	}
-
-	private Song getSongFromID(String songID) {
-		Song song = new Song();
-		
-		JSONObject currentSong = getJsonObject(ServerURL+"songs/"+songID);
-		
-		
-		try {
-			song.setInterpret(currentSong.getString("artist"));
-			song.setTitle(currentSong.getString("title"));
-			song.setDurationInSecs(Integer.parseInt(currentSong.getString("length")));
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return song;
 	}
 
 	@Override
