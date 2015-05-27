@@ -14,6 +14,7 @@ import de.whs.drunkenjukebox.client.admin.view.PartyManagementView;
 import de.whs.drunkenjukebox.client.admin.view.PartyManagementViewImpl;
 import de.whs.drunkenjukebox.client.admin.view.SongManagementView;
 import de.whs.drunkenjukebox.client.admin.view.SongManagementViewImpl;
+import de.whs.drunkenjukebox.resources.AppResources;
 
 public class Admin implements EntryPoint {
 	
@@ -23,6 +24,10 @@ public class Admin implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
+		AppResources resources = GWT.create(AppResources.class);
+		AppResources.AdminStyle style = resources.adminStye();
+		style.ensureInjected();
+		
 		rpcService = GWT.create(AdminService.class);
 		
 		SongManagementPresenter songManagementPresenter = new SongManagementPresenter(rpcService, songManagementView);

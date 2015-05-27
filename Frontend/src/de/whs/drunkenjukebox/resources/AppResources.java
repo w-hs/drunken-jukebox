@@ -27,6 +27,13 @@ public interface AppResources extends ClientBundle {
 		String sendDi();
 	}
 	
+	public interface AdminStyle extends CssResource {
+		
+	}
+	
+	@Source("admin.gss")
+	AdminStyle adminStye();
+	
 	@Source("vote-app.gss")
 	VoteAppStyle voteAppStyle();
 }
