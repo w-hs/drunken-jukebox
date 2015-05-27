@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalPlaylist implements Serializable {
+	
 	private static final long serialVersionUID = -8661363586997406371L;
 	
 	private List<GlobalPlaylistEntry> entries = new ArrayList<GlobalPlaylistEntry>();

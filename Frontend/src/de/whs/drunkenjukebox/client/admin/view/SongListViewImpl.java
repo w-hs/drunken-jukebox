@@ -83,4 +83,9 @@ public class SongListViewImpl extends Composite implements SongListView {
 		listBoxSongs.setSelectedIndex(index);
 		DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxSongs);
 	}
+
+	@Override
+	public void setFocusToTextBoxSearch(boolean focused) {
+		textBoxSearch.setFocus(focused);		
+	}
 }

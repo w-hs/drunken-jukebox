@@ -148,6 +148,7 @@ public class SongManagementPresenter {
 	public void go() {
 		bind();
 		fetchSongs();
+		songListView.setFocusToTextBoxSearch(true);
 	}
 	
 	private void fetchSongs() {	
