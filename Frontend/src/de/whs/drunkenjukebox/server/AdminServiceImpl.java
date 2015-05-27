@@ -1,5 +1,6 @@
 package de.whs.drunkenjukebox.server;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.whs.drunkenjukebox.client.admin.AdminService;
+import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
+import de.whs.drunkenjukebox.shared.Party;
 import de.whs.drunkenjukebox.shared.Song;
 
 public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
@@ -67,5 +70,25 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		song.setId(getId());
 		songs.put(song.getId(), song);
 		return song;
+	}
+
+	@Override
+	public Party startParty() {
+		return new Party(0, 0, LocalDateTime.now());
+	}
+
+	@Override
+	public Party stoppParty(Party p) {
+		return p;
+	}
+
+	@Override
+	public List<GlobalPlaylistEntry> getPlaylist() {
+		List<GlobalPlaylistEntry> entries = new ArrayList<GlobalPlaylistEntry>();
+		entries.add(new GlobalPlaylistEntry(1, "Last Christmas", 15));
+		entries.add(new GlobalPlaylistEntry(2, "Jingle Bells", -5));
+		entries.add(new GlobalPlaylistEntry(3, "Daniels Test", 0));
+		
+		return entries;
 	}
 }
