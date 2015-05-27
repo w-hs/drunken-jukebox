@@ -17,15 +17,22 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
+import de.whs.drunkenjukebox.shared.Party;
 
 public class PartyManagementViewImpl extends Composite implements PartyManagementView {
 
 	private final Button buttonStart = new Button("Start");
 	private final Button buttonStop = new Button("Stopp");
-	private final Label labelStart = new Label("Start: ");
-	private final Label labelPartyPeopleCount = new Label("PartyPeople: ");
-	private final Label labelDrunkenIndex = new Label("Drunken-Index: ");
 	private final CellTable<GlobalPlaylistEntry> table = new CellTable<>();
+	
+	private final String startText = "Start: ";
+	private final Label labelStart = new Label(startText);
+	
+	private final String partyPeopleText = "Gäste: ";
+	private final Label labelPartyPeopleCount = new Label(partyPeopleText);
+	
+	private final String drunkenIndexText = "Drunken-Index: ";
+	private final Label labelDrunkenIndex = new Label(drunkenIndexText);
 
 	public PartyManagementViewImpl() {
 		HorizontalPanel panel = new HorizontalPanel();
@@ -39,12 +46,6 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 	private void initRightSide(HorizontalPanel panel) {
 		initTableColumns();
 		panel.add(table);
-		
-		List<GlobalPlaylistEntry> entries = new ArrayList<GlobalPlaylistEntry>();
-		entries.add(new GlobalPlaylistEntry(1, "Last Christmas", 15));
-		entries.add(new GlobalPlaylistEntry(2, "Jingle Bells", -5));
-		entries.add(new GlobalPlaylistEntry(3, "Daniels Test", 0));
-		table.setRowData(entries);
 	}
 
 	private void initTableColumns() {
@@ -108,4 +109,24 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 		buttonStop.setEnabled(stoppButtonEnabled);
 	}
 
+	@Override
+	public void setParty(Party p) {
+		labelStart.setText(startText + p.getPartyStart());
+		labelDrunkenIndex.setText(drunkenIndexText + p.getDrunkenIndex());
+		labelPartyPeopleCount.setText(partyPeopleText + p.getPartyPeopleCount());
+	}
+
+	@Override
+	public void setPlaylist(List<GlobalPlaylistEntry> entries) {
+		table.setRowData(entries);
+	}
+
+	@Override
+	public void clear() {
+		table.setRowData(new ArrayList<GlobalPlaylistEntry>());
+		
+		labelStart.setText(startText);
+		labelDrunkenIndex.setText(drunkenIndexText);
+		labelPartyPeopleCount.setText(partyPeopleText);
+	}
 }

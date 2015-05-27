@@ -30,6 +30,13 @@ public interface AppResources extends ClientBundle {
 		String fullWidth();
 	}
 	
+	public interface AdminStyle extends CssResource {
+		
+	}
+	
+	@Source("admin.gss")
+	AdminStyle adminStye();
+	
 	@Source("vote-app.gss")
 	VoteAppStyle voteAppStyle();
 }

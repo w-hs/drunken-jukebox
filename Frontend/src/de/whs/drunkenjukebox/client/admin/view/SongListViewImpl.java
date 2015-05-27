@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SongListViewImpl extends Composite implements SongListView {
 
 	private final TextBox textBoxSearch = new TextBox();
-	private final ListBox listBoxSongs = new ListBox(false);
+	private final ListBox listBoxSongs = new ListBox();
 	private final Button buttonCreate = new Button("Erstellen");
 
 	public SongListViewImpl() {
@@ -82,5 +82,10 @@ public class SongListViewImpl extends Composite implements SongListView {
 	public void setSelectedIndex(int index) {
 		listBoxSongs.setSelectedIndex(index);
 		DomEvent.fireNativeEvent(Document.get().createChangeEvent(), listBoxSongs);
+	}
+
+	@Override
+	public void setFocusToTextBoxSearch(boolean focused) {
+		textBoxSearch.setFocus(focused);		
 	}
 }

@@ -12,6 +12,8 @@ public interface SongListView {
 	void setSongs(List<String> songs);
 	
 	void setSelectedIndex(int index);
+	
+	void setFocusToTextBoxSearch(boolean focused);
 
 	HasClickHandlers getCreateButton();
 	

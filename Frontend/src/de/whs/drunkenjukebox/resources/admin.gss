@@ -1,0 +1,6 @@
+@def PRIMARY_COLOR white;
+
+body {
+  background-color: PRIMARY_COLOR;
+  font-family: verdana,arial,helvetica;
+}
