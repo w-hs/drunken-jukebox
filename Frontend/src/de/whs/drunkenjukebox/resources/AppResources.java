@@ -48,6 +48,9 @@ public interface AppResources extends ClientBundle {
 		
 		@ClassName("listBoxSongs")
 		String listBoxSongs();
+		
+		@ClassName("songSourcePanel")
+		String songSourcePanel();
 	}
 	
 	@Source("admin.gss")

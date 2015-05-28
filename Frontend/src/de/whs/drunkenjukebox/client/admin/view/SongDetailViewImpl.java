@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.client.admin.InputBox;
 import de.whs.drunkenjukebox.resources.AppResources;
+import de.whs.drunkenjukebox.resources.AppResources.AdminStyle;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.SongSourceType;
 
@@ -33,8 +34,10 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	
 	private final RadioButton radioYoutube = new RadioButton("SongSource", "YouTube");
 	private final RadioButton radioLocal = new RadioButton("SongSource", "Lokal");
+	private AdminStyle style;
 
 	public SongDetailViewImpl(AppResources.AdminStyle style) {
+		this.style = style;
 		VerticalPanel panel = new VerticalPanel();
 		panel.addStyleName(style.songDetailView());
 
@@ -64,23 +67,21 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	}
 
 	public Widget getSourcePanel() {
-		VerticalPanel panel = new VerticalPanel();
-		panel.setSpacing(8);
+		FlexTable table = new FlexTable();
+		table.getFlexCellFormatter().setRowSpan(0, 1, 2);
+		table.setCellSpacing(8);
+		table.setWidth("100%");
 		
-		panel.add(new Label("Quelle"));
-
-		HorizontalPanel radioButtons = new HorizontalPanel();
-		radioButtons.add(radioYoutube);
-		radioButtons.add(radioLocal);
-		panel.add(radioButtons);
-
-		panel.add(songSource);
-
-		// Wrap the content in a DecoratorPanel
-		DecoratorPanel decPanel = new DecoratorPanel();
-		decPanel.setWidth("100%");
-		decPanel.setWidget(panel);
-		return decPanel;
+		table.setWidget(0, 0, radioYoutube);
+		table.setWidget(1, 0, radioLocal);
+		table.setWidget(0, 1, songSource);
+		songSource.setWidth("100%");
+		
+		CaptionPanel cp = new CaptionPanel("Quelle");
+		cp.addStyleName(style.songSourcePanel());
+		cp.add(table);
+		
+		return cp;
 	}
 
 	@Override

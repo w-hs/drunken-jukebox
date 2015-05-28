@@ -1,7 +1,7 @@
 @def PRIMARY_COLOR white;
 @def STANDARD_MARGIN 8px;
 @def STANDARD_PADDING 8px;
-@def HEIGHT 400px;
+@def HEIGHT 325px;
 @def WIDTH add(LEFT, RIGHT);
 @def LEFT 200px;
 @def RIGHT 400px;
@@ -48,7 +48,12 @@ body {
 
 .listBoxSongs {
 	width: 100%;
-	height: 290px;
+	height: 206px;
 	margin-top: STANDARD_MARGIN;
 	margin-bottom: STANDARD_MARGIN;
+}
+
+.songSourcePanel {
+	font-weight: bold;
+	@mixin border();
 }

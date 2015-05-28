@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -37,6 +38,8 @@ public class SongListViewImpl extends Composite implements SongListView {
 		panel.add(buttonCreate);
 		panel.setCellHorizontalAlignment(buttonCreate,
 				HasHorizontalAlignment.ALIGN_RIGHT);
+		panel.setCellVerticalAlignment(buttonCreate, HasVerticalAlignment.ALIGN_BOTTOM);
+		
 
 		initWidget(panel);
 	}
