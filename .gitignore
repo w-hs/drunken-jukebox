@@ -4,3 +4,10 @@
 /Frontend/gwt-unitCache
 /Frontend/war/voteapp
 /Frontend/.settings/org.eclipse.ltk.core.refactoring.prefs
+/doku/MWB/*.aux
+/doku/MWB/*.bcf
+/doku/MWB/*.out
+/doku/MWB/*.toc
+/doku/MWB/Ausarbeitung.pdf
+/doku/MWB/Ausarbeitung.run.xml
+/doku/MWB/Ausarbeitung.synctex.gz
