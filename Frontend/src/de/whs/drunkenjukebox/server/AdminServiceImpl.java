@@ -3,6 +3,7 @@ package de.whs.drunkenjukebox.server;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -122,6 +123,13 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 				e.printStackTrace();
 			}
 		}
+		
+		playlist.getEntries().sort(new Comparator<GlobalPlaylistEntry>() {
+			@Override
+			public int compare(GlobalPlaylistEntry arg0, GlobalPlaylistEntry arg1) {
+				return arg1.getVoteCount() - arg0.getVoteCount();
+			}
+		});
 
 		return playlist;
 	}
