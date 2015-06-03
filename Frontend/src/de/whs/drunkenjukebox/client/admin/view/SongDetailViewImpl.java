@@ -58,9 +58,9 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		panel.add(getSourcePanel());
 
 		HorizontalPanel buttonPanel = new HorizontalPanel();
-		buttonSave.addStyleName(style.saveButton());
+		buttonSave.addStyleName(style.greenButton());
 		buttonPanel.add(buttonSave);
-		buttonRemove.addStyleName(style.removeButton());
+		buttonRemove.addStyleName(style.redButton());
 		buttonPanel.add(buttonRemove);
 		buttonPanel.setCellHorizontalAlignment(buttonRemove, HasHorizontalAlignment.ALIGN_RIGHT);
 		buttonPanel.setWidth("100%");

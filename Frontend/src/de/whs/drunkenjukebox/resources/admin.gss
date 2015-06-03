@@ -33,6 +33,20 @@
 @external gwt-TabLayoutPanelTab-selected;
 @external gwt-TabLayoutPanelContent;
 
+@external cellTableKeyboardSelectedCell;
+@external cellTableSelectedRow;
+@external cellTableSelectedRowCell;
+@external cellTableCell;
+@external cellTableHoveredRow;
+@external cellTableOddRow;
+@external cellTableEvenRowCell;
+@external cellTableHeader;
+@external cellTableOddRowCell;
+@external cellTableKeyboardSelectedRowCell;
+@external cellTableEvenRow;
+@external cellTableHoveredRowCell;
+@external cellTableFooter;
+
 @defmixin border() {
 	border: 1px solid HEADER_COLOR;
 	border-radius: 3px;
@@ -101,35 +115,35 @@ body {
 	@mixin border();
 }
 
-.save-button { 
+.green-button { 
   @mixin coolButton(SAVE_BUTTON_COLOR, SAVE_BUTTON_BORDER);
 } 
  
-.save-button:hover, 
-.save-button:focus, 
-.save-button:active
+.green-button:hover, 
+.green-button:focus, 
+.green-button:active
 { 
   @mixin coolButtonActive(SAVE_BUTTON_ACTIVE, SAVE_BUTTON_BORDER);
 }
 
-.remove-button { 
+.red-button { 
   @mixin coolButton(REMOVE_BUTTON_COLOR, REMOVE_BUTTON_BORDER);
 } 
  
-.remove-button:hover, 
-.remove-button:focus, 
-.remove-button:active
+.red-button:hover, 
+.red-button:focus, 
+.red-button:active
 { 
   @mixin coolButtonActive(REMOVE_BUTTON_ACTIVE, REMOVE_BUTTON_BORDER);
 }  
 
-.create-button { 
+.blue-button { 
   @mixin coolButton(CREATE_BUTTON_COLOR, CREATE_BUTTON_BORDER);
 } 
  
-.create-button:hover, 
-.create-button:focus, 
-.create-button:active
+.blue-button:hover, 
+.blue-button:focus, 
+.blue-button:active
 { 
   @mixin coolButtonActive(CREATE_BUTTON_ACTIVE, CREATE_BUTTON_BORDER);
 }
@@ -165,11 +179,19 @@ background:HEADER_COLOR;
 	padding: 1em;
 	cursor: pointer;
 }
+
 .partyManagementView{
 	height: HEIGHT;
 	width: WIDTH;
+	margin:STANDARD_MARGIN;
+	padding:STANDARD_PADDING;
 	@mixin border();
-	background:red;
 }
+
+.partyManagementView-Details{
+  padding:div(STANDARD_PADDING/2);
+}
+
+ 
 
 
