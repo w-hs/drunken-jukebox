@@ -20,4 +20,31 @@ public interface AppConstants extends Constants {
 
 	@DefaultStringValue("Vote")
 	String vote();
+	
+	@DefaultStringValue("Save")
+	String save();
+	
+	@DefaultStringValue("Remove")
+	String remove();
+	
+	@DefaultStringValue("Source")
+	String source();
+	
+	@DefaultStringValue("Local")
+	String local();
+	
+	@DefaultStringValue("YouTube")
+	String youtube();
+	
+	@DefaultStringValue("Genre")
+	String genre();
+	
+	@DefaultStringValue("Length")
+	String length();
+	
+	@DefaultStringValue("Create")
+	String create();
+	
+	@DefaultStringValue("Search...")
+	String searchDotDotDot();
 }

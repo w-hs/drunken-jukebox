@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.client.admin.view;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
@@ -16,19 +17,22 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppConstants;
 import de.whs.drunkenjukebox.resources.AppResources;
 
 public class SongListViewImpl extends Composite implements SongListView {
+	
+	private AppConstants constants = GWT.create(AppConstants.class);
 
 	private final TextBox textBoxSearch = new TextBox();
 	private final ListBox listBoxSongs = new ListBox();
-	private final Button buttonCreate = new Button("Erstellen");
+	private final Button buttonCreate = new Button(constants.create());
 
 	public SongListViewImpl(AppResources.AdminStyle style) {
 		VerticalPanel panel = new VerticalPanel();
 		panel.addStyleName(style.songListView());
 
-		textBoxSearch.getElement().setPropertyString("placeholder", "Suche...");
+		textBoxSearch.getElement().setPropertyString("placeholder", constants.searchDotDotDot());
 		panel.add(textBoxSearch);
 		
 		listBoxSongs.setVisibleItemCount(2);
