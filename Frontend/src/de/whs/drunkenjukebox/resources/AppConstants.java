@@ -47,4 +47,31 @@ public interface AppConstants extends Constants {
 	
 	@DefaultStringValue("Search...")
 	String searchDotDotDot();
+	
+	@DefaultStringValue("Send")
+	String send();
+	
+	@DefaultStringValue("Cancel")
+	String cancel();
+	
+	@DefaultStringValue("Please slide in your DI")
+	String pleaseSlideInDI();
+	
+	@DefaultStringValue("Sober")
+	String sober();
+	
+	@DefaultStringValue("Funny")
+	String funny();
+	
+	@DefaultStringValue("Drunk")
+	String drunk();
+	
+	@DefaultStringValue("Send DI")
+	String sendDI();
+	
+	@DefaultStringValue("Up")
+	String upVote();
+	
+	@DefaultStringValue("Down")
+	String downVote();
 }
