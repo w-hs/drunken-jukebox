@@ -1,7 +1,5 @@
 package de.whs.drunkenjukebox.client.admin.view;
 
-import java.util.Arrays;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
@@ -94,13 +92,7 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	public void setSong(Song song) {
 		title.setText(song.getTitle());
 		artist.setText(song.getInterpret());
-		
-		String genres = "";
-		for (String s : song.getGenres())
-			genres += s + ", ";
-		genres = genres.substring(0, genres.length() - 2);
-		
-		genre.setText(genres);
+		genre.setText(song.getGenres());
 		length.setText(new Integer(song.getDurationInSecs()).toString());
 		songSource.setText(song.getSongSource());
 		
@@ -129,9 +121,8 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	@Override
 	public Song getSong() {
 		Song song = new Song();
-		song.setDurationInSecs(Integer.parseInt(length.getText()));
-		String[] genres = genre.getText().split(", ");		
-		song.setGenres(Arrays.asList(genres));
+		song.setDurationInSecs(Integer.parseInt(length.getText()));		
+		song.setGenres(genre.getText());
 		song.setInterpret(artist.getText());
 		song.setTitle(title.getText());
 		song.setSongSource(songSource.getText());

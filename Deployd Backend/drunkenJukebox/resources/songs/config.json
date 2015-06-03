@@ -11,8 +11,8 @@
 		},
 		"length": {
 			"name": "length",
-			"type": "string",
-			"typeLabel": "string",
+			"type": "number",
+			"typeLabel": "number",
 			"required": false,
 			"id": "length",
 			"order": 1
@@ -35,11 +35,19 @@
 		},
 		"sourceType": {
 			"name": "sourceType",
-			"type": "integer",
-			"typeLabel": "integer",
+			"type": "number",
+			"typeLabel": "number",
 			"required": false,
 			"id": "sourceType",
 			"order": 4
+		},
+		"genres": {
+			"name": "genres",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "genres",
+			"order": 5
 		}
 	}
 }
