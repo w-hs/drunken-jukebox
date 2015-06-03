@@ -1,19 +1,23 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppConstants;
 import de.whs.drunkenjukebox.resources.AppResources.VoteAppStyle;
 import de.whs.drunkenjukebox.shared.PlayList;
 import de.whs.drunkenjukebox.shared.PlayListEntry;
 
 public class VoteAppViewImpl extends Composite implements VoteAppView {
+	
+	private AppConstants constants = GWT.create(AppConstants.class);
+	
 	private final FlexTable songTable = new FlexTable();
-	private final Button diButton = new Button("Send DI");
+	private final Button diButton = new Button(constants.sendDI());
 	private final VerticalPanel mainPanel = new VerticalPanel();
 	private final DIDialogView diDialog = new DIDialogViewImpl();
 	private final CurrentSongWidget currentSong;

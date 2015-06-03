@@ -2,13 +2,9 @@ package de.whs.drunkenjukebox.server;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +15,6 @@ import de.whs.drunkenjukebox.shared.GlobalPlaylist;
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 import de.whs.drunkenjukebox.shared.Party;
 import de.whs.drunkenjukebox.shared.Song;
-import de.whs.drunkenjukebox.shared.SongSourceType;
 
 public class AdminServiceImpl extends RemoteServiceServlet implements
 		AdminService {
@@ -27,60 +22,40 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 	private static final long serialVersionUID = -8457486819910574309L;
 	private static final String ServerURL = "http://localhost:2403/";
 
-	private static int lastInsertId;
-	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
-
-	public AdminServiceImpl() {
-		songs.put(getId(), createSong(1, "Jingle Bells"));
-		songs.put(getId(), createSong(2, "Last Christmas"));
-		songs.put(getId(), createSong(3, "Wonderful Dream"));
-	}
-
-	static int getId() {
-		return ++lastInsertId;
-	}
-
 	@Override
 	public ArrayList<Song> getSongList() {
-		return new ArrayList<>(songs.values());
-	}
-
-	private Song createSong(int id, String title) {
-		List<String> genres = new ArrayList<String>();
-		genres.add("Classic");
-		genres.add("Pop");
-
-		Song song = new Song();
-		song.setId(id);
-		song.setInterpret("Wham");
-		song.setTitle(title);
-		song.setGenres(genres);
-		song.setSongSource("https://www.youtube.com/");
-		song.setDurationInSecs(186);
-		song.setSongSourceType(SongSourceType.youtube);
-
-		return song;
+		ArrayList<Song> result = new ArrayList<Song>();
+		JSONArray songs = Snippets.getJsonArray(ServerURL + "songs"); 
+		
+		for (int i = 0; i < songs.length(); i++) {
+			try {
+				JSONObject song = songs.getJSONObject(i);
+				result.add(Snippets.getSongFromJsonObject(song));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
 	@Override
 	public Song getSong(String id) {
-		return songs.containsKey(id) ? songs.get(id) : null;
+		return Snippets.getSongFromID(id, ServerURL);
 	}
 
 	@Override
 	public Song updateSong(Song song) {
-		return songs.put(song.getId(), song);
+		return song;
 	}
 
 	@Override
-	public void removeSong(int songId) {
-		songs.remove(songId);
+	public void removeSong(String songId) {
+		
 	}
 
 	@Override
 	public Song addSong(Song song) {
-		song.setId(getId());
-		songs.put(song.getId(), song);
 		return song;
 	}
 
@@ -112,13 +87,26 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public GlobalPlaylist getPlaylist() {
 		GlobalPlaylist playlist = new GlobalPlaylist();
-		playlist.getEntries().add(
-				new GlobalPlaylistEntry(1, "Last Christmas", 15));
-		playlist.getEntries().add(
-				new GlobalPlaylistEntry(2, "Jingle Bells", -5));
-		playlist.getEntries()
-				.add(new GlobalPlaylistEntry(3, "Daniels Test", 0));
-
+		JSONArray array = Snippets.getJsonArray(ServerURL + "playlist");
+		
+		if (array == null)
+			return playlist;
+		
+		for (int i = 0; i < array.length(); i++) {
+			try {
+				JSONObject entry = array.getJSONObject(i);
+				
+				int index = entry.getInt("position");
+				int votes = entry.getInt("votes");
+				String songId = entry.getString("songID");
+				Song song = Snippets.getSongFromID(songId, ServerURL);	
+				
+				playlist.addEntry(new GlobalPlaylistEntry(index, song.getTitle(), votes));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return playlist;
 	}
 }

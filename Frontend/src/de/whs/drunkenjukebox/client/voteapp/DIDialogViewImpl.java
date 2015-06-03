@@ -1,5 +1,6 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -8,14 +9,18 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppConstants;
+
 public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 	
-	private Button acceptButton = new Button("OK");
-	private Button cancelButton = new Button("Schlie\u00DFen");
+	private AppConstants constants = GWT.create(AppConstants.class);
+	
+	private Button acceptButton = new Button(constants.send());
+	private Button cancelButton = new Button(constants.cancel());
 	private DISlider diSlider = new DISlider(20,"100%");
 	
 	public DIDialogViewImpl() {
-		setText("Bitte ihren DI einsliden");	    
+		setText(constants.pleaseSlideInDI());	    
 		
 		VerticalPanel mainPanel = new VerticalPanel();
 		mainPanel.setWidth("300px");
@@ -23,9 +28,9 @@ public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 		
 		HorizontalPanel titles = new HorizontalPanel();
 		titles.setWidth("100%");
-		Label startLabel = new Label("Sober");
-		Label middleLabel = new Label("Funny");
-		Label endLabel = new Label("Drunk");
+		Label startLabel = new Label(constants.sober());
+		Label middleLabel = new Label(constants.funny());
+		Label endLabel = new Label(constants.drunk());
 		titles.add(startLabel);
 		titles.add(middleLabel);
 		titles.add(endLabel);

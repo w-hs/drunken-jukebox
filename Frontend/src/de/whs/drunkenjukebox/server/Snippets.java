@@ -130,5 +130,22 @@ public class Snippets {
 		}
 		return song;
 	}
-
+	
+	public static Song getSongFromJsonObject(JSONObject song) {
+		Song result = new Song();
+		
+		try {
+			result.setId(song.getString("id"));
+			result.setTitle(song.getString("title"));
+			result.setDurationInSecs(song.getInt("length"));
+			result.setInterpret(song.getString("artist"));
+			result.setSongSource(song.getString("source"));
+			result.setSongSourceType(song.getInt("sourceType"));
+//			result.setGenres(genres);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

@@ -84,7 +84,7 @@ public class SongManagementPresenter {
 		if (currentSong == null) {
 			songsSerivce.addSong(songDetailView.getSong(), asyncCallback);
 		} else {
-			int songId = currentSong.getId();
+			String songId = currentSong.getId();
 			currentSong = songDetailView.getSong();
 			currentSong.setId(songId);
 			
