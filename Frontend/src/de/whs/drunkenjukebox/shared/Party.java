@@ -6,6 +6,7 @@ import java.util.Date;
 public class Party implements Serializable {
 	
 	private static final long serialVersionUID = -6273407605775485301L;
+	private String partyId;
 	private int drunkenIndex;
 	private int partyPeopleCount;
 	private Date partyStart;
@@ -14,12 +15,12 @@ public class Party implements Serializable {
 		
 	}
 
-	public Party(int drunkenIndex, int partyPeopleCount,
-			Date partyStart) {
-		super();
-		this.drunkenIndex = drunkenIndex;
-		this.partyPeopleCount = partyPeopleCount;
-		this.partyStart = partyStart;
+	public String getPartyId() {
+		return partyId;
+	}
+	
+	public void setPartyId(String partyId) {
+		this.partyId = partyId;
 	}
 
 	public int getDrunkenIndex() {

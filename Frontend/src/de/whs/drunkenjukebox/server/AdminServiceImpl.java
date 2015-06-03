@@ -1,14 +1,17 @@
 package de.whs.drunkenjukebox.server;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gwt.dev.json.JsonObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.whs.drunkenjukebox.client.admin.AdminService;
@@ -18,24 +21,25 @@ import de.whs.drunkenjukebox.shared.Party;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.SongSourceType;
 
-public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
-	
+public class AdminServiceImpl extends RemoteServiceServlet implements
+		AdminService {
+
 	private static final long serialVersionUID = -8457486819910574309L;
 	private static final String ServerURL = "http://localhost:2403/";
-	
+
 	private static int lastInsertId;
 	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
-	
+
 	public AdminServiceImpl() {
 		songs.put(getId(), createSong(1, "Jingle Bells"));
 		songs.put(getId(), createSong(2, "Last Christmas"));
 		songs.put(getId(), createSong(3, "Wonderful Dream"));
-	}	
-	
+	}
+
 	static int getId() {
 		return ++lastInsertId;
 	}
-	
+
 	@Override
 	public ArrayList<Song> getSongList() {
 		return new ArrayList<>(songs.values());
@@ -45,7 +49,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		List<String> genres = new ArrayList<String>();
 		genres.add("Classic");
 		genres.add("Pop");
-		
+
 		Song song = new Song();
 		song.setId(id);
 		song.setInterpret("Wham");
@@ -54,12 +58,12 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		song.setSongSource("https://www.youtube.com/");
 		song.setDurationInSecs(186);
 		song.setSongSourceType(SongSourceType.youtube);
-	
+
 		return song;
 	}
 
 	@Override
-	public Song getSong(String id) {		
+	public Song getSong(String id) {
 		return songs.containsKey(id) ? songs.get(id) : null;
 	}
 
@@ -82,14 +86,22 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 
 	@Override
 	public Party startParty() {
-		
 		Party p = new Party();
 		JSONObject object = Snippets.post(ServerURL + "party");
 		
+		try {
+			p.setPartyId(object.getString("id"));
+			p.setDrunkenIndex(object.getInt("avgDI"));
+			p.setPartyPeopleCount(object.getInt("guestCount"));
+			
+			String format = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+			SimpleDateFormat sdf = new SimpleDateFormat(format);			
+			p.setPartyStart(sdf.parse(object.getString("start")));
+		} catch (JSONException | ParseException e) {
+			e.printStackTrace();
+		}	
 		
 		return p;
-		
-		//return new Party(0, 0, new Date());
 	}
 
 	@Override
@@ -100,10 +112,13 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 	@Override
 	public GlobalPlaylist getPlaylist() {
 		GlobalPlaylist playlist = new GlobalPlaylist();
-		playlist.getEntries().add(new GlobalPlaylistEntry(1, "Last Christmas", 15));
-		playlist.getEntries().add(new GlobalPlaylistEntry(2, "Jingle Bells", -5));
-		playlist.getEntries().add(new GlobalPlaylistEntry(3, "Daniels Test", 0));
-		
+		playlist.getEntries().add(
+				new GlobalPlaylistEntry(1, "Last Christmas", 15));
+		playlist.getEntries().add(
+				new GlobalPlaylistEntry(2, "Jingle Bells", -5));
+		playlist.getEntries()
+				.add(new GlobalPlaylistEntry(3, "Daniels Test", 0));
+
 		return playlist;
 	}
 }
