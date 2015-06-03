@@ -1,5 +1,7 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
+import java.util.Comparator;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -7,6 +9,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 import de.whs.drunkenjukebox.shared.PlayList;
+import de.whs.drunkenjukebox.shared.PlayListEntry;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.Vote;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;

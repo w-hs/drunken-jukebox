@@ -1,5 +1,7 @@
 package de.whs.drunkenjukebox.server;
 
+import java.util.Comparator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +75,14 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 				e.printStackTrace();
 			}
 		}
+		
+		pl.getEntries().sort(new Comparator<PlayListEntry>() {
+
+			@Override
+			public int compare(PlayListEntry o1, PlayListEntry o2) {
+				return o1.getVotes() - o2.getVotes();
+			}
+		});
 		
 		return pl;
 	}
