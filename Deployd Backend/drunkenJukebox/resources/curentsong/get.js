@@ -1,7 +1,7 @@
 //Playlist ersten entry entnehmen
 //Playlist wieder auffüllen
 //
-
+/*
 var votes = -999999;
 var songID = null;
 dpd.playlist.get(function (result, err) {
@@ -20,6 +20,7 @@ dpd.playlist.get(function (result, err) {
   }
   
   this.songID = songID;
-});
-
+});*/
+this.songID = "18c77e30e376280f";
+this.id = "77a26abb92f2ebdd";
 
