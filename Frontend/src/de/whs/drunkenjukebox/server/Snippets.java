@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +31,31 @@ public class Snippets {
 				JsonString+=line;
 			}
 			
-			return new JSONObject(JsonString);
-			
-			
+			return new JSONObject(JsonString);		
 		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static JSONObject post(String url) {
+		try {
+			@SuppressWarnings({ "deprecation", "resource" })
+			HttpClient client = new DefaultHttpClient();
+			HttpPost request = new HttpPost(url);
+			HttpResponse response = client.execute(request);
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent()));
+			String line = "";
+			String JsonString = "";
+			while ((line = rd.readLine()) != null) {
+				//System.out.println(line);
+				JsonString+=line;
+			}
+			
+			return new JSONObject(JsonString);	
+		}
+		catch (Exception e) {
+			System.err.println(e);
 			return null;
 		}
 	}

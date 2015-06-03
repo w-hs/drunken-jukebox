@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.google.gwt.dev.json.JsonObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.whs.drunkenjukebox.client.admin.AdminService;
@@ -18,6 +21,8 @@ import de.whs.drunkenjukebox.shared.SongSourceType;
 public class AdminServiceImpl extends RemoteServiceServlet implements AdminService {
 	
 	private static final long serialVersionUID = -8457486819910574309L;
+	private static final String ServerURL = "http://localhost:2403/";
+	
 	private static int lastInsertId;
 	private final Map<Integer, Song> songs = new HashMap<Integer, Song>();
 	
@@ -77,7 +82,14 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 
 	@Override
 	public Party startParty() {
-		return new Party(0, 0, new Date());
+		
+		Party p = new Party();
+		JSONObject object = Snippets.post(ServerURL + "party");
+		
+		
+		return p;
+		
+		//return new Party(0, 0, new Date());
 	}
 
 	@Override
