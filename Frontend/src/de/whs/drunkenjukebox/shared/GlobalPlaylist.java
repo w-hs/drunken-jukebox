@@ -17,4 +17,8 @@ public class GlobalPlaylist implements Serializable {
 	public void setEntries(List<GlobalPlaylistEntry> entries) {
 		this.entries = entries;
 	}
+	
+	public void addEntry(GlobalPlaylistEntry entry) {
+		this.entries.add(entry);
+	}
 }
