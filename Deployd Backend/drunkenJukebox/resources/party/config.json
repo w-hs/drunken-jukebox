@@ -1,29 +1,37 @@
 {
 	"type": "Collection",
 	"properties": {
-		"name": {
-			"name": "name",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "name",
-			"order": 0
-		},
 		"start": {
 			"name": "start",
-			"type": "string",
-			"typeLabel": "string",
+			"type": "object",
+			"typeLabel": "object",
 			"required": false,
 			"id": "start",
-			"order": 1
+			"order": 0
 		},
 		"end": {
 			"name": "end",
-			"type": "string",
-			"typeLabel": "string",
+			"type": "object",
+			"typeLabel": "object",
 			"required": false,
 			"id": "end",
+			"order": 1
+		},
+		"guestCount": {
+			"name": "guestCount",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "guestCount",
 			"order": 2
+		},
+		"avgDI": {
+			"name": "avgDI",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "avgDI",
+			"order": 3
 		}
 	}
 }

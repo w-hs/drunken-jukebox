@@ -7,7 +7,7 @@ var songID = null;
 dpd.playlist.get(function (result, err) {
   if(err) return console.log(err);
   //sortieren und ersten Entry zurück geben
- 
+ console.log("hallo");
   
   for(var i = 0; i< result.length; i++)
   {
