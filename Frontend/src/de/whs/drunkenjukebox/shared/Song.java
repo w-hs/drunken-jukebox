@@ -1,8 +1,6 @@
 package de.whs.drunkenjukebox.shared;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Song implements Serializable {
 
@@ -11,7 +9,7 @@ public class Song implements Serializable {
 	private String title;
 	private String interpret;
 	private int durationInSecs;
-	private List<String> genres = new ArrayList<String>();
+	private String genres;
 	private String songSource;
 	private SongSourceType songSourceType;
 
@@ -51,11 +49,11 @@ public class Song implements Serializable {
 		this.interpret = interpret;
 	}
 
-	public List<String> getGenres() {
+	public String getGenres() {
 		return genres;
 	}
 
-	public void setGenres(List<String> genres) {
+	public void setGenres(String genres) {
 		this.genres = genres;
 	}
 

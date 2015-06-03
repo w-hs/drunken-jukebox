@@ -25,8 +25,8 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public ArrayList<Song> getSongList() {
 		ArrayList<Song> result = new ArrayList<Song>();
-		JSONArray songs = Snippets.getJsonArray(ServerURL + "songs"); 
-		
+		JSONArray songs = Snippets.getJsonArray(ServerURL + "songs");
+
 		for (int i = 0; i < songs.length(); i++) {
 			try {
 				JSONObject song = songs.getJSONObject(i);
@@ -35,7 +35,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 				e.printStackTrace();
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -46,36 +46,51 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public Song updateSong(Song song) {
-		return song;
+		try {
+			JSONObject jsonSong = Snippets.getJsonObjectFrom(song);
+			JSONObject result = Snippets.put(ServerURL + "songs", jsonSong);
+			return Snippets.getSongFromJsonObject(result);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public void removeSong(String songId) {
-		
+		Snippets.delete(ServerURL + "songs/" + songId);
 	}
 
 	@Override
 	public Song addSong(Song song) {
-		return song;
+		try {
+			JSONObject jsonSong = Snippets.getJsonObjectFrom(song);
+			JSONObject result = Snippets.post(ServerURL + "songs", jsonSong);
+			return Snippets.getSongFromJsonObject(result);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public Party startParty() {
 		Party p = new Party();
 		JSONObject object = Snippets.post(ServerURL + "party");
-		
+
 		try {
 			p.setPartyId(object.getString("id"));
 			p.setDrunkenIndex(object.getInt("avgDI"));
 			p.setPartyPeopleCount(object.getInt("guestCount"));
-			
+
 			String format = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-			SimpleDateFormat sdf = new SimpleDateFormat(format);			
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
 			p.setPartyStart(sdf.parse(object.getString("start")));
 		} catch (JSONException | ParseException e) {
 			e.printStackTrace();
-		}	
-		
+		}
+
 		return p;
 	}
 
@@ -88,25 +103,27 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 	public GlobalPlaylist getPlaylist() {
 		GlobalPlaylist playlist = new GlobalPlaylist();
 		JSONArray array = Snippets.getJsonArray(ServerURL + "playlist");
-		
+
 		if (array == null)
 			return playlist;
-		
+
 		for (int i = 0; i < array.length(); i++) {
 			try {
 				JSONObject entry = array.getJSONObject(i);
-				
+
 				int index = entry.getInt("position");
 				int votes = entry.getInt("votes");
 				String songId = entry.getString("songID");
-				Song song = Snippets.getSongFromID(songId, ServerURL);	
-				
-				playlist.addEntry(new GlobalPlaylistEntry(index, song.getTitle(), votes));
+				Song song = Snippets.getSongFromID(songId, ServerURL);
+
+				playlist.addEntry(new GlobalPlaylistEntry(index, song
+						.getTitle(), votes));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return playlist;
 	}
+
 }
