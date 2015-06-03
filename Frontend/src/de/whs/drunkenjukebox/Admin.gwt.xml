@@ -19,6 +19,10 @@
 	
 	<!-- GSS aktivieren -->
 	<inherits name="com.google.gwt.resources.Resources" />
+	<inherits name="com.google.gwt.i18n.I18N"/>
+	
+	<extend-property name="locale" values="de,en" />
+	<set-property-fallback name="locale" value="en" />
 	<set-configuration-property  name="CssResource.enableGss" value="true" />
 	<set-configuration-property name="CssResource.legacy" value="true" />
 	
@@ -29,5 +33,9 @@
 
 	<!-- allow Super Dev Mode -->
 	<add-linker name="xsiframe" />
-	<entry-point class="de.whs.drunkenjukebox.client.Admin"></entry-point>
+	<entry-point class="de.whs.drunkenjukebox.client.Admin">
+<!-- 		<extend-property name="locale" values="de"/> -->
+	</entry-point>
+	
+	
 </module>

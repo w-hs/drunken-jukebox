@@ -7,7 +7,7 @@ import java.util.List;
 public class Song implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private String id;
 	private String title;
 	private String interpret;
 	private int durationInSecs;
@@ -19,11 +19,11 @@ public class Song implements Serializable {
 
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -73,6 +73,29 @@ public class Song implements Serializable {
 
 	public void setSongSourceType(SongSourceType songSourceType) {
 		this.songSourceType = songSourceType;
+	}
+	
+	public void setSongSourceType(int type) {
+		if (type == 0) {
+			this.songSourceType = SongSourceType.local;
+		}
+		else if (type == 1) {
+			this.songSourceType = SongSourceType.youtube;
+		}
+		else
+			throw new RuntimeException(
+				"songSourceType must be local (0) or youtube (1)");
+	}
+	
+	public int getSongSourceTypeInt() {
+		if (this.songSourceType == SongSourceType.local) {
+			return 0;
+		}
+		else if (this.songSourceType == SongSourceType.youtube) {
+			return 1;
+		}
+		else
+			throw new IllegalStateException("SongSourceType must be youtube or local!");
 	}
 	
 	@Override

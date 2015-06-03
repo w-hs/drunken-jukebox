@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 public interface AppResources extends ClientBundle {
 	public interface VoteAppStyle extends CssResource {
@@ -71,4 +72,10 @@ public interface AppResources extends ClientBundle {
 	
 	@Source("vote-app.gss")
 	VoteAppStyle voteAppStyle();
+	
+	@Source("en.png")
+	ImageResource en();
+	
+	@Source("de.png")
+	ImageResource de();
 }

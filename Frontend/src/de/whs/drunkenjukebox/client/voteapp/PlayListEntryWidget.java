@@ -1,7 +1,6 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
-import javafx.scene.layout.FlowPane;
-
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -10,10 +9,13 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppConstants;
 import de.whs.drunkenjukebox.resources.AppResources.VoteAppStyle;
 import de.whs.drunkenjukebox.shared.PlayListEntry;
 
 public class PlayListEntryWidget extends Composite {
+	
+	private AppConstants constants = GWT.create(AppConstants.class);
 	
 	PlayListEntry playlistEntry;
 	
@@ -29,9 +31,9 @@ public class PlayListEntryWidget extends Composite {
 		namePanel.add(songName);
 		namePanel.add(artistName);
 		
-		Button upButton = new Button("Up");
+		Button upButton = new Button(constants.upVote());
 		upButton.addStyleName(style.upVote());
-		Button downButton = new Button("Down");
+		Button downButton = new Button(constants.downVote());
 		downButton.addStyleName(style.downVote());
 		
 		FlowPanel buttonsPannel = new FlowPanel();
