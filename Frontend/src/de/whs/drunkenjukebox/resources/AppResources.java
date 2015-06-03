@@ -65,6 +65,8 @@ public interface AppResources extends ClientBundle {
 		@ClassName("gwt-TabLayoutPanel")
 		String tabLayoutPanel();
 		
+		@ClassName("partyManagementView")
+		String partyManagementView();
 	}
 	
 	@Source("admin.gss")

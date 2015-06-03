@@ -161,4 +161,10 @@ background:HEADER_COLOR;
   color: TAB_TEXT_COLOR_SELECTED; 
 }
 
+.partyManagementView{
+	height: HEIGHT;
+	width: WIDTH;
+	@mixin border();
+	background:red;
+}
 

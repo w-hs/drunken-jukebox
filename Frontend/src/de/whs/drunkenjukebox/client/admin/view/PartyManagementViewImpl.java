@@ -40,6 +40,7 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 
 	public PartyManagementViewImpl(AdminStyle style) {
 		HorizontalPanel panel = new HorizontalPanel();
+		panel.addStyleName(style.partyManagementView());
 		initLeftSide(panel);
 		initRightSide(panel);
 
