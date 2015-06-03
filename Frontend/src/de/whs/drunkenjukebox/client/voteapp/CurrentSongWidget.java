@@ -10,10 +10,8 @@ public class CurrentSongWidget extends Composite {
 	
 	private Label songLabel = new Label("Dummy");
 	private Label interpreterLabel = new Label("Bla Blubb");
-	private VoteAppStyle style;
 	
 	public CurrentSongWidget(VoteAppStyle style) {
-		this.style = style;
 		VerticalPanel panel = new VerticalPanel();
 		panel.add(songLabel);
 		panel.add(interpreterLabel);
