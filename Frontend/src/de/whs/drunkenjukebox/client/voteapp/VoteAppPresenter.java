@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 import de.whs.drunkenjukebox.shared.PlayList;
 import de.whs.drunkenjukebox.shared.Song;
+import de.whs.drunkenjukebox.shared.Vote;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
 
 public class VoteAppPresenter {
@@ -15,10 +16,48 @@ public class VoteAppPresenter {
 	private VoteAppView view;
 	private VoteAppServiceAsync service;
 	
-	public VoteAppPresenter(final VoteAppView view, VoteAppServiceAsync service)
+	public VoteAppPresenter(final VoteAppView view,final VoteAppServiceAsync service)
 	{
 		this.view = view;
 		this.service = service;
+		
+		view.setVoteListener(new VoteListener() {
+			
+			@Override
+			public void onUpVote(PlayListEntryWidget entry) {
+				service.sendVote(entry.playlistEntry, Vote.UP, new AsyncCallback<Void>() {	
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO: Error handling
+						
+					}
+		
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+			
+			@Override
+			public void onDownVote(PlayListEntryWidget entry) {
+				service.sendVote(entry.playlistEntry, Vote.DOWN, new AsyncCallback<Void>() {	
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO: Error handling
+						
+					}
+		
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		});
+		
 		this.service.getPlayList(new AsyncCallback<PlayList>() {	
 			@Override
 			public void onSuccess(PlayList result) {

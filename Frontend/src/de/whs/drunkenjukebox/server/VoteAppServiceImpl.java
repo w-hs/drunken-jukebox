@@ -57,9 +57,12 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 					JSONObject playlistEntry = playlistArray.getJSONObject(i);
 					Song song = Snippets.getSongFromID(playlistEntry.getString("songID"), ServerURL);
 					PlayListEntry entry = new PlayListEntry();
+					entry.setId(playlistEntry.getString("id"));
+					entry.setSongID(playlistEntry.getString("songID"));
 					entry.setSongName(song.getTitle());
 					entry.setInterpreter(song.getInterpret());
 					entry.setVoteResult(VoteResult.NOT_VOTED);
+					entry.setVotes(playlistEntry.getInt("votes"));
 					pl.getEntries().add(entry);
 					
 				}
@@ -77,11 +80,41 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void sendDi(int value) {
 		// TODO: Wirklich implementieren
+		
 	}
 
 	@Override
 	public void sendVote(PlayListEntry entry, Vote vote) {
 		// TODO: Wirklich implementieren
+		System.out.println("voteUP");
+		
+		if(vote == Vote.UP)
+		{
+			entry.setVoteResult(VoteResult.UP_VOTED);
+		}
+		else
+		{
+			entry.setVoteResult(VoteResult.DOWN_VOTED);
+		}
+			
+		JSONObject jsonEntry = new JSONObject();
+		try {
+			
+			jsonEntry.put("id", entry.getId());
+			jsonEntry.put("songID", entry.getSongID());
+			jsonEntry.put("position", 0);
+			jsonEntry.put("votes",entry.getVotes());
+			
+			System.out.println(ServerURL+"playlist/"+entry.getId());
+			System.out.println(jsonEntry.toString());
+			
+			Snippets.put(ServerURL+"playlist/"+entry.getId(), jsonEntry);
+		} catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }

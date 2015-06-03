@@ -22,6 +22,7 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	private final DIDialogView diDialog = new DIDialogViewImpl();
 	private final CurrentSongWidget currentSong;
 	private final VoteAppStyle style;
+	private VoteListener voteListener;
 	
 	public VoteAppViewImpl(VoteAppStyle style) {
 		this.style = style;
@@ -45,6 +46,7 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 		{
 			int numRows = songTable.getRowCount();
 			PlayListEntryWidget entry = new PlayListEntryWidget(p, style);
+			entry.setVoteListener(voteListener);
 			songTable.setWidget(numRows, 0, entry);
 		}
 	}
@@ -63,4 +65,8 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	public CurrentSongWidget getCurrentSong() {
 		return currentSong;
 	}
-}
+
+	@Override
+	public void setVoteListener(VoteListener listener) {
+		voteListener = listener;
+	}}
