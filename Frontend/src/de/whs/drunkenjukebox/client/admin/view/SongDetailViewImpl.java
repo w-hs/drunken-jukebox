@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.client.admin.view;
 
 import java.util.Arrays;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
@@ -16,24 +17,27 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.whs.drunkenjukebox.client.admin.InputBox;
+import de.whs.drunkenjukebox.resources.AppConstants;
 import de.whs.drunkenjukebox.resources.AppResources;
 import de.whs.drunkenjukebox.resources.AppResources.AdminStyle;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.SongSourceType;
 
 public class SongDetailViewImpl extends Composite implements SongDetailView {
+	
+	private AppConstants constants = GWT.create(AppConstants.class);
 
-	private final InputBox interpret;
+	private final InputBox artist;
 	private final InputBox title;
 	private final InputBox genre;
 	private final InputBox length;
 	private final TextBox songSource = new TextBox();
 	
-	private final Button buttonSave = new Button("Speichern");
-	private final Button buttonRemove = new Button("Entfernen");
+	private final Button buttonSave = new Button(constants.save());
+	private final Button buttonRemove = new Button(constants.remove());
 	
-	private final RadioButton radioYoutube = new RadioButton("SongSource", "YouTube");
-	private final RadioButton radioLocal = new RadioButton("SongSource", "Lokal");
+	private final RadioButton radioYoutube = new RadioButton("SongSource", constants.youtube());
+	private final RadioButton radioLocal = new RadioButton("SongSource", constants.local());
 	private AdminStyle style;
 
 	public SongDetailViewImpl(AppResources.AdminStyle style) {
@@ -41,16 +45,16 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		VerticalPanel panel = new VerticalPanel();
 		panel.addStyleName(style.songDetailView());
 
-		interpret = new InputBox("Interpret", style);
-		panel.add(interpret);
+		artist = new InputBox(constants.artist(), style);
+		panel.add(artist);
 		
-		title = new InputBox("Titel", style);
+		title = new InputBox(constants.title(), style);
 		panel.add(title);
 		
-		genre = new InputBox("Genre", style);
+		genre = new InputBox(constants.genre(), style);
 		panel.add(genre);
 		
-		length = new InputBox("Länge", style);
+		length = new InputBox(constants.length(), style);
 		panel.add(length);
 
 		panel.add(getSourcePanel());
@@ -77,7 +81,7 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		table.setWidget(0, 1, songSource);
 		songSource.setWidth("100%");
 		
-		CaptionPanel cp = new CaptionPanel("Quelle");
+		CaptionPanel cp = new CaptionPanel(constants.source());
 		cp.addStyleName(style.songSourcePanel());
 		cp.add(table);
 		
@@ -87,7 +91,7 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 	@Override
 	public void setSong(Song song) {
 		title.setText(song.getTitle());
-		interpret.setText(song.getInterpret());
+		artist.setText(song.getInterpret());
 		
 		String genres = "";
 		for (String s : song.getGenres())
@@ -98,16 +102,16 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		length.setText(new Integer(song.getDurationInSecs()).toString());
 		songSource.setText(song.getSongSource());
 		
-		if (song.getSongSourceType()==SongSourceType.local)
+		if (song.getSongSourceType() == SongSourceType.local)
 			radioLocal.setValue(true);
-		else if (song.getSongSourceType()==SongSourceType.youtube)
+		else if (song.getSongSourceType() == SongSourceType.youtube)
 			radioYoutube.setValue(true);	
 	}
 
 	@Override
 	public void clear() {
 		title.clear();
-		interpret.clear();
+		artist.clear();
 		genre.clear();
 		length.clear();
 		songSource.setText("");
@@ -126,7 +130,7 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 		song.setDurationInSecs(Integer.parseInt(length.getText()));
 		String[] genres = genre.getText().split(", ");		
 		song.setGenres(Arrays.asList(genres));
-		song.setInterpret(interpret.getText());
+		song.setInterpret(artist.getText());
 		song.setTitle(title.getText());
 		song.setSongSource(songSource.getText());
 		if (radioLocal.getValue())
@@ -138,7 +142,7 @@ public class SongDetailViewImpl extends Composite implements SongDetailView {
 
 	@Override
 	public void setFocusToInterpretBox() {
-		interpret.setFocus(true);
+		artist.setFocus(true);
 	}
 
 	@Override
