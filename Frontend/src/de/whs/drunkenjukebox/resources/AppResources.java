@@ -51,6 +51,19 @@ public interface AppResources extends ClientBundle {
 		
 		@ClassName("songSourcePanel")
 		String songSourcePanel();
+		
+		@ClassName("save-button")
+		String saveButton();
+		
+		@ClassName("remove-button")
+		String removeButton();
+		
+		@ClassName("create-button")
+		String createButton();
+		
+		@ClassName("gwt-TabLayoutPanel")
+		String tabLayoutPanel();
+		
 	}
 	
 	@Source("admin.gss")

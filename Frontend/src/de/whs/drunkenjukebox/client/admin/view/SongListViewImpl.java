@@ -39,6 +39,7 @@ public class SongListViewImpl extends Composite implements SongListView {
 		listBoxSongs.addStyleName(style.listBoxSongs());
 		panel.add(listBoxSongs);
 
+		buttonCreate.addStyleName(style.createButton());
 		panel.add(buttonCreate);
 		panel.setCellHorizontalAlignment(buttonCreate,
 				HasHorizontalAlignment.ALIGN_RIGHT);

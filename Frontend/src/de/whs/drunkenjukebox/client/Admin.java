@@ -45,6 +45,7 @@ public class Admin implements EntryPoint {
 	       
 		tabLayoutPanel.add(partyManagementView.asWidget(), "Party");
 		tabLayoutPanel.add(songManagementView.asWidget(), "Songs");
+		tabLayoutPanel.addStyleName(style.tabLayoutPanel());
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		
 		rp.add(tabLayoutPanel);	

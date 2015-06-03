@@ -6,9 +6,52 @@
 @def LEFT 200px;
 @def RIGHT 400px;
 
+@def HEADER_COLOR #40A6FF;
+@def TAB_COLOR #8CCAFF;
+@def TAB_TEXT_COLOR PRIMARY_COLOR;
+@def TAB_COLOR_SELECTED PRIMARY_COLOR;
+@def TAB_TEXT_COLOR_SELECTED HEADER_COLOR;
+
+@def BUTTON_TEXT_COLOR #fff;
+
+@def SAVE_BUTTON_COLOR #1BBD46;
+@def SAVE_BUTTON_BORDER #3CA365; 
+@def SAVE_BUTTON_ACTIVE #398232;
+
+@def REMOVE_BUTTON_COLOR #E82727;
+@def REMOVE_BUTTON_BORDER #C43535; 
+@def REMOVE_BUTTON_ACTIVE #C92222;
+
+@def CREATE_BUTTON_COLOR #40A6FF;
+@def CREATE_BUTTON_BORDER #4E55E0; 
+@def CREATE_BUTTON_ACTIVE #4662EB;
+
+@external gwt-TabLayoutPanel;
+@external gwt-TabLayoutPanelTabs;
+@external gwt-TabLayoutPanelTabInner;
+@external gwt-TabLayoutPanelTab;
+@external gwt-TabLayoutPanelTab-selected;
+@external gwt-TabLayoutPanelContent;
+
 @defmixin border() {
-	border: 1px solid #bbb;
+	border: 1px solid HEADER_COLOR;
 	border-radius: 3px;
+}
+
+@defmixin coolButton(BACKGROUND, BORDER) {
+  color: BUTTON_TEXT_COLOR; 
+  background-color: BACKGROUND; 
+  border-color: BORDER; 
+  background-image: none;
+  padding:STANDARD_PADDING;
+  width: 80px;
+  margin-right:STANDARD_MARGIN;   
+}
+
+@defmixin coolButtonActive(BACKGROUND, BORDER) {
+  color: BUTTON_TEXT_COLOR; 
+  background-color: BACKGROUND; 
+  border-color: BORDER; 
 }
 
 body {
@@ -56,4 +99,69 @@ body {
 .songSourcePanel {
 	font-weight: bold;
 	@mixin border();
+}
+
+.save-button { 
+  @mixin coolButton(SAVE_BUTTON_COLOR, SAVE_BUTTON_BORDER);
+} 
+ 
+.save-button:hover, 
+.save-button:focus, 
+.save-button:active
+{ 
+  @mixin coolButtonActive(SAVE_BUTTON_ACTIVE, SAVE_BUTTON_BORDER);
+}
+
+.remove-button { 
+  @mixin coolButton(REMOVE_BUTTON_COLOR, REMOVE_BUTTON_BORDER);
+} 
+ 
+.remove-button:hover, 
+.remove-button:focus, 
+.remove-button:active
+{ 
+  @mixin coolButtonActive(REMOVE_BUTTON_ACTIVE, REMOVE_BUTTON_BORDER);
+}  
+
+.create-button { 
+  @mixin coolButton(CREATE_BUTTON_COLOR, CREATE_BUTTON_BORDER);
+} 
+ 
+.create-button:hover, 
+.create-button:focus, 
+.create-button:active
+{ 
+  @mixin coolButtonActive(CREATE_BUTTON_ACTIVE, CREATE_BUTTON_BORDER);
+}
+
+.gwt-TabLayoutPanel { 
+} 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs { 
+background:HEADER_COLOR;
+} 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelContent { 
+  border-style: none;  
+  overflow: hidden; 
+  padding: STANDARD_PADDING; 
+  background: PRIMARY_COLOR;  
+} 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab { 
+  margin-left: STANDARD_MARGIN; 
+  padding: 3px STANDARD_PADDING 3px STANDARD_PADDING;  
+  cursor: hand;  
+  font-size: 1.2em; 
+  color: TAB_TEXT_COLOR; 
+  text-align: center; 
+  background: TAB_COLOR;
+} 
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected { 
+  cursor: default; 
+  background: TAB_COLOR_SELECTED; 
+  font-size: 1.2em; 
+  color: TAB_TEXT_COLOR_SELECTED; 
+}
+
+.partyManagementView{
+	height: HEIGHT;
+	width: WIDTH;
 }
