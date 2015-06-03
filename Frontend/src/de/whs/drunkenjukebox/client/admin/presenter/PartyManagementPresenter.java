@@ -2,6 +2,7 @@ package de.whs.drunkenjukebox.client.admin.presenter;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -14,12 +15,19 @@ public class PartyManagementPresenter {
 
 	private final PartyManagementView view;
 	private final AdminServiceAsync service;
+	private final Timer refreshPlaylistTimer;
 	private Party currentParty;
 
 	public PartyManagementPresenter(AdminServiceAsync service,
 			PartyManagementView view) {
 		this.view = view;
 		this.service = service;
+		this.refreshPlaylistTimer = new Timer() {
+			@Override
+			public void run() {
+				fetchPlaylistEntries();
+			}
+		};
 	}
 
 	public void bind() {
@@ -63,6 +71,7 @@ public class PartyManagementPresenter {
 				view.setButtonEnabled(false, true);
 				view.setParty(currentParty);
 				fetchPlaylistEntries();
+				refreshPlaylistTimer.scheduleRepeating(5*1000);
 			}
 
 			@Override
