@@ -66,7 +66,6 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 					entry.setVoteResult(VoteResult.NOT_VOTED);
 					entry.setVotes(playlistEntry.getInt("votes"));
 					pl.getEntries().add(entry);
-					
 				}
 				
 				
@@ -80,7 +79,7 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 
 			@Override
 			public int compare(PlayListEntry o1, PlayListEntry o2) {
-				return o1.getVotes() - o2.getVotes();
+				return o2.getVotes() - o1.getVotes();
 			}
 		});
 		

@@ -1,15 +1,13 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
-import java.util.Comparator;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 import de.whs.drunkenjukebox.shared.PlayList;
-import de.whs.drunkenjukebox.shared.PlayListEntry;
 import de.whs.drunkenjukebox.shared.Song;
 import de.whs.drunkenjukebox.shared.Vote;
 import de.whs.drunkenjukebox.shared.VoteAppServiceAsync;
@@ -61,18 +59,7 @@ public class VoteAppPresenter {
 			}
 		});
 		
-		this.service.getPlayList(new AsyncCallback<PlayList>() {	
-			@Override
-			public void onSuccess(PlayList result) {
-				view.setPlaylist(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO: Error handling
-				
-			}
-		});
+		updatePlayList();
 		
 		this.service.getCurrentSong(new AsyncCallback<Song>() {	
 			@Override
@@ -83,6 +70,31 @@ public class VoteAppPresenter {
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				
+			}
+		});
+		
+		Timer timer = new Timer() {	
+			@Override
+			public void run() {
+				updatePlayList();
+			}
+		};
+		
+		timer.scheduleRepeating(5000);
+	}
+	
+	private void updatePlayList()
+	{
+		this.service.getPlayList(new AsyncCallback<PlayList>() {	
+			@Override
+			public void onSuccess(PlayList result) {
+				view.setPlaylist(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO: Error handling
 				
 			}
 		});
