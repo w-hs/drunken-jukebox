@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -16,24 +17,26 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.whs.drunkenjukebox.resources.AppConstants;
+import de.whs.drunkenjukebox.resources.AppMessages;
 import de.whs.drunkenjukebox.resources.AppResources.AdminStyle;
 import de.whs.drunkenjukebox.shared.GlobalPlaylistEntry;
 import de.whs.drunkenjukebox.shared.Party;
 
 public class PartyManagementViewImpl extends Composite implements PartyManagementView {
 
-	private final Button buttonStart = new Button("Start");
-	private final Button buttonStop = new Button("Stopp");
+	private AppConstants constants = GWT.create(AppConstants.class);
+	private AppMessages messages = GWT.create(AppMessages.class);
+	
+	private final Button buttonStart = new Button(constants.startParty());
+	private final Button buttonStop = new Button(constants.stopParty());
 	private final CellTable<GlobalPlaylistEntry> table = new CellTable<>();
 	
-	private final String startText = "Start: ";
-	private final Label labelStart = new Label(startText);
+	private final Label labelStart = new Label("");
 	
-	private final String partyPeopleText = "Gäste: ";
-	private final Label labelPartyPeopleCount = new Label(partyPeopleText);
+	private final Label labelPartyPeopleCount = new Label("");
 	
-	private final String drunkenIndexText = "Drunken-Index: ";
-	private final Label labelDrunkenIndex = new Label(drunkenIndexText);
+	private final Label labelDrunkenIndex = new Label("");
 
 	public PartyManagementViewImpl(AdminStyle style) {
 		HorizontalPanel panel = new HorizontalPanel();
@@ -57,7 +60,7 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 				return object.getIndex();
 			}
 		};
-		table.addColumn(indexColumn, "Index");
+		table.addColumn(indexColumn, constants.position());
 
 		Column<GlobalPlaylistEntry, String> titleColumn = new Column<GlobalPlaylistEntry, String>(
 				new TextCell()) {
@@ -66,7 +69,7 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 				return object.getTitle();
 			}
 		};
-		table.addColumn(titleColumn, "Titel");
+		table.addColumn(titleColumn, constants.title());
 
 		Column<GlobalPlaylistEntry, Number> voteCountCell = new Column<GlobalPlaylistEntry, Number>(
 				new NumberCell(NumberFormat.getFormat("+#;-#"))) {
@@ -75,7 +78,7 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 				return object.getVoteCount();
 			}
 		};
-		table.addColumn(voteCountCell, "Vote");
+		table.addColumn(voteCountCell, constants.vote());
 	}
 
 	private void initLeftSide(CellPanel layout) {
@@ -111,9 +114,9 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 
 	@Override
 	public void setParty(Party p) {
-		labelStart.setText(startText + p.getPartyStart());
-		labelDrunkenIndex.setText(drunkenIndexText + p.getDrunkenIndex());
-		labelPartyPeopleCount.setText(partyPeopleText + p.getPartyPeopleCount());
+		labelStart.setText(messages.startDate(p.getPartyStart()));
+		labelDrunkenIndex.setText(messages.drunkenIndex(p.getDrunkenIndex()));
+		labelPartyPeopleCount.setText(messages.guestCount(p.getPartyPeopleCount()));
 	}
 
 	@Override
@@ -125,8 +128,8 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 	public void clear() {
 		table.setRowData(new ArrayList<GlobalPlaylistEntry>());
 		
-		labelStart.setText(startText);
-		labelDrunkenIndex.setText(drunkenIndexText);
-		labelPartyPeopleCount.setText(partyPeopleText);
+		labelStart.setText("");
+		labelDrunkenIndex.setText("");
+		labelPartyPeopleCount.setText("");
 	}
 }
