@@ -3,6 +3,11 @@ package de.whs.drunkenjukebox.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 
@@ -48,6 +53,30 @@ public class Admin implements EntryPoint {
 	       
 		tabLayoutPanel.add(partyManagementView.asWidget(), constants.party());
 		tabLayoutPanel.add(songManagementView.asWidget(), constants.songs());
+		
+		HorizontalPanel languagePanel = new HorizontalPanel();
+		Image enImage = new Image(resources.en());
+		enImage.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String newUrl = Window.Location.getPath() + "?locale=en";
+				Window.Location.assign(newUrl);
+			}
+		});
+		Image deImage = new Image(resources.de());
+		deImage.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				String newUrl = Window.Location.getPath() + "?locale=de";
+				Window.Location.assign(newUrl);
+			}
+		});
+		languagePanel.add(enImage);
+		languagePanel.add(deImage);
+		tabLayoutPanel.add(languagePanel, "Language");
+		
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		
 		rp.add(tabLayoutPanel);	
