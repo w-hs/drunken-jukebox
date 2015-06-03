@@ -65,6 +65,9 @@ public interface AppResources extends ClientBundle {
 		@ClassName("gwt-TabLayoutPanel")
 		String tabLayoutPanel();
 		
+		@ClassName("language-image")
+		String languageImage();
+		
 	}
 	
 	@Source("admin.gss")

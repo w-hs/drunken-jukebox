@@ -56,6 +56,7 @@ public class Admin implements EntryPoint {
 		
 		HorizontalPanel languagePanel = new HorizontalPanel();
 		Image enImage = new Image(resources.en());
+		enImage.addStyleName(style.languageImage());
 		enImage.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -65,6 +66,7 @@ public class Admin implements EntryPoint {
 			}
 		});
 		Image deImage = new Image(resources.de());
+		deImage.addStyleName(style.languageImage());
 		deImage.addClickHandler(new ClickHandler() {
 			
 			@Override
