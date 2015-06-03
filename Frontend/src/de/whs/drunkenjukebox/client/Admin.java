@@ -14,9 +14,12 @@ import de.whs.drunkenjukebox.client.admin.view.PartyManagementView;
 import de.whs.drunkenjukebox.client.admin.view.PartyManagementViewImpl;
 import de.whs.drunkenjukebox.client.admin.view.SongManagementView;
 import de.whs.drunkenjukebox.client.admin.view.SongManagementViewImpl;
+import de.whs.drunkenjukebox.resources.AppConstants;
 import de.whs.drunkenjukebox.resources.AppResources;
 
 public class Admin implements EntryPoint {
+	
+	private AppConstants constants = GWT.create(AppConstants.class);
 	
 	private AdminServiceAsync rpcService;
 	private SongManagementView songManagementView;
@@ -43,8 +46,8 @@ public class Admin implements EntryPoint {
 		tabLayoutPanel.setAnimationDuration(1000);
 	    tabLayoutPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	       
-		tabLayoutPanel.add(partyManagementView.asWidget(), "Party");
-		tabLayoutPanel.add(songManagementView.asWidget(), "Songs");
+		tabLayoutPanel.add(partyManagementView.asWidget(), constants.party());
+		tabLayoutPanel.add(songManagementView.asWidget(), constants.songs());
 		RootLayoutPanel rp = RootLayoutPanel.get();
 		
 		rp.add(tabLayoutPanel);	

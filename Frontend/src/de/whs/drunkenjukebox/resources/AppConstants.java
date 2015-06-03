@@ -74,4 +74,10 @@ public interface AppConstants extends Constants {
 	
 	@DefaultStringValue("Down")
 	String downVote();
+	
+	@DefaultStringValue("Party")
+	String party();
+	
+	@DefaultStringValue("Songs")
+	String songs();
 }
