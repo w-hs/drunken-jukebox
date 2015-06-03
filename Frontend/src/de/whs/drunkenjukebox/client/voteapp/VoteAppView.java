@@ -14,5 +14,7 @@ public interface VoteAppView {
 	
 	CurrentSongWidget getCurrentSong();
 	
+	void setVoteListener(VoteListener listener);
+	
 	Widget asWidget();
 }

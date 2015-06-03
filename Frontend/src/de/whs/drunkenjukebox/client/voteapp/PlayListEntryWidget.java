@@ -1,6 +1,8 @@
 package de.whs.drunkenjukebox.client.voteapp;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -18,6 +20,11 @@ public class PlayListEntryWidget extends Composite {
 	private AppConstants constants = GWT.create(AppConstants.class);
 	
 	PlayListEntry playlistEntry;
+	Button upButton;
+	Button downButton;
+	private VoteListener voteListener;
+	
+	
 	
 	public PlayListEntryWidget(PlayListEntry p, VoteAppStyle style) {
 		playlistEntry = p;
@@ -31,13 +38,28 @@ public class PlayListEntryWidget extends Composite {
 		namePanel.add(songName);
 		namePanel.add(artistName);
 		
-		Button upButton = new Button(constants.upVote());
+		upButton = new Button(constants.upVote());
 		upButton.addStyleName(style.upVote());
-		Button downButton = new Button(constants.downVote());
+		downButton = new Button(constants.downVote());
 		downButton.addStyleName(style.downVote());
 		
 		FlowPanel buttonsPannel = new FlowPanel();
 		
+		final PlayListEntryWidget self = this;
+		upButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				voteListener.onUpVote(self);
+			}
+		});
+		downButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				voteListener.onDownVote(self);
+			}
+		});
 		
 		buttonsPannel.add(upButton);
 		buttonsPannel.add(downButton);
@@ -49,6 +71,12 @@ public class PlayListEntryWidget extends Composite {
 		
 		initWidget(mainPanel);
 	}
+	
+	public void setVoteListener(VoteListener vl)
+	{
+		voteListener = vl;
+	}
+	
 	
 	
 }
