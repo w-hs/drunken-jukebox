@@ -80,4 +80,7 @@ public interface AppConstants extends Constants {
 	
 	@DefaultStringValue("Songs")
 	String songs();
+	
+	@DefaultStringValue("Language")
+	String language();
 }

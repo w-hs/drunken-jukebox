@@ -77,7 +77,7 @@ public class Admin implements EntryPoint {
 		});
 		languagePanel.add(enImage);
 		languagePanel.add(deImage);
-		tabLayoutPanel.add(languagePanel, "Language");
+		tabLayoutPanel.add(languagePanel, constants.language());
 		
 		tabLayoutPanel.addStyleName(style.tabLayoutPanel());
 		RootLayoutPanel rp = RootLayoutPanel.get();
