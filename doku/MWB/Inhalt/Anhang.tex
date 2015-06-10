@@ -12,4 +12,94 @@ Zwei Services:
 
 \section{REST-Schnittstelle von Deployd}
 
-Beispiele
+\subsection{party}
+\label{service:party}
+Erstellt eine neue Party und löscht die playlist.
+
+POST
+\url{/party}
+
+Parameter: Leeres JSON Objekt
+
+Rückgabewert: JSON Objekt der Party
+Beispiel:
+\begin{lstlisting}
+{
+"start":"2015-06-03T12:12:48.190Z",
+"end":{},
+"avgDI":0,
+"guestCount":1,
+"id":"791bbdf86d85fa29"
+}
+\end{lstlisting}
+
+\subsection{playlist}
+\label{service:playlist}
+Gibt die aktuelle Playlist zurück.
+
+GET
+\url{/playlist}
+
+Rückgabewert: JSON Array aller Playlist Einträge
+Beispiel:
+\begin{lstlisting}
+[
+{"songID":"89d0ddbf0d7e683e","position":0,"votes":1,"id":"b90bb3e138456920"},
+{"songID":"fbc56a0eacd2d880","position":0,"votes":2,"id":"7de1eb1dfeee188e"},
+...
+]
+\end{lstlisting}
+
+
+\subsection{currentSong}
+\label{service:currentSong}
+Gibt den current Song zurück.
+
+GET
+\url{/currentsong}
+
+Rückgabewert: JSON Objekt des current Songs
+Beispiel:
+\begin{lstlisting}
+[{
+"songID":"18c77e30e376280f",
+"id":"77a26abb92f2ebdd"
+}]
+\end{lstlisting}
+
+\subsection{song}
+\label{service:song}
+Gibt alle Songs zurück.
+
+GET
+\url{/song}
+
+Rückgabewert: JSON Array aller Songs
+Beispiel:
+\begin{lstlisting}
+[{
+"title":"The Pretender",
+"length":260,
+"artist":"Foo Fighters",
+"source":"C:\\Musik\\",
+"sourceType":0,
+"genres":"Rock",
+"id":"89d0ddbf0d7e683e"
+},
+{"title":"Crawling",
+"length":340,
+"artist":"Linkin Park",
+"source":"C:\\Musik\\",
+"sourceType":0,
+"genres":"Rock",
+"id":"fbc56a0eacd2d880"
+},
+...
+]
+\end{lstlisting}
+
+
+
+Zudem wir noch POST, PUT, und DELETE unterstützt\footnote{\url{http://docs.deployd.com/docs/collections/reference/http.html}}.
+
+
