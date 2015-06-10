@@ -27,10 +27,22 @@ HTTP-Schnittstelle angesprochen.
 \subsubsection{Frontend}
 Innerhalb der GWT-Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige
 der Oberfläche implementiert. Der Zugriff auf das Model wird über Services ermöglicht, die intern
-eine Anfrage an den Java-Server im Backend durchführen.
+Anfragen an den Java-Server im Backend durchführen.
 
-MVP-Architektur
-- Klassendiagramm für beide (Views \& Presenter)
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.6\linewidth]{Bilder/MVP-mit-Service}
+\caption{MVP-Pattern mit Service}
+\label{fig:MVP-mit-Service}
+\end{figure}
+
+Im Folgenden werden die erstellten View-Presenter-Paare und deren Aufgaben kurz vorgestellt:
+\begin{description}
+	\item[PartyManagamentView und -Presenter:] Verwalten einer Party im Admin
+	\item[SongManagementView und -Presenter:] Verwalten der Songsammlung im Admin
+	\item[LanguageSelectionView und -Presenter:] Ändern der Anzeigesprache im Admin
+	\item[VoteAppView und -Presenter:] Teilnahme an einer Party als Gast über die Vote-App
+\end{description}
 
 \subsubsection{Backend}
 - Java-Server
