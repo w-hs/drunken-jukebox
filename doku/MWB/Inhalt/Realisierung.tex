@@ -1,6 +1,15 @@
 \section{Realisierung}
 
+In diesem Kapitel wird die konkrete Umsetzung der Anforderungen in GWT beschreiben.
+Zuerst wird die Architektur der Anwendung festgelegt. Anschließend werden konkrete
+Implentierungsdetails erläutert, welche die Erstellung eigener Widgets in GWT und
+mittels JSNI, das Styling in GSS sowie die Lokalisierung.
+
 \subsection{Architektur}
+
+Um den Anforderungen der zwei Anwendergruppen (Veranstalter und Gäster einer Party) gerecht
+zu werden, entwickeln wir zwei Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
+entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird.
 
 Zwei GWT-Anwendungen
 - eine für Desktop
