@@ -1,49 +1,27 @@
 \section{GWT-RPC}
 
 \subsection{Admin Service}
-
-Nachfolgend eine Liste aller Funktionen des Admin Services.
-
-\textbf{ArrayList<Song> getSongList()}
-Gibt die Liste aller Songs zurück.
-
-\textbf{Song getSong(String id)}
-Gibt einen spezifischen Song zurück.
-
-\textbf{Song updateSong(Song song)}
-Updatet einen Song.
-
-\textbf{void removeSong(String songId)}
-Löscht einen Song.
-
-\textbf{Song addSong(Song song)}
-Fügt einen neuen Song hinzu.
-
-\textbf{Party startParty()}
-Startet eine Party
-
-\textbf{Party stoppParty(Party p) }
-Stoppt eine Party
-
-\textbf{GlobalPlaylist getPlaylist()}
-Gibt die aktuelle Playlist zurück zurück.
+Nachfolgend eine Liste aller Funktionen des Admin-Services:
+\begin{description}
+	\item[ArrayList<Song> getSongList()] Gibt die Liste aller Songs zurück.
+	\item[Song getSong(String id)] Gibt einen spezifischen Song zurück.
+	\item[Song updateSong(Song song)] Updatet einen Song.
+	\item[void removeSong(String songId)]	Löscht einen Song.
+	\item[Song addSong(Song song)] Fügt einen neuen Song hinzu.
+	\item[Party startParty()]	Startet eine Party
+	\item[Party stoppParty(Party p)] Stoppt eine Party
+	\item[GlobalPlaylist getPlaylist()] Gibt die aktuelle Playlist zurück zurück.
+\end{description}
 
 
 \subsection{VoteApp Service}
-
-Nachfolgend die Auflistung der Funktionen des VoteApp Services.
-
-\textbf{Song getCurrentSong()}
-Gibt den Current Song zurück.
-
-\textbf{PlayList getPlayList()}
-Gibt die aktuelle Playlist zurück.
-
-\textbf{void sendDi(int value)}
-Sendet den übergebenen Betrunkenheitsgrad (DI-Wert) zurück.
-
-\textbf{void sendVote(PlayListEntry entry, Vote vote)}
-Sendet zum Übergebenen Song (PlaylistEntry) einen Vote (UP oder DOWN).
+Nachfolgend die Auflistung der Funktionen des VoteApp-Services:
+\begin{description}
+	\item[Song getCurrentSong()] Gibt den Current Song zurück.
+	\item[PlayList getPlayList()]	Gibt die aktuelle Playlist zurück.
+	\item[void sendDi(int value)] Sendet den übergebenen Betrunkenheitsgrad (DI-Wert) zurück.
+	\item[void sendVote(PlayListEntry entry, Vote vote)] Sendet zum Übergebenen Song (PlaylistEntry) einen Vote (UP oder DOWN).
+\end{description}
 
 \section{REST-Schnittstelle von Deployd}
 
