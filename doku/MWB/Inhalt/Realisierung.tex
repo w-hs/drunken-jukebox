@@ -9,18 +9,19 @@ mittels JSNI, das Styling in GSS sowie die Lokalisierung.
 
 Um den Anforderungen der zwei Anwendergruppen (Veranstalter und Gäster einer Party) gerecht
 zu werden, entwickeln wir zwei Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
-entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird.
+entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzdem werden
+beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
 
-Zwei GWT-Anwendungen
-- eine für Desktop
-- eine für mobil
+TODO: Blockdiagramm der Architektur
 
+\subsubsection{Frontend}
 MVP-Architektur
 - Klassendiagramm für beide (Views \& Presenter)
 
-Backend
-- Java-Server als Proxy
-- Deployd als Datenhaltung + Logik
+\subsubsection{Backend}
+- Java-Server
+- Als Proxy für Deployed
+- Deployed zur Datenhaltung + Logik
 
 Fabian
 
@@ -33,13 +34,20 @@ Beispiele
 Chris
 
 \subsection{Styles in GSS}
-- Getrennt für beide Anwendungen (Desktop und Mobil)
+Für das Styling der beiden GWT-Anwendungen verwenden wir GSS. Da es unterschiedliche Anforderungen
+an Deskop- und Mobilanwendungen gibt, werden zwei Stylesheet-Dateien verwendet.
+
+- Verknüpfung: Client-Bundle und GSS-Dateien
+- Gemeinsame Styles auslagern?
 
 Fabian
 
 \subsection{Lokalisierung}
-- Admin: Wählen
-- VoteApp: Automatisch
+Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
+Im Admin soll es möglich sein die Sprache über die Oberfläche zu ändern, während
+in der Vote-App die Sprache automatisch ausgewählt wird.
+
+Dazu verwenden wir Ressourcen-Strings (TODO).
 
 Fabian
 
