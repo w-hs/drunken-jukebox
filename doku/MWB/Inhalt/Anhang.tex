@@ -1,14 +1,49 @@
 \section{GWT-RPC}
 
-Schnittstellen kurz beschreiben
+\subsection{Admin Service}
 
-Zwei Services:
-- AdminService
-	- getCurrentSong(): Liefert den aktuellen Song zurück
-	- getPlaylist(): Gibt die aktuelle Playlist zurück
-	- sendDi(int value): Schickt den DI ans Backend
-	- sendVote(PlaylistEntry entry, Vote vote): Funktionen zum Voten eines Playlist-Eintrags...
-- VoteAppService
+Nachfolgend eine Liste aller Funktionen des Admin Services.
+
+\textbf{ArrayList<Song> getSongList()}
+Gibt die Liste aller Songs zurück.
+
+\textbf{Song getSong(String id)}
+Gibt einen spezifischen Song zurück.
+
+\textbf{Song updateSong(Song song)}
+Updatet einen Song.
+
+\textbf{void removeSong(String songId)}
+Löscht einen Song.
+
+\textbf{Song addSong(Song song)}
+Fügt einen neuen Song hinzu.
+
+\textbf{Party startParty()}
+Startet eine Party
+
+\textbf{Party stoppParty(Party p) }
+Stoppt eine Party
+
+\textbf{GlobalPlaylist getPlaylist()}
+Gibt die aktuelle Playlist zurück zurück.
+
+
+\subsection{VoteApp Service}
+
+Nachfolgend die Auflistung der Funktionen des VoteApp Services.
+
+\textbf{Song getCurrentSong()}
+Gibt den Current Song zurück.
+
+\textbf{PlayList getPlayList()}
+Gibt die aktuelle Playlist zurück.
+
+\textbf{void sendDi(int value)}
+Sendet den übergebenen Betrunkenheitsgrad (DI-Wert) zurück.
+
+\textbf{void sendVote(PlayListEntry entry, Vote vote)}
+Sendet zum Übergebenen Song (PlaylistEntry) einen Vote (UP oder DOWN).
 
 \section{REST-Schnittstelle von Deployd}
 
