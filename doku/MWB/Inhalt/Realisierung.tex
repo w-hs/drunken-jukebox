@@ -66,6 +66,9 @@ Dazu verwenden wir Ressourcen-Strings (TODO).
 Fabian
 
 \subsection{JSNI}
-Slider mit jQuery
+Die Eingabe des eigenen DI-Werts sollte mithilfe eines Sliders erfolgen. Leider enthält GWT kein natives Benutzerelement Slider, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dieser sollte auf seiten von GWT wie ein natives Widget benutzt werden können. Dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
 
-Daniel
+JSNI ermöglicht es in einer GWT Applikation natives Javascript zu schreiben welcher bei der Kompilierung der Anwendung übernommen wird. 
+Dadurch ist das mischen von Java und Javascript bei der Entwicklung möglich.
+
+In unserem konkreten Problem haben wir eine neue Composite Klasse erstellt die Methoden zum setzen und lesen des Slider Wertes ermöglicht. Weiter ist es möglich ein SliderListener Interface zu setzen der beim "slide"-Event aufgerufen wird. Das Custom-Widget erstellt ein neues DIV Element, in welches mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript wird die Slide-Methode der Java Seite aufgerufen.
