@@ -1,16 +1,13 @@
 \section{Realisierung}
 
-In diesem Kapitel wird die konkrete Umsetzung der Anforderungen in GWT beschreiben.
+In diesem Kapitel wird die konkrete Umsetzung der Anforderungen in GWT beschrieben.
 Zuerst wird die Architektur der Anwendung festgelegt. Anschließend werden konkrete
-Implentierungsdetails erläutert, welche die Erstellung eigener Widgets in GWT und
-mittels JSNI, das Styling in GSS sowie die Lokalisierung umfassen.
+Implentierungsdetails erläutert, welche die Erstellung eigener Widgets mittels GWT und
+JSNI sowie das Styling in GSS und die Lokalisierung umfassen.
 
 \subsection{Architektur}
-
-Um den Anforderungen der zwei Anwendergruppen (Veranstalter und Gäste einer Party) gerecht
-zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
-entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzdem werden
-beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
+Um den in Kapitel \ref{sec:Anforderungen} beschriebenen Anforderungen der zwei Anwendergruppen (Veranstalter und Gäste einer Party) gerecht zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
+entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzdem werden beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
 
 \begin{figure}[tbh]
 \centering
@@ -20,9 +17,7 @@ beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
 \end{figure}
 
 Die Frontend-Webapplikationen kommunizieren über GWT-RPC mit einem Java-Server. Dieser dient als 
-Proxy zum deployd\footnote{\url{http://deployd.com/}}-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der deployed-Server
-ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine
-HTTP-Schnittstelle angesprochen.
+Proxy zum Deployd-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der Deployed-Server ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine HTTP-Schnittstelle angesprochen.
 
 \subsubsection{Frontend}
 Innerhalb der GWT-Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige
@@ -44,13 +39,12 @@ Im Folgenden werden die erstellten View-Presenter-Paare und deren Aufgaben kurz 
 \end{description}
 
 \subsubsection{Backend}
-Das Backend besteht aus einem Java-Server, der als Proxy zur Umgehung der Same-Origin-Policy dient, und einem deployd-Server, der für die eigentliche Datenhaltung
-und Anwendungslogik verantwortlich ist.
+Das Backend besteht aus einem Java-Server, der als Proxy zur Umgehung der Same-Origin-Policy dient, und einem Deployd-Server, der für die eigentliche Datenhaltung und Anwendungslogik verantwortlich ist.
 
-Der deployd-Server stellt Ressourcen über eine HTTP/REST-Schnittstelle bereit. Als
-Datenformat wird JSON verwendet. Zur Einrichtung des deployd-Servers sind zwei Schritte
+Der Deployd-Server stellt Ressourcen über eine HTTP/REST-Schnittstelle bereit. Als
+Datenformat wird JSON verwendet. Zur Einrichtung des Deployd-Servers sind zwei Schritte
 notwendig. Zunächst müssen die verwendeten Ressourcen definiert werden. Im zweiten
-Schritt kann eigener Code\footnote{Der Code wird in JavaScript hinterlegt, da deployd auf node.js basiert.} hinterlegt werden, der beim Zugriff auf die Ressourcen
+Schritt kann eigener Code\footnote{Der Code wird in JavaScript hinterlegt, da Deployd auf node.js basiert.} hinterlegt werden, der beim Zugriff auf die Ressourcen
 ausgeführt wird. Auf diese Weise konnten wir das notwendige Datenmodell und die
 dazugehörige Anwendungslogik hinterlegen.
 
@@ -97,7 +91,7 @@ Die SongListView besteht aus einer TextBox für die Suche, einer ListBox und ein
 \label{fig:SongListView}
 \end{figure}
 
-
+Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung \ref{fig:SongListViewClass} zeigt das Interface für die SongListView, dass alle benötigten Funktionen zum Umgang mit dem Widget bereitstellt. Beispielsweise können über die Methode getSongsListBox Change-Handlers registriert werden. Diese werden aufgerufen, sobald sich die Selektion der ListBox ändert. Über die Methode getSelectedIndex kann daraufhin der Index des ausgewählten Songs abgefragt werden und beispielsweise in einer anderen View zur Anzeige gebracht werden.
 
 \begin{figure}[H]
 \centering
@@ -128,16 +122,18 @@ und nur den jeweils benötigten Style nachladen.
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
 Im Admin soll es möglich sein die Sprache über die Oberfläche zu ändern, während
-in der Vote-App die Sprache automatisch ausgewählt wird.
+in der Vote-App die Sprache automatisch ausgewählt werden soll.
 
-Zur Lokalisierung verwenden wir Properties-Dateien\footnote{http://www.gwtproject.org/doc/latest/DevGuideI18n.html}, welche wir
-zur Verwendung im Java-Code mit Interfaces verknüpfen. Es gibt zwei Arten von übersetzbaren Texten:
+\subsubsection{Properties-Dateien}
+
+Zur Lokalisierung werden Properties-Dateien\footnote{http://www.gwtproject.org/doc/latest/DevGuideI18n.html} verwendet, welche über Interfaces
+mit dem Java-Code verknüpft werden. Es gibt zwei Arten von übersetzbaren Texten:
 \begin{description}
 	\item[Statisch:] Text ohne Platzhalter
 	\item[Dynamisch:] Text mit einem oder mehreren Platzhaltern
 \end{description}
 Diese Arten werden in GWT unterschiedlich behandelt. Für statische Text muss
-von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in Properties-Dateien gefunden wurde. Als
+von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
 Fallback-Sprache verwenden wir Englisch, so dass wir nur Properties-Dateien für
 die deutsche Übersetzung anlegen müssen.
 
@@ -152,6 +148,24 @@ Abbildung \ref{fig:Lokalisierung} zeigt, dass die Übersetzungsdateien in dem
 \texttt{de.whs.drunkenjukebox.resources}-Package abgelegt sind. Um weitere
 Übersetzungen hinzufügen müssen hier lediglich neue Properties-Dateien mit
 dem entsprechenden Sprachkürzel angelegt und gefüllt werden.
+
+
+\subsubsection{Wahl der Sprache}
+In GWT kann die anzuzeigende Sprache über einen URL-Parameter bestimmt. Für die Admin-Oberfläche rufen wir die eigene URL
+mit dem Parameter \texttt{locale} auf, um die vom Anwender
+gewünscht Sprache anzuzeigen. Die zur Auswahl stehenden Sprachen werden dem Benutzer als Bilder angezeigt, auf denen Click-Handler den notwendigen Wechsel der URL herbeiführen.
+\begin{lstlisting}[language=Java]
+@Override
+public void onClick(ClickEvent event) {
+	String newUrl = Window.Location.getPath() + "?locale=de";
+	Window.Location.assign(newUrl);
+}
+\end{lstlisting}
+In der Vote-App soll die im Browser eingestellte Sprache verwendet werden. Dazu reicht ein Eintrag in dem GWT-Modul
+der Anwendung:
+\begin{lstlisting}[language=XML]
+<set-configuration-property name="locale.useragent" value="Y"/>
+\end{lstlisting}
 
 \subsection{JSNI}
 Die Eingabe des eigenen DI-Werts sollte mithilfe eines Sliders erfolgen. Leider enthält GWT kein natives Benutzerelement Slider, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dieser sollte auf seiten von GWT wie ein natives Widget benutzt werden können. Dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
