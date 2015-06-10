@@ -71,13 +71,22 @@ Beispiele
 Chris
 
 \subsection{Styles in GSS}
-Für das Styling der beiden GWT-Anwendungen verwenden wir GSS. Da es unterschiedliche Anforderungen
+Für das Styling der beiden GWT-Anwendungen verwenden wir GSS\footnote{\url{https://code.google.com/p/closure-stylesheets/}}. Da es unterschiedliche Anforderungen
 an Deskop- und Mobilanwendungen gibt, werden zwei Stylesheet-Dateien verwendet.
 
-- Verknüpfung: Client-Bundle und GSS-Dateien
-- Gemeinsame Styles auslagern?
+Um die Styles im Java-Code verwenden zu können, müssen diese mit dem \texttt{AppResources}-Interface\footnote{Dieses Interface erbt von dem GWT-Interface \texttt{ClientBundle}} verbunden werden.
+In diesem Projekt legen wir alle Ressourcen, zu denen auch Stylesheets zählen, in
+einem separaten Package (\texttt{de.whs.drunkenjukebox.resources}) ab. Wie Abbildung
+\ref{fig:GSS} zeigt, können so beide Anwendungen \texttt{AppResources} verwenden
+und nur den jeweils benötigten Style nachladen.
 
-Fabian
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.6\linewidth]{Bilder/GSS}
+\caption{Verknüpfung der GSS-Dateien mit Java}
+\label{fig:GSS}
+\end{figure}
+
 
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
