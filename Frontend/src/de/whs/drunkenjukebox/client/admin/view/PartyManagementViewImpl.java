@@ -39,14 +39,19 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 	private final Label labelDrunkenIndex = new Label("");
 
 	public PartyManagementViewImpl(AdminStyle style) {
-		HorizontalPanel panel = new HorizontalPanel();
-		initLeftSide(panel);
-		initRightSide(panel);
+		//two panels due to styling issues
+		HorizontalPanel outerPanel = new HorizontalPanel();
+		HorizontalPanel panel = new HorizontalPanel();		
+		outerPanel.add(panel);		
+		panel.addStyleName(style.partyManagementView());
+		
+		initLeftSide(panel, style);
+		initRightSide(panel, style);
 
-		initWidget(panel);
+		initWidget(outerPanel);
 	}
 
-	private void initRightSide(HorizontalPanel panel) {
+	private void initRightSide(HorizontalPanel panel, AdminStyle style) {
 		initTableColumns();
 		panel.add(table);
 	}
@@ -81,18 +86,23 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 		table.addColumn(voteCountCell, constants.vote());
 	}
 
-	private void initLeftSide(CellPanel layout) {
+	private void initLeftSide(CellPanel layout, AdminStyle style) {
 		VerticalPanel panel = new VerticalPanel();
 		layout.add(panel);
 		
-		panel.add(labelStart);
-		panel.add(labelPartyPeopleCount);
-		panel.add(labelDrunkenIndex);
-		
 		HorizontalPanel panelButtons = new HorizontalPanel();
+		buttonStart.addStyleName(style.greenButton());
 		panelButtons.add(buttonStart);
+		buttonStop.addStyleName(style.redButton());
 		panelButtons.add(buttonStop);
 		panel.add(panelButtons);
+				
+		panel.add(labelStart);
+		labelStart.addStyleName(style.partyManagementViewDetails());
+		panel.add(labelPartyPeopleCount);
+		labelPartyPeopleCount.addStyleName(style.partyManagementViewDetails());
+		panel.add(labelDrunkenIndex);
+		labelDrunkenIndex.addStyleName(style.partyManagementViewDetails());
 	}
 
 	@Override

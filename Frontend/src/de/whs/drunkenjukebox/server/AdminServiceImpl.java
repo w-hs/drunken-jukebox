@@ -130,6 +130,10 @@ public class AdminServiceImpl extends RemoteServiceServlet implements
 				return arg1.getVoteCount() - arg0.getVoteCount();
 			}
 		});
+		
+		for (int i = 0; i < playlist.getEntries().size(); i++) {
+			playlist.getEntries().get(i).setIndex(i+1);
+		}
 
 		return playlist;
 	}
