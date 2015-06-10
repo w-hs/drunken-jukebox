@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.resources.AppConstants;
+import de.whs.drunkenjukebox.resources.AppResources.VoteAppStyle;
 
 public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 	
@@ -17,14 +18,15 @@ public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 	
 	private Button acceptButton = new Button(constants.send());
 	private Button cancelButton = new Button(constants.cancel());
-	private DISlider diSlider = new DISlider(20,"100%");
+	//private DISlider diSlider = new DISlider(20,"100%");
+	private DISliderJQ diSlider = new DISliderJQ("slider");
 	
-	public DIDialogViewImpl() {
+	public DIDialogViewImpl(VoteAppStyle style) {
 		setText(constants.pleaseSlideInDI());	    
 		
 		VerticalPanel mainPanel = new VerticalPanel();
 		mainPanel.setWidth("300px");
-		mainPanel.setHeight("200px");
+		mainPanel.setHeight("150px");
 		
 		HorizontalPanel titles = new HorizontalPanel();
 		titles.setWidth("100%");
@@ -37,6 +39,9 @@ public class DIDialogViewImpl extends DialogBox implements DIDialogView {
 		
 		titles.setCellHorizontalAlignment(middleLabel, HasHorizontalAlignment.ALIGN_CENTER);
 		titles.setCellHorizontalAlignment(endLabel, HasHorizontalAlignment.ALIGN_RIGHT);
+		
+		acceptButton.addStyleName(style.upVote());
+		cancelButton.addStyleName(style.downVote());
 		
 		HorizontalPanel buttonBar = new HorizontalPanel();
 		buttonBar.setWidth("100%");

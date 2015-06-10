@@ -3,18 +3,32 @@
 In diesem Kapitel wird die konkrete Umsetzung der Anforderungen in GWT beschreiben.
 Zuerst wird die Architektur der Anwendung festgelegt. Anschließend werden konkrete
 Implentierungsdetails erläutert, welche die Erstellung eigener Widgets in GWT und
-mittels JSNI, das Styling in GSS sowie die Lokalisierung.
+mittels JSNI, das Styling in GSS sowie die Lokalisierung umfassen.
 
 \subsection{Architektur}
 
-Um den Anforderungen der zwei Anwendergruppen (Veranstalter und Gäster einer Party) gerecht
-zu werden, entwickeln wir zwei Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
+Um den Anforderungen der zwei Anwendergruppen (Veranstalter und Gäste einer Party) gerecht
+zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
 entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzdem werden
 beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
 
-TODO: Blockdiagramm der Architektur
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.7\linewidth]{Bilder/Architektur-Ueberblick}
+\caption{Überblick über die Architektur der beiden Anwendungen}
+\label{fig:Architektur-Ueberblick}
+\end{figure}
+
+Die Frontend-Webapplikationen kommunizieren über GWT-RPC mit einem Java-Server. Dieser dient als 
+Proxy zum deployd\footnote{\url{http://deployd.com/}}-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der deployed-Server
+ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine
+HTTP-Schnittstelle angesprochen.
 
 \subsubsection{Frontend}
+Innerhalb der GWT-Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige
+der Oberfläche implementiert. Der Zugriff auf das Model wird über Services ermöglicht, die intern
+eine Anfrage an den Java-Server im Backend durchführen.
+
 MVP-Architektur
 - Klassendiagramm für beide (Views \& Presenter)
 
