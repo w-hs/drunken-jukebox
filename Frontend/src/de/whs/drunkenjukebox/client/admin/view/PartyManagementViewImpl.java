@@ -92,8 +92,10 @@ public class PartyManagementViewImpl extends Composite implements PartyManagemen
 		
 		HorizontalPanel panelButtons = new HorizontalPanel();
 		buttonStart.addStyleName(style.greenButton());
+		buttonStart.addStyleName(style.extraMarginRight());
 		panelButtons.add(buttonStart);
 		buttonStop.addStyleName(style.redButton());
+		buttonStop.addStyleName(style.extraMarginRight());
 		panelButtons.add(buttonStop);
 		panel.add(panelButtons);
 				

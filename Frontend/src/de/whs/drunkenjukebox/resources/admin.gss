@@ -6,25 +6,25 @@
 @def LEFT 200px;
 @def RIGHT 400px;
 
-@def HEADER_COLOR #40A6FF;
-@def TAB_COLOR #8CCAFF;
+@def HEADER_COLOR #1D4A72;
+@def TAB_COLOR #565DA8;
 @def TAB_TEXT_COLOR PRIMARY_COLOR;
 @def TAB_COLOR_SELECTED PRIMARY_COLOR;
 @def TAB_TEXT_COLOR_SELECTED HEADER_COLOR;
 
 @def BUTTON_TEXT_COLOR #fff;
 
-@def SAVE_BUTTON_COLOR #1BBD46;
-@def SAVE_BUTTON_BORDER #3CA365; 
+@def SAVE_BUTTON_COLOR #259E45;
+@def SAVE_BUTTON_BORDER #38935C; 
 @def SAVE_BUTTON_ACTIVE #398232;
 
-@def REMOVE_BUTTON_COLOR #E82727;
-@def REMOVE_BUTTON_BORDER #C43535; 
-@def REMOVE_BUTTON_ACTIVE #C92222;
+@def REMOVE_BUTTON_COLOR #D31D1D;
+@def REMOVE_BUTTON_BORDER #AD2E2E; 
+@def REMOVE_BUTTON_ACTIVE #BB3431;
 
-@def CREATE_BUTTON_COLOR #40A6FF;
+@def CREATE_BUTTON_COLOR #4988C0;
 @def CREATE_BUTTON_BORDER #4E55E0; 
-@def CREATE_BUTTON_ACTIVE #4662EB;
+@def CREATE_BUTTON_ACTIVE #456CA7;
 
 @external gwt-TabLayoutPanel;
 @external gwt-TabLayoutPanelTabs;
@@ -32,20 +32,6 @@
 @external gwt-TabLayoutPanelTab;
 @external gwt-TabLayoutPanelTab-selected;
 @external gwt-TabLayoutPanelContent;
-
-@external cellTableKeyboardSelectedCell;
-@external cellTableSelectedRow;
-@external cellTableSelectedRowCell;
-@external cellTableCell;
-@external cellTableHoveredRow;
-@external cellTableOddRow;
-@external cellTableEvenRowCell;
-@external cellTableHeader;
-@external cellTableOddRowCell;
-@external cellTableKeyboardSelectedRowCell;
-@external cellTableEvenRow;
-@external cellTableHoveredRowCell;
-@external cellTableFooter;
 
 @defmixin border() {
 	border: 1px solid HEADER_COLOR;
@@ -58,8 +44,7 @@
   border-color: BORDER; 
   background-image: none;
   padding:STANDARD_PADDING;
-  width: 80px;
-  margin-right:STANDARD_MARGIN;   
+  width: 80px;   
 }
 
 @defmixin coolButtonActive(BACKGROUND, BORDER) {
@@ -108,6 +93,7 @@ body {
 	height: 206px;
 	margin-top: STANDARD_MARGIN;
 	margin-bottom: STANDARD_MARGIN;
+	@mixin border();
 }
 
 .songSourcePanel {
@@ -192,6 +178,8 @@ background:HEADER_COLOR;
   padding:div(STANDARD_PADDING/2);
 }
 
- 
+.extraMarginRight{
+  margin-right:STANDARD_MARGIN;
+}
 
 
