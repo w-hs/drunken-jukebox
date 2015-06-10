@@ -20,7 +20,7 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 	private final FlexTable songTable = new FlexTable();
 	private final Button diButton = new Button(constants.sendDI());
 	private final VerticalPanel mainPanel = new VerticalPanel();
-	private final DIDialogView diDialog = new DIDialogViewImpl();
+	private final DIDialogView diDialog;
 	private final CurrentSongWidget currentSong;
 	private final VoteAppStyle style;
 	private VoteListener voteListener;
@@ -36,6 +36,8 @@ public class VoteAppViewImpl extends Composite implements VoteAppView {
 		
 		songTable.addStyleName(style.fullWidth());
 		mainPanel.addStyleName(style.fullWidth());
+		
+		diDialog = new DIDialogViewImpl(style);
 		
 		initWidget(mainPanel);
 	}

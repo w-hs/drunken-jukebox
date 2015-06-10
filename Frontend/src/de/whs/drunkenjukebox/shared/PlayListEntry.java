@@ -12,7 +12,7 @@ public class PlayListEntry implements Serializable {
 	private String songName;
 	private String interpreter;
 	private VoteResult voteResult;
-	private int votes;
+	private int votes = 0;
 	
 	
 	public String getSongName() {
