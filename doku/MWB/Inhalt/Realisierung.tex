@@ -26,8 +26,7 @@ HTTP-Schnittstelle angesprochen.
 
 \subsubsection{Frontend}
 Innerhalb der GWT-Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige
-der Oberfläche implementiert. Der Zugriff auf das Model wird über Services ermöglicht, die intern
-Anfragen an den Java-Server im Backend durchführen.
+der Oberfläche implementiert. Der Zugriff auf das Model wird über GWT-RPC-Services ermöglicht, die Anfragen an den Java-Server im Backend durchführen.
 
 \begin{figure}[tbh]
 \centering
@@ -45,11 +44,23 @@ Im Folgenden werden die erstellten View-Presenter-Paare und deren Aufgaben kurz 
 \end{description}
 
 \subsubsection{Backend}
-- Java-Server
-- Als Proxy für Deployed
-- Deployed zur Datenhaltung + Logik
+Das Backend besteht aus einem Java-Server, der als Proxy zur Umgehung der Same-Origin-Policy dient, und einem deployd-Server, der für die eigentliche Datenhaltung
+und Anwendungslogik verantwortlich ist.
 
-Fabian
+Der deployd-Server stellt Ressourcen über eine HTTP/REST-Schnittstelle bereit. Als
+Datenformat wird JSON verwendet. Zur Einrichtung des deployd-Servers sind zwei Schritte
+notwendig. Zunächst müssen die verwendeten Ressourcen definiert werden. Im zweiten
+Schritt kann eigener Code\footnote{Der Code wird in JavaScript hinterlegt, da deployd auf node.js basiert.} hinterlegt werden, der beim Zugriff auf die Ressourcen
+ausgeführt wird. Auf diese Weise konnten wir das notwendige Datenmodell und die
+dazugehörige Anwendungslogik hinterlegen.
+
+Die von uns definierten Ressourcen umfassen:
+\begin{description}
+	\item[/party] Daten über die aktuell laufende Party
+	\item[/playlist] Die aktuelle Playlist (Songs und deren Votes)
+	\item[/currentsong] Der Song, der gerade gespielt wird
+	\item[/song] Songsammlung, aus der Songs für die Playlist gewählt werden
+\end{description}
 
 \subsection{Eigene Widgets}
 - Search Dinge
