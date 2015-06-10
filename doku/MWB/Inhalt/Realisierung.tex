@@ -135,16 +135,18 @@ und nur den jeweils benötigten Style nachladen.
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
 Im Admin soll es möglich sein die Sprache über die Oberfläche zu ändern, während
-in der Vote-App die Sprache automatisch ausgewählt wird.
+in der Vote-App die Sprache automatisch ausgewählt werden soll.
 
-Zur Lokalisierung verwenden wir Properties-Dateien\footnote{http://www.gwtproject.org/doc/latest/DevGuideI18n.html}, welche wir
-zur Verwendung im Java-Code mit Interfaces verknüpfen. Es gibt zwei Arten von übersetzbaren Texten:
+\subsubsection{Properties-Dateien}
+
+Zur Lokalisierung werden Properties-Dateien\footnote{http://www.gwtproject.org/doc/latest/DevGuideI18n.html} verwendet, welche über Interfaces
+mit dem Java-Code verknüpft werden. Es gibt zwei Arten von übersetzbaren Texten:
 \begin{description}
 	\item[Statisch:] Text ohne Platzhalter
 	\item[Dynamisch:] Text mit einem oder mehreren Platzhaltern
 \end{description}
 Diese Arten werden in GWT unterschiedlich behandelt. Für statische Text muss
-von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in Properties-Dateien gefunden wurde. Als
+von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
 Fallback-Sprache verwenden wir Englisch, so dass wir nur Properties-Dateien für
 die deutsche Übersetzung anlegen müssen.
 
@@ -159,6 +161,24 @@ Abbildung \ref{fig:Lokalisierung} zeigt, dass die Übersetzungsdateien in dem
 \texttt{de.whs.drunkenjukebox.resources}-Package abgelegt sind. Um weitere
 Übersetzungen hinzufügen müssen hier lediglich neue Properties-Dateien mit
 dem entsprechenden Sprachkürzel angelegt und gefüllt werden.
+
+
+\subsubsection{Wahl der Sprache}
+In GWT kann die anzuzeigende Sprache über einen URL-Parameter bestimmt. Für die Admin-Oberfläche rufen wir die eigene URL
+mit dem Parameter \texttt{locale} auf, um die vom Anwender
+gewünscht Sprache anzuzeigen. Die zur Auswahl stehenden Sprachen werden dem Benutzer als Bilder angezeigt, auf denen Click-Handler den notwendigen Wechsel der URL herbeiführen.
+\begin{lstlisting}[language=Java]
+@Override
+public void onClick(ClickEvent event) {
+	String newUrl = Window.Location.getPath() + "?locale=de";
+	Window.Location.assign(newUrl);
+}
+\end{lstlisting}
+In der Vote-App soll die im Browser eingestellte Sprache verwendet werden. Dazu reicht ein Eintrag in dem GWT-Modul
+der Anwendung:
+\begin{lstlisting}[language=XML]
+<set-configuration-property name="locale.useragent" value="Y"/>
+\end{lstlisting}
 
 \subsection{JSNI}
 Die Eingabe des eigenen DI-Werts sollte mithilfe eines Sliders erfolgen. Leider enthält GWT kein natives Benutzerelement Slider, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dieser sollte auf seiten von GWT wie ein natives Widget benutzt werden können. Dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
