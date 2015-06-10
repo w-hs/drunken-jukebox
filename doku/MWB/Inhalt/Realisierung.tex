@@ -121,18 +121,18 @@ und nur den jeweils benötigten Style nachladen.
 
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
-Im Admin soll es möglich sein die Sprache über die Oberfläche zu ändern, während
+Im Admin soll es möglich sein, die Sprache über die Oberfläche zu ändern, während
 in der Vote-App die Sprache automatisch ausgewählt werden soll.
 
 \subsubsection{Properties-Dateien}
 
-Zur Lokalisierung werden Properties-Dateien\footnote{http://www.gwtproject.org/doc/latest/DevGuideI18n.html} verwendet, welche über Interfaces
+Zur Lokalisierung werden Properties-Dateien\footnote{\url{http://www.gwtproject.org/doc/latest/DevGuideI18n.html}} verwendet, welche über Interfaces
 mit dem Java-Code verknüpft werden. Es gibt zwei Arten von übersetzbaren Texten:
 \begin{description}
 	\item[Statisch:] Text ohne Platzhalter
 	\item[Dynamisch:] Text mit einem oder mehreren Platzhaltern
 \end{description}
-Diese Arten werden in GWT unterschiedlich behandelt. Für statische Text muss
+Diese Arten werden in GWT unterschiedlich behandelt. Für statische Texte muss
 von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
 Fallback-Sprache verwenden wir Englisch, so dass wir nur Properties-Dateien für
 die deutsche Übersetzung anlegen müssen.
@@ -146,12 +146,12 @@ die deutsche Übersetzung anlegen müssen.
 
 Abbildung \ref{fig:Lokalisierung} zeigt, dass die Übersetzungsdateien in dem
 \texttt{de.whs.drunkenjukebox.resources}-Package abgelegt sind. Um weitere
-Übersetzungen hinzufügen müssen hier lediglich neue Properties-Dateien mit
+Übersetzungen hinzuzufügen, müssen hier lediglich neue Properties-Dateien mit
 dem entsprechenden Sprachkürzel angelegt und gefüllt werden.
 
 
 \subsubsection{Wahl der Sprache}
-In GWT kann die anzuzeigende Sprache über einen URL-Parameter bestimmt. Für die Admin-Oberfläche rufen wir die eigene URL
+In GWT kann die anzuzeigende Sprache über einen URL-Parameter bestimmt werden. Für die Admin-Oberfläche rufen wir die eigene URL
 mit dem Parameter \texttt{locale} auf, um die vom Anwender
 gewünscht Sprache anzuzeigen. Die zur Auswahl stehenden Sprachen werden dem Benutzer als Bilder angezeigt, auf denen Click-Handler den notwendigen Wechsel der URL herbeiführen.
 \begin{lstlisting}[language=Java]
@@ -168,9 +168,8 @@ der Anwendung:
 \end{lstlisting}
 
 \subsection{JSNI}
-Die Eingabe des eigenen DI-Werts sollte mithilfe eines Sliders erfolgen. Leider enthält GWT kein natives Benutzerelement Slider, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dieser sollte auf seiten von GWT wie ein natives Widget benutzt werden können. Dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
+Die Eingabe des eigenen Drunken-Index sollte mithilfe eines Schiebereglers erfolgen. GWT enthält jedoch kein entsprechendes natives Benutzerelement, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dessen Verwendung sollte wie ein natives GWT-Widget wirken, dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
 
-JSNI ermöglicht es in einer GWT Applikation natives Javascript zu schreiben welcher bei der Kompilierung der Anwendung übernommen wird. 
-Dadurch ist das mischen von Java und Javascript bei der Entwicklung möglich.
+JSNI ermöglicht es in einer GWT-Applikation natives Javascript zu schreiben, welches bei der Kompilierung der Anwendung übernommen wird. Dies ermöglicht bei der Entwicklung die Integration von Javascript in Java.
 
-In unserem konkreten Problem haben wir eine neue Composite Klasse erstellt die Methoden zum setzen und lesen des Slider Wertes ermöglicht. Weiter ist es möglich ein SliderListener Interface zu setzen der beim "slide"-Event aufgerufen wird. Das Custom-Widget erstellt ein neues DIV Element, in welches mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die Slide-Methode der Java Seite aufgerufen. Zur Benutzung des Sliders müssend die entsprechenden jQuery und jQuery UI Bibliotheken im Head der HTML Datei eingebunden werden.
+In dem angesprochenen Fall haben wir eine neue Composite Klasse erstellt, die Methoden zum Setzen und Lesen des Sliderwertes ermöglicht. Weiter wurde ein Slider-Listener implementiert, welcher beim "'onSlide"'-Event aufgerufen wird und den aktuellen Wert übergibt. Das Custom-Widget erstellt ein neues HTML-DIV Element, in welchem mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die "'onSlide"'-Methode der kapselnden Java-Klasse aufgerufen. Zur Benutzung des Sliders müssen die entsprechenden jQuery und jQuery UI Bibliotheken im Head der HTML-Datei eingebunden werden.
