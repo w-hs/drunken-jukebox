@@ -73,6 +73,7 @@ public class SongManagementPresenter {
 		AsyncCallback<Song> asyncCallback = new AsyncCallback<Song>() {
 			@Override
 			public void onSuccess(Song result) {
+				songListView.getSearchText().setValue("");
 				fetchSongs();
 			}				
 			@Override
