@@ -74,6 +74,8 @@ public interface AppResources extends ClientBundle {
 		@ClassName("partyManagementView-Details")
 		String partyManagementViewDetails();
 
+		@ClassName("extraMarginRight")
+		String extraMarginRight();
 	}
 	
 	@Source("admin.gss")
