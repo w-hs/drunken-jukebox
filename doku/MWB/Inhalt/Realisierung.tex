@@ -114,13 +114,22 @@ Beispiele
 Chris
 
 \subsection{Styles in GSS}
-Für das Styling der beiden GWT-Anwendungen verwenden wir GSS. Da es unterschiedliche Anforderungen
+Für das Styling der beiden GWT-Anwendungen verwenden wir GSS\footnote{\url{https://code.google.com/p/closure-stylesheets/}}. Da es unterschiedliche Anforderungen
 an Deskop- und Mobilanwendungen gibt, werden zwei Stylesheet-Dateien verwendet.
 
-- Verknüpfung: Client-Bundle und GSS-Dateien
-- Gemeinsame Styles auslagern?
+Um die Styles im Java-Code verwenden zu können, müssen diese mit dem \texttt{AppResources}-Interface\footnote{Dieses Interface erbt von dem GWT-Interface \texttt{ClientBundle}} verbunden werden.
+In diesem Projekt legen wir alle Ressourcen, zu denen auch Stylesheets zählen, in
+einem separaten Package (\texttt{de.whs.drunkenjukebox.resources}) ab. Wie Abbildung
+\ref{fig:GSS} zeigt, können so beide Anwendungen \texttt{AppResources} verwenden
+und nur den jeweils benötigten Style nachladen.
 
-Fabian
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.6\linewidth]{Bilder/GSS}
+\caption{Verknüpfung der GSS-Dateien mit Java}
+\label{fig:GSS}
+\end{figure}
+
 
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
@@ -132,6 +141,9 @@ Dazu verwenden wir Ressourcen-Strings (TODO).
 Fabian
 
 \subsection{JSNI}
-Slider mit jQuery
+Die Eingabe des eigenen DI-Werts sollte mithilfe eines Sliders erfolgen. Leider enthält GWT kein natives Benutzerelement Slider, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dieser sollte auf seiten von GWT wie ein natives Widget benutzt werden können. Dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
 
-Daniel
+JSNI ermöglicht es in einer GWT Applikation natives Javascript zu schreiben welcher bei der Kompilierung der Anwendung übernommen wird. 
+Dadurch ist das mischen von Java und Javascript bei der Entwicklung möglich.
+
+In unserem konkreten Problem haben wir eine neue Composite Klasse erstellt die Methoden zum setzen und lesen des Slider Wertes ermöglicht. Weiter ist es möglich ein SliderListener Interface zu setzen der beim "slide"-Event aufgerufen wird. Das Custom-Widget erstellt ein neues DIV Element, in welches mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die Slide-Methode der Java Seite aufgerufen. Zur Benutzung des Sliders müssend die entsprechenden jQuery und jQuery UI Bibliotheken im Head der HTML Datei eingebunden werden.
