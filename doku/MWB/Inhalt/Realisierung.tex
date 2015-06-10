@@ -91,7 +91,7 @@ Die SongListView besteht aus einer TextBox für die Suche, einer ListBox und ein
 \label{fig:SongListView}
 \end{figure}
 
-
+Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung \ref{fig:SongListViewClass} zeigt das Interface für die SongListView, dass alle benötigten Funktionen zum Umgang mit dem Widget bereitstellt. Beispielsweise können über die Methode getSongsListBox Change-Handlers registriert werden. Diese werden aufgerufen, sobald sich die Selektion der ListBox ändert. Über die Methode getSelectedIndex kann daraufhin der Index des ausgewählten Songs abgefragt werden und beispielsweise in einer anderen View zur Anzeige gebracht werden.
 
 \begin{figure}[H]
 \centering
