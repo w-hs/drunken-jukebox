@@ -1,6 +1,6 @@
 \section{Anforderungen}
 \label{sec:Anforderungen}
-Wie eingangs bereits beschrieben sollen lediglich die beiden Anwendungen "`Admin"' und "`VoteApp"' realisiert werden. In den folgenden Abschnitten werden die Anforderungen an die beiden Apps, sowie Entwürfe der Benutzeroberflächen vorgestellt. Eine gemeinsame Anforderung ist dabei die Lokalisierung in deutscher und englischer Sprache.
+Wie eingangs bereits beschrieben sollen lediglich die beiden Anwendungen für den Administrator bzw. den Partygast, im Folgenden "`Admin"' bzw. "`VoteApp"' genannt, realisiert werden. In den nachfolgenden Abschnitten werden die Anforderungen an die beiden Anwendungen, sowie Entwürfe der Benutzeroberflächen vorgestellt. Eine gemeinsame Anforderung ist dabei die Lokalisierung in deutscher und englischer Sprache.
 
 \subsection{Admin}
 Das Anwendungsfalldiagramm (Abb. \ref{fig:AdminUseCase}) stellt die Anforderungen an die Admin-Anwendung dar:
@@ -12,9 +12,9 @@ Das Anwendungsfalldiagramm (Abb. \ref{fig:AdminUseCase}) stellt die Anforderunge
 \label{fig:AdminUseCase}
 \end{figure}
 
-Der Admin soll die Party starten und stoppen können sowie Infos über die Party dargestellt bekommen. Darüber hinaus soll er in der Lage sein die Songsammlung zu verwalten.
+Der Admin soll die Party starten und stoppen sowie Infos über die Party einsehen können. Darüber hinaus soll er in der Lage sein, die Songsammlung zu verwalten.
 
-Wir haben uns dazu entschieden je eine eigene Oberfläche für den Bereich der Party- und der Songverwaltung zu entwickeln. Neben diesen beiden Oberflächen gibt es eine weitere, die eine Auswahl der Sprache im Sinne der Lokalisierung ermöglicht. Diese Oberflächen werden in einem gemeinsamen Tab-Layout gebündelt.
+Wir haben uns dazu entschieden, je eine eigene Oberfläche für den Bereich der Party- und der Songverwaltung zu entwickeln. Neben diesen beiden Oberflächen gibt es eine weitere, die eine Auswahl der Sprache im Sinne der Lokalisierung ermöglicht. Diese Oberflächen werden in einem gemeinsamen Tab-Layout gebündelt.
   
 \begin{figure}[H]
 \centering
@@ -23,7 +23,7 @@ Wir haben uns dazu entschieden je eine eigene Oberfläche für den Bereich der P
 \label{fig:MockParty}
 \end{figure}
 
-Die Oberfläche zur Verwaltung der Party (Abb. \ref{fig:MockParty}) verfügt über Buttons zum Starten und Stoppen der Party sowie über eine Auflistung der Songs der aktuellen Playlist inkl. deren Votings. Des Weiteren werden Informationen über eine laufende Party wie Startzeit, Anzahl der Partygäste und der Drunken-Index dargestellt.
+Die Oberfläche zur Verwaltung der Party (Abb. \ref{fig:MockParty}) verfügt über Buttons zum Starten und Stoppen der Party sowie über eine Auflistung der Songs der aktuellen Playlist inkl. deren Votings. Des Weiteren werden Informationen über eine laufende Party wie Startzeit, Anzahl der Partygäste und der durchschnittliche Drunken-Index dargestellt.
 
 \begin{figure}[H]
 \centering
@@ -53,8 +53,7 @@ Das Anwendungsfalldiagramm (Abb. \ref{fig:PartyPeopleUseCase}) stellt die Anford
 \caption{Anwendungsfalldiagramm für den Partygast}
 \label{fig:PartyPeopleUseCase}
 \end{figure}
-
-Der Partygast soll die Playlist und den aktuellen Song angezeigt bekommen sowie einzelne Songs voten und seinen Betrunkenheitsgrad messen können.
+Dem Partygast soll die Playlist und den aktuellen Song angezeigt werden. Außerdem soll er einzelne Songs voten und seinen Betrunkenheitsgrad messen können.
 
 \begin{figure}[H]
 \centering
@@ -68,7 +67,7 @@ Die Anwendung besteht aus einer einzigen Oberfläche (Abb. \ref{fig:MockPartyPeo
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.45\linewidth]{Bilder/MockDiSlider}
-\caption{}
+\caption{Dialog zur Eingabe des Drunken-Index}
 \label{fig:MockDiSlider}
 \end{figure}
 
