@@ -20,12 +20,12 @@ Die Webapplikationen kommunizieren über GWT-RPC\footnote{Remote Procedure Calls
 Proxy zum Deployd-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der Deployed-Server ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine REST-Schnittstelle angesprochen (s. Anhang \ref{anh:rest}).
 
 \subsubsection{Frontend}
-Innerhalb der Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige der Oberfläche implementiert. Der Zugriff auf das Model wird über GWT-RPC-Services ermöglicht, die Anfragen an den Java-Server im Backend durchführen (Abb. \ref{fig:MVP-mit-Service}).
+Innerhalb der Frontend-Anwendungen wird MVP zur Trennung von Steuerung und Anzeige der Oberfläche implementiert. Der Zugriff auf das Model wird über GWT-RPC-Services ermöglicht, die Anfragen an den Java-Server im Backend durchführen (Abb. \ref{fig:MVP-mit-Service}).
 
 \begin{figure}[tbh]
 \centering
 \includegraphics[width=0.6\linewidth]{Bilder/MVP-mit-Service}
-\caption{MVP-Pattern mit Service}
+\caption{MVP mit Service}
 \label{fig:MVP-mit-Service}
 \end{figure}
 
