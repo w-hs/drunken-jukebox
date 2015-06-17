@@ -16,8 +16,6 @@ entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzd
 \label{fig:Architektur-Ueberblick}
 \end{figure}
 
-\todo{Kisten mit Frontend und Backend}
-
 Die Frontend-Webapplikationen kommunizieren über GWT-RPC mit einem Java-Server. Dieser dient als 
 Proxy zum Deployd-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der Deployed-Server ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine HTTP-Schnittstelle angesprochen.
 
@@ -108,8 +106,6 @@ Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung
 
 \todo{Screenshots austauschen}
 
-\subsubsection{PlaylistEntry}
-
 \todo{PlayListEntry-Widget}
 
 
@@ -129,8 +125,6 @@ und nur den jeweils benötigten Style nachladen.
 \caption{Verknüpfung der GSS-Dateien mit Java}
 \label{fig:GSS}
 \end{figure}
-
-\todo{Box in Grün}
 
 
 \subsection{Lokalisierung}
@@ -157,8 +151,6 @@ die deutsche Übersetzung anlegen müssen.
 \caption{Übersetzung mittels Properties-Dateien}
 \label{fig:Lokalisierung}
 \end{figure}
-
-\todo{Box in Grün}
 
 Abbildung \ref{fig:Lokalisierung} zeigt, dass die Übersetzungsdateien in dem
 \texttt{de.whs.drunkenjukebox.resources}-Package abgelegt sind. Um weitere
@@ -190,4 +182,10 @@ JSNI ermöglicht es in einer GWT-Applikation natives Javascript zu schreiben, we
 
 In dem angesprochenen Fall haben wir eine neue Composite Klasse erstellt, die Methoden zum Setzen und Lesen des Sliderwertes ermöglicht. Weiter wurde ein Slider-Listener implementiert, welcher beim "'onSlide"'-Event aufgerufen wird und den aktuellen Wert übergibt. Das Custom-Widget erstellt ein neues HTML-DIV Element, in welchem mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die "'onSlide"'-Methode der kapselnden Java-Klasse aufgerufen. Zur Benutzung des Sliders müssen die entsprechenden jQuery und jQuery UI Bibliotheken im Head der HTML-Datei eingebunden werden.
 
-\todo{Screenshot nur vom Slider}
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.7\linewidth]{Bilder/DISlider}
+\caption{JavaScript-Slider über JSNI}
+\label{fig:DISlider}
+\end{figure}
+
