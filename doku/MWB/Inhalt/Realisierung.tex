@@ -106,6 +106,13 @@ Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung
 
 \todo{Screenshots austauschen}
 
+\subsubsection{PlayListEntryWidget}
+Das PlayListEntryWidget ist ein Touch-Freundliches Widget für die VoteApp Komponente. Es dient der Song Darstellung in der Playlist mit zusätzlicher Eingabemöglichkeit zum Voten (UP oder DOWN). Es besteht aus zwei Labels zum anzeigen des Titels und des Interpreten und zwei Buttons zum UP-Voten und DOWN-Voten. 
+
+Bild
+
+Abbildung XX zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry Erstellt. Weiter werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote bzw. onDownVote Methoden des Interfaces voteListener aufrufen. Die setVoteListener Methode setzt die Referenz auf den voteListener.
+
 \todo{PlayListEntry-Widget}
 
 
@@ -180,7 +187,7 @@ der Anwendung:
 \end{lstlisting}
 
 \subsection{JSNI}
-Die Eingabe des eigenen Drunken-Index sollte mithilfe eines Schiebereglers erfolgen. GWT enthält jedoch kein entsprechendes natives Benutzerelement, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5 Slider zu implementieren. Dessen Verwendung sollte wie ein natives GWT-Widget wirken, dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
+Die Eingabe des eigenen Drunken-Index sollte mithilfe eines Schiebereglers erfolgen. GWT enthält jedoch kein entsprechendes natives Benutzerelement, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5-Slider zu implementieren. Dessen Verwendung sollte wie ein natives GWT-Widget wirken, dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
 
 JSNI ermöglicht es in einer GWT-Applikation natives Javascript zu schreiben, welches bei der Kompilierung der Anwendung übernommen wird. Dies ermöglicht bei der Entwicklung die Integration von Javascript in Java.
 
