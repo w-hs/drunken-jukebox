@@ -114,7 +114,15 @@ Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es d
 	\label{fig:PlayListEntry}
 \end{figure}
 
-Abbildung XX zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry erstellt. Weiter werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote bzw. onDownVote Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die die Vote-Eingaben registriert werden.
+Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry erstellt. Weiter werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote bzw. onDownVote Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die die Vote-Eingaben registriert werden.
+
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=1.0\linewidth]{Bilder/PlayListEntry.pdf}
+\caption{Schnittstellenbeschreibung des PlayListEntryWidget}
+\label{fig:PlayListEntryClass}
+\end{figure}
+
 
 \subsection{Styles in GSS}
 Für das Styling der beiden GWT-Anwendungen verwenden wir GSS\footnote{\url{https://code.google.com/p/closure-stylesheets/}}. Da es unterschiedliche Anforderungen
