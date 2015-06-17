@@ -17,7 +17,7 @@ Nachfolgend eine Liste aller Funktionen des Admin-Services:
 \subsection{VoteApp Service}
 Nachfolgend die Auflistung der Funktionen des VoteApp-Services:
 \begin{description}
-	\item[Song getCurrentSong()] Gibt den Current Song zurück.
+	\item[Song getCurrentSong()] Gibt den aktuellen Song zurück.
 	\item[PlayList getPlayList()]	Gibt die aktuelle Playlist zurück.
 	\item[void sendDi(int value)] Sendet den übergebenen Betrunkenheitsgrad (DI-Wert) zurück.
 	\item[void sendVote(PlayListEntry entry, Vote vote)] Sendet zum Übergebenen Song (PlaylistEntry) einen Vote (UP oder DOWN).
@@ -25,18 +25,18 @@ Nachfolgend die Auflistung der Funktionen des VoteApp-Services:
 
 \section{REST-Schnittstelle von Deployd}
 
-\todo{GET, POST, PUT, DELETE: Es werden nur die wichtigen beschrieben}
+Der Deployd Server unterstützt für jeden Datensatz REST-Operationen wie GET, PUT, POST oder DELETE. Im folgenden werden exemplarisch einige Schnittstellen beschrieben.
 
 \subsection{party}
 \label{service:party}
-Erstellt eine neue Party und löscht die playlist.
+Erstellt eine neue Party und löscht die Playlist.
 
 POST
 \url{/party}
 
-Parameter: Leeres JSON Objekt
+Parameter: Leeres JSON-Objekt
 
-Rückgabewert: JSON Objekt der Party
+Rückgabewert: JSON-Objekt der Party
 Beispiel:
 \begin{lstlisting}
 {
@@ -47,6 +47,7 @@ Beispiel:
 "id":"791bbdf86d85fa29"
 }
 \end{lstlisting}
+Weiter ist auch ein DELETE möglich, welches die Party Löscht.
 
 \subsection{playlist}
 \label{service:playlist}
@@ -55,7 +56,7 @@ Gibt die aktuelle Playlist zurück.
 GET
 \url{/playlist}
 
-Rückgabewert: JSON Array aller Playlist Einträge
+Rückgabewert: JSON-Array aller Playlist Einträge
 Beispiel:
 \begin{lstlisting}
 [
@@ -68,12 +69,12 @@ Beispiel:
 
 \subsection{currentSong}
 \label{service:currentSong}
-Gibt den current Song zurück.
+Gibt den aktuellen Song zurück.
 
 GET
 \url{/currentsong}
 
-Rückgabewert: JSON Objekt des current Songs
+Rückgabewert: JSON-Objekt des aktuellen Songs
 Beispiel:
 \begin{lstlisting}
 [{
@@ -89,7 +90,7 @@ Gibt alle Songs zurück.
 GET
 \url{/song}
 
-Rückgabewert: JSON Array aller Songs
+Rückgabewert: JSON-Array aller Songs
 Beispiel:
 \begin{lstlisting}
 [{
