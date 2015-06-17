@@ -1,6 +1,6 @@
 \section{GWT-RPC}
 
-\subsection{Admin Service}
+\subsection{Admin-Service}
 Nachfolgend eine Liste aller Funktionen des Admin-Services:
 \begin{description}
 	\item[ArrayList<Song> getSongList()] Gibt die Liste aller Songs zurück.
@@ -14,18 +14,18 @@ Nachfolgend eine Liste aller Funktionen des Admin-Services:
 \end{description}
 
 
-\subsection{VoteApp Service}
+\subsection{VoteApp-Service}
 Nachfolgend die Auflistung der Funktionen des VoteApp-Services:
 \begin{description}
 	\item[Song getCurrentSong()] Gibt den aktuellen Song zurück.
 	\item[PlayList getPlayList()]	Gibt die aktuelle Playlist zurück.
-	\item[void sendDi(int value)] Sendet den übergebenen Betrunkenheitsgrad (DI-Wert) zurück.
-	\item[void sendVote(PlayListEntry entry, Vote vote)] Sendet zum Übergebenen Song (PlaylistEntry) einen Vote (UP oder DOWN).
+	\item[void sendDi(int value)] Sendet den übergebenen Drunken-Index.
+	\item[void sendVote(PlayListEntry entry, Vote vote)] Sendet zum übergebenen Song (PlaylistEntry) einen Vote (Up oder Down).
 \end{description}
 
 \section{REST-Schnittstelle von Deployd}
 \label{anh:rest}
-Deployd stellt für den Zugriff auf die Entitäten eine REST-Schnittstelle zur Verfügung und unterstützt dabei standardmäßig die HTTP-Methoden GET, POST, PUT und DELETE\footnote{\url{http://docs.deployd.com/docs/collections/reference/http.html}}. Im Folgenden beschreiben wir wichtigsten in unserem Projekt verwendeten HTTP-Methoden.
+Deployd stellt für den Zugriff auf die Entitäten eine REST-Schnittstelle zur Verfügung und unterstützt dabei standardmäßig die HTTP-Methoden GET, POST, PUT und DELETE\footnote{\url{http://docs.deployd.com/docs/collections/reference/http.html}}. Im Folgenden beschreiben wir die wichtigsten, in unserem Projekt verwendeten HTTP-Methoden.
 
 \subsection{party}
 \label{service:party}
@@ -34,20 +34,21 @@ Erstellt eine neue Party und löscht die Playlist.
 POST
 \url{/party}
 
-Parameter: Leeres JSON-Objekt
+Body: Leeres JSON-Objekt
 
 Rückgabewert: JSON-Objekt der Party
+
 Beispiel:
-\begin{lstlisting}
+\begin{lstlisting}[language=Java]
 {
-"start":"2015-06-03T12:12:48.190Z",
-"end":{},
-"avgDI":0,
-"guestCount":1,
-"id":"791bbdf86d85fa29"
+  "start":"2015-06-03T12:12:48.190Z",
+  "end":{},
+  "avgDI":0,
+  "guestCount":1,
+  "id":"791bbdf86d85fa29"
 }
 \end{lstlisting}
-Weiter ist auch ein DELETE möglich, welches die Party Löscht.
+Darüber hinaus ist auch ein DELETE möglich, welches die Party beendet.
 
 \subsection{playlist}
 \label{service:playlist}
@@ -57,11 +58,16 @@ GET
 \url{/playlist}
 
 Rückgabewert: JSON-Array aller Playlist Einträge
+
 Beispiel:
-\begin{lstlisting}
+\begin{lstlisting}[language=Java]
 [
-{"songID":"89d0ddbf0d7e683e","position":0,"votes":1,"id":"b90bb3e138456920"},
-{"songID":"fbc56a0eacd2d880","position":0,"votes":2,"id":"7de1eb1dfeee188e"},
+{
+  "songID":"89d0ddbf0d7e683e","position":0,"votes":1,"id":"b90bb3e138456920"
+},
+{
+  "songID":"fbc56a0eacd2d880","position":0,"votes":2,"id":"7de1eb1dfeee188e"
+},
 ...
 ]
 \end{lstlisting}
@@ -75,12 +81,13 @@ GET
 \url{/currentsong}
 
 Rückgabewert: JSON-Objekt des aktuellen Songs
+
 Beispiel:
-\begin{lstlisting}
-[{
-"songID":"18c77e30e376280f",
-"id":"77a26abb92f2ebdd"
-}]
+\begin{lstlisting}[language=Java]
+{
+  "songID":"18c77e30e376280f",
+  "id":"77a26abb92f2ebdd"
+}
 \end{lstlisting}
 
 \subsection{song}
@@ -91,24 +98,27 @@ GET
 \url{/song}
 
 Rückgabewert: JSON-Array aller Songs
+
 Beispiel:
-\begin{lstlisting}
-[{
-"title":"The Pretender",
-"length":260,
-"artist":"Foo Fighters",
-"source":"C:\\Musik\\",
-"sourceType":0,
-"genres":"Rock",
-"id":"89d0ddbf0d7e683e"
+\begin{lstlisting}[language=Java]
+[
+{
+  "title":"The Pretender",
+  "length":260,
+  "artist":"Foo Fighters",
+  "source":"C:\\Musik\\",
+  "sourceType":0,
+  "genres":"Rock",
+  "id":"89d0ddbf0d7e683e"
 },
-{"title":"Crawling",
-"length":340,
-"artist":"Linkin Park",
-"source":"C:\\Musik\\",
-"sourceType":0,
-"genres":"Rock",
-"id":"fbc56a0eacd2d880"
+{
+  "title":"Crawling",
+  "length":340,
+  "artist":"Linkin Park",
+  "source":"C:\\Musik\\",
+  "sourceType":0,
+  "genres":"Rock",
+  "id":"fbc56a0eacd2d880"
 },
 ...
 ]
