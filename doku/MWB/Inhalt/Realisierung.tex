@@ -2,7 +2,7 @@
 
 In diesem Kapitel wird die konkrete Umsetzung der Anforderungen in GWT beschrieben.
 Zuerst wird die Architektur der Anwendung festgelegt. Anschließend werden konkrete
-Implentierungsdetails erläutert, welche die Erstellung eigener Widgets mittels GWT und
+Implementierungsdetails erläutert, welche die Erstellung eigener Widgets mittels GWT und
 JSNI sowie das Styling in GSS und die Lokalisierung umfassen.
 
 \subsection{Architektur}
@@ -43,7 +43,7 @@ Im Gegensatz zum Admin besteht die VoteApp lediglich aus einem View-Presenter-Pa
 \end{description}
 
 \subsubsection{Backend}
-Wie zuvor beschrieben besteht das Backend aus einem Java-Server und Deployd.
+Wie zuvor beschrieben, besteht das Backend aus einem Java-Server und Deployd.
 Zur Einrichtung von Deployd sind zwei Schritte
 notwendig:
 \begin{itemize}
@@ -62,9 +62,9 @@ Die von uns definierten Ressourcen umfassen:
 \end{description}
 
 \subsection{Eigene Widgets}
-Im Rahmen der Realisierung sind viele eigene Widgets entstanden. Um ein eigenes Widget zu implementieren leitet man von der Klasse Composite ab und ruft im Konstruktor die Methode initWidget auf. Neben kleineren Hilfskomponenten haben wir vor allem die Views als eigene Widgets realisiert.
+Im Rahmen der Realisierung sind viele eigene Widgets entstanden. Um ein eigenes Widget zu implementieren, leitet man von der Klasse Composite ab und ruft im Konstruktor die Methode initWidget auf. Neben kleineren Hilfskomponenten haben wir vor allem die Views als eigene Widgets realisiert.
 
-Im Folgenden wird exemplarisch die Hilfskomponenten InputBox und PlayListEntryWidget sowie die SongListView vorgestellt.
+Im Folgenden werden exemplarisch die Hilfskomponenten InputBox und PlayListEntryWidget sowie die SongListView vorgestellt.
 
 \subsubsection{InputBox}
 Die InputBox ist eine simple Hilfskomponente, die eine TextBox mit einem Label kombiniert:
@@ -159,7 +159,7 @@ mit dem Java-Code verknüpft werden. Es gibt zwei Arten von übersetzbaren Texte
 \end{description}
 Diese Arten werden in GWT unterschiedlich behandelt. Für statische Texte muss
 von Constants und für dynamische Texte von Messages abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
-Fallback-Sprache verwenden wir Englisch, so dass wir nur Properties-Dateien für
+Fallback-Sprache verwenden wir Englisch, sodass wir nur Properties-Dateien für
 die deutsche Übersetzung anlegen müssen.
 
 \begin{figure}[tbh]
