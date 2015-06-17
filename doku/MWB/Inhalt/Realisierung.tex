@@ -66,26 +66,6 @@ Im Rahmen der Realisierung sind viele eigene Widgets entstanden. Um ein eigenes 
 
 Im Folgenden werden exemplarisch die Hilfskomponenten InputBox und PlayListEntryWidget sowie die SongListView vorgestellt.
 
-\subsubsection{InputBox}
-Die InputBox ist eine simple Hilfskomponente, die eine TextBox mit einem Label kombiniert:
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\linewidth]{Bilder/InputBox}
-\caption{InputBox für den Interpreten eines Songs}
-\label{fig:InputBox}
-\end{figure}
-
-Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem CSS-Style der Label-Text übergeben. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe vorgesehen.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.3\linewidth]{Bilder/InputBoxClass}
-\caption{Schnittstellenbeschreibung der InputBox}
-\label{fig:InputBoxClass}
-\end{figure}
-
-
 \subsubsection{PlayListEntryWidget}
 Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten. Es besteht aus zwei Labels zum Anzeigen des Titels und des Interpreten und zwei Buttons zum Voten. 
 
@@ -106,12 +86,33 @@ Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des 
 \end{figure}
 
 
+\subsubsection{InputBox}
+Die InputBox ist eine simple Hilfskomponente, die eine TextBox mit einem Label kombiniert:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{Bilder/InputBox}
+\caption{InputBox für den Interpreten eines Songs}
+\label{fig:InputBox}
+\end{figure}
+
+Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem CSS-Style der Label-Text übergeben. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe vorgesehen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\linewidth]{Bilder/InputBoxClass}
+\caption{Schnittstellenbeschreibung der InputBox}
+\label{fig:InputBoxClass}
+\end{figure}
+
+
+\newpage
 \subsubsection{SongListView}
 Die SongListView besteht aus einer TextBox für die Suche, einer ListBox und einem Button zur Erstellung eines neuen Songs:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\linewidth]{Bilder/SongListView}
+\includegraphics[width=0.65\linewidth]{Bilder/SongListView}
 \caption{Liste mit Suchmöglichkeit zur Verwaltung der Songs}
 \label{fig:SongListView}
 \end{figure}
@@ -138,7 +139,7 @@ und nur den jeweils benötigten Style nachladen.
 
 \begin{figure}[tbh]
 \centering
-\includegraphics[width=0.6\linewidth]{Bilder/GSS}
+\includegraphics[width=0.5\linewidth]{Bilder/GSS}
 \caption{Verknüpfung der GSS-Dateien mit Java}
 \label{fig:GSS}
 \end{figure}
