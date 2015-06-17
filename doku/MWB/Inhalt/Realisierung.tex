@@ -7,7 +7,7 @@ JSNI sowie das Styling in GSS und die Lokalisierung umfassen.
 
 \subsection{Architektur}
 Um den in Kapitel \ref{sec:Anforderungen} beschriebenen Anforderungen der zwei Anwendergruppen (Veranstalter und Gäste einer Party) gerecht zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
-entwickelt, während die Vote-App als mobile Webanwendung umgesetzt wird. Trotzdem werden beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
+entwickelt, während die VoteApp als mobile Webanwendung umgesetzt wird. Trotzdem werden beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
 
 \begin{figure}[tbh]
 \centering
@@ -39,7 +39,7 @@ In der nachfolgenden Übersicht werden die erstellten View-Presenter-Paare des A
 Im Gegensatz zum Admin besteht die VoteApp lediglich aus einem View-Presenter-Paar:
 
 \begin{description}
-	\item[VoteAppView und -Presenter:] Teilnahme an einer Party als Gast über die Vote-App
+	\item[VoteAppView und -Presenter:] Teilnahme an einer Party als Gast über die VoteApp
 \end{description}
 
 \subsubsection{Backend}
@@ -104,17 +104,17 @@ Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung
 \label{fig:SongListViewClass}
 \end{figure}
 
-\todo{Screenshots austauschen}
-
 \subsubsection{PlayListEntryWidget}
-Das PlayListEntryWidget ist ein Touch-Freundliches Widget für die VoteApp Komponente. Es dient der Song Darstellung in der Playlist mit zusätzlicher Eingabemöglichkeit zum Voten (UP oder DOWN). Es besteht aus zwei Labels zum anzeigen des Titels und des Interpreten und zwei Buttons zum UP-Voten und DOWN-Voten. 
+Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten (Up oder Down). Es besteht aus zwei Labels zum Anzeigen des Titels und des Interpreten und zwei Buttons zum Voten. 
 
-Bild
+\begin{figure}[tbh]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Bilder/PlayListEntry}
+	\caption{Eintrag in der Playlist mit Vote-Möglichkeiten}
+	\label{fig:PlayListEntry}
+\end{figure}
 
-Abbildung XX zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry Erstellt. Weiter werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote bzw. onDownVote Methoden des Interfaces voteListener aufrufen. Die setVoteListener Methode setzt die Referenz auf den voteListener.
-
-\todo{PlayListEntry-Widget}
-
+Abbildung XX zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry erstellt. Weiter werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote bzw. onDownVote Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die die Vote-Eingaben registriert werden.
 
 \subsection{Styles in GSS}
 Für das Styling der beiden GWT-Anwendungen verwenden wir GSS\footnote{\url{https://code.google.com/p/closure-stylesheets/}}. Da es unterschiedliche Anforderungen
@@ -137,7 +137,7 @@ und nur den jeweils benötigten Style nachladen.
 \subsection{Lokalisierung}
 Beide Anwendungen sollen lokalisiert in Deutsch und Englisch angeboten werden.
 Im Admin soll es möglich sein, die Sprache über die Oberfläche zu ändern, während
-in der Vote-App die Sprache automatisch ausgewählt werden soll.
+in der VoteApp die Sprache automatisch ausgewählt werden soll.
 
 \subsubsection{Properties-Dateien}
 
@@ -176,7 +176,7 @@ public void onClick(ClickEvent event) {
 	Window.Location.assign(newUrl);
 }
 \end{lstlisting}
-In der Vote-App soll die im Browser eingestellte Sprache verwendet werden. Dazu reicht ein Eintrag in dem GWT-Modul
+In der VoteApp soll die im Browser eingestellte Sprache verwendet werden. Dazu reicht ein Eintrag in dem GWT-Modul
 der Anwendung:
 \begin{lstlisting}[language=XML]
 <set-configuration-property name="locale.useragent" value="Y"/>
