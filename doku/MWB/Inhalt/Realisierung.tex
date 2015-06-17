@@ -6,8 +6,8 @@ Implentierungsdetails erläutert, welche die Erstellung eigener Widgets mittels 
 JSNI sowie das Styling in GSS und die Lokalisierung umfassen.
 
 \subsection{Architektur}
-Um den in Kapitel \ref{sec:Anforderungen} beschriebenen Anforderungen der zwei Anwendergruppen (Veranstalter und Gäste einer Party) gerecht zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als Desktop-Webanwendung
-entwickelt, während die VoteApp als mobile Webanwendung umgesetzt wird. Trotzdem werden beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert.
+Um den in Kapitel \ref{sec:Anforderungen} beschriebenen Anforderungen der zwei Anwendergruppen (Gastgeber und Partygäste) gerecht zu werden, entwickeln wir zwei GWT-Anwendungen. Die Admin-Oberfläche wird als klassische Webanwendung
+entwickelt, während die VoteApp für die mobile Nutzung optimiert wird. Trotzdem werden beide Anwendungen mit einer ähnlichen Softwarearchitektur implementiert (Abb. \ref{fig:Architektur-Ueberblick}).
 
 \begin{figure}[tbh]
 \centering
@@ -16,11 +16,11 @@ entwickelt, während die VoteApp als mobile Webanwendung umgesetzt wird. Trotzde
 \label{fig:Architektur-Ueberblick}
 \end{figure}
 
-Die Frontend-Webapplikationen kommunizieren über GWT-RPC mit einem Java-Server. Dieser dient als 
-Proxy zum Deployd-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der Deployed-Server ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine HTTP-Schnittstelle angesprochen.
+Die Webapplikationen kommunizieren über GWT-RPC\footnote{Remote Procedure Calls werden in GWT zur Kommunikation zwischen Client und Server verwendet} mit einem Java-Server. Dieser dient als 
+Proxy zum Deployd-Server und enthält selbst keine Applikationslogik. Auf diese Weise umgehen wir das Problem der Same-Origin-Policy. Der Deployed-Server ist für die Persistenz der Daten und die Anwendungslogik verantwortlich und wird über eine REST-Schnittstelle angesprochen (s. Anhang \ref{anh:rest}).
 
 \subsubsection{Frontend}
-Innerhalb der GWT-Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige der Oberfläche implementiert. Der Zugriff auf das Model wird über GWT-RPC-Services ermöglicht, die Anfragen an den Java-Server im Backend durchführen (s. Abbildung \ref{fig:MVP-mit-Service}).
+Innerhalb der Frontend-Anwendungen wird das MVP-Pattern zur Trennung von Steuerung und Anzeige der Oberfläche implementiert. Der Zugriff auf das Model wird über GWT-RPC-Services ermöglicht, die Anfragen an den Java-Server im Backend durchführen (Abb. \ref{fig:MVP-mit-Service}).
 
 \begin{figure}[tbh]
 \centering
@@ -43,18 +43,19 @@ Im Gegensatz zum Admin besteht die VoteApp lediglich aus einem View-Presenter-Pa
 \end{description}
 
 \subsubsection{Backend}
-Das Backend besteht aus einem Java-Server, der als Proxy zur Umgehung der Same-Origin-Policy dient, und einem Deployd-Server, der für die eigentliche Datenhaltung und Anwendungslogik verantwortlich ist.
-
-Der Deployd-Server stellt Ressourcen über eine HTTP/REST-Schnittstelle bereit. Als
-Datenformat wird JSON verwendet. Zur Einrichtung des Deployd-Servers sind zwei Schritte
-notwendig. Zunächst müssen die verwendeten Ressourcen definiert werden. Im zweiten
-Schritt kann eigener Code\footnote{Der Code wird in JavaScript hinterlegt, da Deployd auf node.js basiert.} hinterlegt werden, der beim Zugriff auf die Ressourcen
-ausgeführt wird. Auf diese Weise konnten wir das notwendige Datenmodell und die
+Wie zuvor beschrieben besteht das Backend aus einem Java-Server und Deployd.
+Zur Einrichtung von Deployd sind zwei Schritte
+notwendig:
+\begin{itemize}
+	\item Definition der verwendeten Ressourcen
+	\item Hinterlegung von eigenem JavaScript-Code\footnote{Der Code wird in JavaScript hinterlegt, da Deployd auf node.js basiert.}, der beim Zugriff auf die Ressourcen ausgeführt wird
+\end{itemize}
+Auf diese Weise konnten wir das notwendige Datenmodell und die
 dazugehörige Anwendungslogik hinterlegen.
 
 Die von uns definierten Ressourcen umfassen:
 \begin{description}
-	\item[/party] Daten über die aktuell laufende Party
+	\item[/party] Daten der aktuellen Party
 	\item[/playlist] Die aktuelle Playlist (Songs und deren Votes)
 	\item[/currentsong] Der Song, der gerade gespielt wird
 	\item[/song] Songsammlung, aus der Songs für die Playlist gewählt werden
@@ -63,10 +64,10 @@ Die von uns definierten Ressourcen umfassen:
 \subsection{Eigene Widgets}
 Im Rahmen der Realisierung sind viele eigene Widgets entstanden. Um ein eigenes Widget zu implementieren leitet man von der Klasse Composite ab und ruft im Konstruktor die Methode initWidget auf. Neben kleineren Hilfskomponenten haben wir vor allem die Views als eigene Widgets realisiert.
 
-Im Folgenden wird exemplarisch die Hilfskomponente InputBox und die SongListView vorgestellt.
+Im Folgenden wird exemplarisch die Hilfskomponenten InputBox und PlayListEntryWidget sowie die SongListView vorgestellt.
 
 \subsubsection{InputBox}
-Die InputBox ist eine simple Hilfskomponente die eine TextBox und mit einem Label versieht:
+Die InputBox ist eine simple Hilfskomponente die eine TextBox mit einem Label kombiniert:
 
 \begin{figure}[H]
 \centering
@@ -75,13 +76,33 @@ Die InputBox ist eine simple Hilfskomponente die eine TextBox und mit einem Labe
 \label{fig:InputBox}
 \end{figure}
 
-Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem CSS-Style der Label-Text übergeben. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe.
+Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem CSS-Style der Label-Text übergeben. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe vorgesehen.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.3\linewidth]{Bilder/InputBoxClass}
 \caption{Schnittstellenbeschreibung der InputBox}
 \label{fig:InputBoxClass}
+\end{figure}
+
+
+\subsubsection{PlayListEntryWidget}
+Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten. Es besteht aus zwei Labels zum Anzeigen des Titels und des Interpreten und zwei Buttons zum Voten. 
+
+\begin{figure}[tbh]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Bilder/PlayListEntry}
+	\caption{Eintrag in der Playlist mit Vote-Möglichkeiten}
+	\label{fig:PlayListEntry}
+\end{figure}
+
+Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die Labels Interpret und Titel mit den Daten aus dem PlayListEntry initialisiert. Des Weiteren werden Click-Handler für die beiden Buttons hinzugefügt, welche die onUpVote- bzw. onDownVote-Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die Vote-Eingaben registriert werden.
+
+\begin{figure}[tbh]
+	\centering
+	\includegraphics[width=1.0\linewidth]{Bilder/PlayListEntry.pdf}
+	\caption{Schnittstellenbeschreibung des PlayListEntryWidget}
+	\label{fig:PlayListEntryClass}
 \end{figure}
 
 
@@ -95,7 +116,7 @@ Die SongListView besteht aus einer TextBox für die Suche, einer ListBox und ein
 \label{fig:SongListView}
 \end{figure}
 
-Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung \ref{fig:SongListViewClass} zeigt das Interface für die SongListView, dass alle benötigten Funktionen zum Umgang mit dem Widget bereitstellt. Beispielsweise können über die Methode getSongsListBox Change-Handlers registriert werden. Diese werden aufgerufen, sobald sich die Selektion der ListBox ändert. Über die Methode getSelectedIndex kann daraufhin der Index des ausgewählten Songs abgefragt werden und beispielsweise in einer anderen View zur Anzeige gebracht werden.
+Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung \ref{fig:SongListViewClass} zeigt das Interface für die SongListView, dass alle benötigten Funktionen zum Umgang mit dem Widget bereitstellt. Beispielsweise können über die Methode getSongsListBox Change-Handler registriert werden. Diese werden aufgerufen, sobald sich die Selektion der ListBox ändert. Über die Methode getSelectedIndex kann daraufhin der Index des ausgewählten Songs abgefragt werden, um diesen in einer anderen View anzuzeigen.
 
 \begin{figure}[H]
 \centering
@@ -104,34 +125,15 @@ Grundsätzlich haben wir alle Views in Form von Interfaces deklariert. Abbildung
 \label{fig:SongListViewClass}
 \end{figure}
 
-\subsubsection{PlayListEntryWidget}
-Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten (Up oder Down). Es besteht aus zwei Labels zum Anzeigen des Titels und des Interpreten und zwei Buttons zum Voten. 
-
-\begin{figure}[tbh]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Bilder/PlayListEntry}
-	\caption{Eintrag in der Playlist mit Vote-Möglichkeiten}
-	\label{fig:PlayListEntry}
-\end{figure}
-
-Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die beiden Labels mit Interpret und Titel aus dem PlayListEntry erstellt. Des Weiteren werden ClickHandler für die beiden Buttons hinzugefügt, welche die onUpVote- bzw. onDownVote-Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die Vote-Eingaben registriert werden.
-
-\begin{figure}[tbh]
-\centering
-\includegraphics[width=1.0\linewidth]{Bilder/PlayListEntry.pdf}
-\caption{Schnittstellenbeschreibung des PlayListEntryWidget}
-\label{fig:PlayListEntryClass}
-\end{figure}
-
 
 \subsection{Styles in GSS}
 Für das Styling der beiden GWT-Anwendungen verwenden wir GSS\footnote{\url{https://code.google.com/p/closure-stylesheets/}}. Da es unterschiedliche Anforderungen
 an Deskop- und Mobilanwendungen gibt, werden zwei Stylesheet-Dateien verwendet.
 
-Um die Styles im Java-Code verwenden zu können, müssen diese mit dem \texttt{AppResources}-Interface\footnote{Dieses Interface erbt von dem GWT-Interface \texttt{ClientBundle}} verbunden werden.
+Um die Styles im Java-Code verwenden zu können, müssen diese mit dem AppResources-Interface\footnote{Dieses Interface erbt von dem GWT-Interface ClientBundle} verbunden werden.
 In diesem Projekt legen wir alle Ressourcen, zu denen auch Stylesheets zählen, in
-einem separaten Package (\texttt{de.whs.drunkenjukebox.resources}) ab. Wie Abbildung
-\ref{fig:GSS} zeigt, können so beide Anwendungen \texttt{AppResources} verwenden
+einem separaten Package (de.whs.drunkenjukebox.resources) ab. Wie Abbildung
+\ref{fig:GSS} zeigt, können so beide Anwendungen AppResources verwenden
 und nur den jeweils benötigten Style nachladen.
 
 \begin{figure}[tbh]
@@ -156,7 +158,7 @@ mit dem Java-Code verknüpft werden. Es gibt zwei Arten von übersetzbaren Texte
 	\item[Dynamisch:] Text mit einem oder mehreren Platzhaltern
 \end{description}
 Diese Arten werden in GWT unterschiedlich behandelt. Für statische Texte muss
-von \texttt{Constants} und für dynamische Texte von \texttt{Messages} abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
+von Constants und für dynamische Texte von Messages abgeleitet werden. In den Interfaces können Fallback-Texte hinterlegt werden, die angezeigt werden, wenn keine passende Übersetzung in den Properties-Dateien gefunden wurde. Als
 Fallback-Sprache verwenden wir Englisch, so dass wir nur Properties-Dateien für
 die deutsche Übersetzung anlegen müssen.
 
@@ -168,14 +170,14 @@ die deutsche Übersetzung anlegen müssen.
 \end{figure}
 
 Abbildung \ref{fig:Lokalisierung} zeigt, dass die Übersetzungsdateien in dem
-\texttt{de.whs.drunkenjukebox.resources}-Package abgelegt sind. Um weitere
+de.whs.drunkenjukebox.resources-Package abgelegt sind. Um weitere
 Übersetzungen hinzuzufügen, müssen hier lediglich neue Properties-Dateien mit
 dem entsprechenden Sprachkürzel angelegt und gefüllt werden.
 
 
 \subsubsection{Wahl der Sprache}
 In GWT kann die anzuzeigende Sprache über einen URL-Parameter bestimmt werden. Für die Admin-Oberfläche rufen wir die eigene URL
-mit dem Parameter \texttt{locale} auf, um die vom Anwender
+mit dem Parameter locale auf, um die vom Anwender
 gewünscht Sprache anzuzeigen. Die zur Auswahl stehenden Sprachen werden dem Benutzer als Bilder angezeigt, auf denen Click-Handler den notwendigen Wechsel der URL herbeiführen.
 \begin{lstlisting}[language=Java]
 @Override
@@ -191,11 +193,11 @@ der Anwendung:
 \end{lstlisting}
 
 \subsection{JSNI}
-Die Eingabe des eigenen Drunken-Index sollte mithilfe eines Schiebereglers erfolgen. GWT enthält jedoch kein entsprechendes natives Benutzerelement, weswegen wir uns überlegt haben mithilfe von jQuery UI und JSNI einen HTML5-Slider zu implementieren. Dessen Verwendung sollte wie ein natives GWT-Widget wirken, dazu war es nötig die JSNI Funktionen vor der direkten Benutzung, in ein Custom-Widget zu kapseln. 
+Die Eingabe des eigenen Drunken-Index soll mithilfe eines Schiebereglers erfolgen. GWT enthält jedoch kein entsprechendes  Benutzerelement, weswegen wir uns überlegt haben mithilfe von jQuery-UI\footnote{https://jqueryui.com/} und JSNI einen HTML5-Slider zu implementieren. Dessen Verwendung sollte wie ein natives GWT-Widget wirken. Dazu war es nötig die JSNI-Funktionen vor der direkten Benutzung in ein Custom-Widget zu kapseln. 
 
-JSNI ermöglicht es in einer GWT-Applikation natives Javascript zu schreiben, welches bei der Kompilierung der Anwendung übernommen wird. Dies ermöglicht bei der Entwicklung die Integration von Javascript in Java.
+JSNI ermöglicht es in einer GWT-Applikation natives JavaScript zu schreiben, welches bei der Kompilierung der Anwendung übernommen wird. Dies ermöglicht die direkte Integration von JavaScript in Java-Code.
 
-In dem angesprochenen Fall haben wir eine neue Composite Klasse erstellt, die Methoden zum Setzen und Lesen des Sliderwertes ermöglicht. Weiter wurde ein Slider-Listener implementiert, welcher beim "'onSlide"'-Event aufgerufen wird und den aktuellen Wert übergibt. Das Custom-Widget erstellt ein neues HTML-DIV Element, in welchem mithilfe von jQuery UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die "'onSlide"'-Methode der kapselnden Java-Klasse aufgerufen. Zur Benutzung des Sliders müssen die entsprechenden jQuery und jQuery UI Bibliotheken im Head der HTML-Datei eingebunden werden.
+Wir haben ein neues Widget erstellt, das Methoden zum Setzen und Lesen des Slider-Wertes ermöglicht. Weiter wurde ein Slider-Listener implementiert, welcher beim "'onSlide"'-Event aufgerufen wird und den aktuellen Wert übergibt. Das Custom-Widget erstellt ein neues "`div"'-Element, in welchem mithilfe von jQuery-UI ein Slider-Element eingebettet wird. Aus dem Javascript heraus wird die "'onSlide"'-Methode der kapselnden Java-Klasse aufgerufen. Zur Benutzung des Sliders müssen die entsprechenden jQuery und jQuery-UI Bibliotheken im Head der HTML-Datei eingebunden werden. Abbildung \ref{fig:DISlider} zeigt den fertigen Slider.
 
 \begin{figure}[tbh]
 \centering
