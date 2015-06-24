@@ -2,11 +2,9 @@
 
 \subsection{Probleme}
 
-Die Verwendung von GWT für die Umsetzung des Projekts verlief überwiegend problemlos. Dennoch sind uns einige
-Aspekte aufgefallen, die etwas zu wünschen übrig ließen. Das betrifft zum einen die
-Übersetzung des Layouts in HTML und zum anderen die Abstraktionsmöglichkeiten von GSS.
+Die Verwendung von GWT für die Umsetzung des Projekts verlief überwiegend problemlos. Dennoch sind uns einige Aspekte aufgefallen, die etwas zu wünschen übrig ließen. Das betrifft zum einen den HTML-Code der Widgets und zum anderen die Abstraktionsmöglichkeiten von GSS.
 
-\subsubsection{Übersetzung des Layouts in HTML}
+\subsubsection{HTML-Code der Widgets}
 
 In GWT werden Panels verwendet um das Layout der Anwendung zu definieren. Wir haben in unserem Projekt
 hierzu überwiegend Horizontal-, Vertical- und FlowPanels verwendet. Neben diesen wurden für Tabellenstrukturen wie die Playlist
@@ -14,7 +12,7 @@ Flex- bzw. CellTables eingesetzt.
 
 Bei der Analyse von Problemen bzgl. des Layouts und dem Styling von einzelnen Oberflächenelementen haben wir
 festgestellt, dass die meisten Panels als verschachtelte <table>-Elemente im DOM eingefügt werden.
-Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt (s. Abbildung \ref{fig:Probleme-HTML-tables}). Dies erschwert die Analyse von Layout und Styleproblemen, da im HTML-Code nicht direkt ersichtlich ist, ob die GWT-Elemente in <table>-Elemente übersetzt werden und wenn welches <table>-Element welchem GWT-Widget entspricht. 
+Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt (s. Abbildung \ref{fig:Probleme-HTML-tables}). Dies erschwert die Analyse von Layout und Styleproblemen, da im HTML-Code nicht direkt ersichtlich ist, ob die GWT-Elemente in <table>-Elemente übersetzt werden bzw. welches <table>-Element welchem GWT-Widget entspricht. 
 
 \begin{figure}[htb]
 \centering
