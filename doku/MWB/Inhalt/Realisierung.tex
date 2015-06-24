@@ -67,7 +67,7 @@ Im Rahmen der Realisierung sind viele eigene Widgets entstanden. Um ein eigenes 
 Im Folgenden werden exemplarisch die Hilfskomponenten InputBox und PlayListEntryWidget sowie die SongListView vorgestellt.
 
 \subsubsection{PlayListEntryWidget}
-Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten. Es besteht aus zwei Labels zum Anzeigen des Titels und des Interpreten und zwei Buttons zum Voten. 
+Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es dient der Darstellung eines Eintrags in der Playlist mit zusätzlicher Möglichkeit zum Voten. Es besteht aus drei Labels zum Anzeigen des Titels, des Interpreten und des Vote-Counts, sowie zwei Buttons zum Voten. 
 
 \begin{figure}[tbh]
 	\centering
@@ -76,7 +76,7 @@ Das PlayListEntryWidget ist ein touch-freundliches Widget für die VoteApp. Es d
 	\label{fig:PlayListEntry}
 \end{figure}
 
-Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die Labels Interpret und Titel mit den Daten aus dem PlayListEntry initialisiert. Des Weiteren werden Click-Handler für die beiden Buttons hinzugefügt, welche die onUpVote- bzw. onDownVote-Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die Vote-Eingaben registriert werden.
+Abbildung \ref{fig:PlayListEntryClass} zeigt die Schnittstellenbeschreibung des PlayListEntryWidget. Im Konstruktor werden die Labels Interpret, Titel und Vote-Count mit den Daten aus dem PlayListEntry initialisiert. In Abhängigkeit des Vote-Counts wird der Text des Labels grün (positiv) bzw. rot (negativ) eingefärbt. Des Weiteren werden Click-Handler für die beiden Buttons hinzugefügt, welche die onUpVote- bzw. onDownVote-Methoden des Interfaces VoteListener aufrufen. Über die setVoteListener-Methode kann ein Listener für die Vote-Eingaben registriert werden.
 
 \begin{figure}[tbh]
 	\centering
