@@ -120,19 +120,17 @@ body {
 {
 	font-size: 27px;
     float: right;
-   /* margin-left: 14px;
-    margin-right: 15px;*/
     width:50px;
     margin-right: 15px;
     font-weight: bold;
 }
 .voteCountPos
 {
-	 color: green;
+	 color: #3ca365;
 	
 }
 .voteCountNeg
 {
-	 color: red;
+	 color: #e82727;
 	
 }
