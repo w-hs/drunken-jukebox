@@ -14,9 +14,16 @@ wurden Flex- bzw. CellTables eingesetzt.
 
 Bei der Analyse von Problemen bzgl. des Layouts und dem Styling von einzelnen Oberflächenelementen haben wir
 festgestellt, dass alle Panels und Tables als verschachtelte <table>-Elemente im DOM eingefügt werden.
-Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt. Dies erschwert
+Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt (s. Abbildung \ref{fig:Probleme-HTML-tables}). Dies erschwert
 die Analyse von Layout und Styleproblemen, da im HTML-Code nicht direkt ersichtlich ist, welches
 <table>-Element welchem GWT-Widget entspricht. 
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\linewidth]{Bilder/Probleme-HTML-tables}
+\caption{Tabellenstruktur der VoteApp in den Chrome DevTools}
+\label{fig:Probleme-HTML-tables}
+\end{figure}
 
 Aus den oben genannten Gründen haben wir zu Analysezwecken Styles auf verschiedene GWT-Widgets angewendet,
 um ein Gefühl dafür zu bekommen, an welcher Stelle in der HTML-Tabellenstruktur diese eingefügt werden.
@@ -26,6 +33,8 @@ und die Analyse von Fehlern beim Layout oder beim Styling wesentlich vereinfacht
 Es ist allerdings schwer zu beurteilen, ob andere Gründe für die Verwendung der Tabellenstruktur in GWT sprechen.
  
 \subsubsection{Zu geringe Abstraktionsmöglichkeiten in GSS}
+
+
 
 \subsection{Ausblick}
 Im Verlauf des Projekts haben sich weitere Ideen entwickelt, die wir leider aus zeitlichen Gründen nicht mehr umsetzen konnten. Anwendungsübergreifend hätten wir gerne Tests implementiert, um diesbezüglich Erfahrung im GWT-Umfeld zu sammeln. Für die Admin-Applikation wäre die Möglichkeit eines batchartigen Musikimports mehr als wünschenswert. Auf Seiten der VoteApp gibt es eine ganze Reihe von Verbesserungs- und Erweiterungsideen. Grundsätzlich sollte die VoteApp für die Nutzung auf einem Smartphone optimiert werden. Im diesem Zusammenhang könnten weitere visuelle Effekte beispielsweise für die Veränderung der Song-Rangliste hinzugenommen werden, um die Anwendung ansprechender zu gestalten. Darüber hinaus muss die Anwendung auf den wichtigsten mobilen Betriebssysteme lauffähig sein, was beispielsweise den Einsatz von PhoneGap auf den Plan ruft. Die Bedienbarkeit muss dazu so angepasst werden, dass sie allen Design-Richtlinien entspricht. Beispielweise könnte in diesem Zusammenhang der Dialog, der zur Eingabe des DI-Wertes dient, durch dynamische Elemente ersetzt werden, sodass keine zusätzlichen Fenster notwendig sind. Bezüglich des Drunken-Index besteht des Weiteren die Idee statt des Sliders den DI auf anderem Wege zu ermitteln. Eine Art Spiel, anhand dessen sich ein Wert auf der Betrunkenheitsskala ermitteln lässt, wäre vorstellbar. Unabhängig davon sollte jedoch in jedem Fall der Partygast motiviert werden seinen DI regelmäßig einzureichen. Es wäre ein Punktesystem denkbar, bei dem es für die Eingabe des DIs Punkte gibt, die bei Abgabe eines Votes verbraucht werden. Neben den vorgestellten Ideen sind selbstredend noch viele weitere Innovationen vorstellbar.
