@@ -96,7 +96,7 @@ Die InputBox ist eine simple Hilfskomponente, die eine TextBox mit einem Label k
 \label{fig:InputBox}
 \end{figure}
 
-Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem CSS-Style der Label-Text übergeben. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe vorgesehen.
+Abbildung \ref{fig:InputBoxClass} zeigt die Schnittstellenbeschreibung der InputBox. Im Konstruktor wird neben dem Label-Text auch der CSS-Style übergeben, um flexibel den Style verschiedener Instanzen mittels Dependency Injection anpassen zu können. Über die Methode setFocus kann der Fokus auf die TextBox gesetzt werden. Die Methoden setText, getText und clear sind zur Manipulation der Eingabe vorgesehen.
 
 \begin{figure}[H]
 \centering
