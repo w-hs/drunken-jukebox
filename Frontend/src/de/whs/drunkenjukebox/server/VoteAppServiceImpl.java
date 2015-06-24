@@ -94,21 +94,15 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void sendVote(PlayListEntry entry, Vote vote) {
-		// TODO: Wirklich implementieren
-		System.out.println("voteUP");
 		
-		if(vote == Vote.UP)
-		{
+		if(vote == Vote.UP) {
 			entry.setVoteResult(VoteResult.UP_VOTED);
-		}
-		else
-		{
+		} else {
 			entry.setVoteResult(VoteResult.DOWN_VOTED);
 		}
 			
 		JSONObject jsonEntry = new JSONObject();
 		try {
-			
 			jsonEntry.put("id", entry.getId());
 			jsonEntry.put("songID", entry.getSongID());
 			jsonEntry.put("position", 0);
@@ -118,12 +112,8 @@ public class VoteAppServiceImpl extends RemoteServiceServlet implements
 			System.out.println(jsonEntry.toString());
 			
 			Snippets.put(ServerURL+"playlist/"+entry.getId(), jsonEntry);
-		} catch (JSONException e) {
-			
+		} catch (JSONException e) {	
 			e.printStackTrace();
 		}
-		
-		
 	}
-
 }

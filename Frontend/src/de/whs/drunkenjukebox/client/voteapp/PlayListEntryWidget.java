@@ -3,12 +3,14 @@ package de.whs.drunkenjukebox.client.voteapp;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.NumberLabel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.resources.AppConstants;
@@ -38,29 +40,38 @@ public class PlayListEntryWidget extends Composite {
 		namePanel.add(songName);
 		namePanel.add(artistName);
 		
+		
+		NumberLabel<Integer> voteCount = new NumberLabel<Integer>(NumberFormat.getFormat("+#;-#"));
+		voteCount.setValue(p.getVotes());
+		voteCount.addStyleName(style.voteCount());
+		if(p.getVotes()>0)
+			voteCount.addStyleName(style.voteCountPos());
+		else if(p.getVotes()<0)
+			voteCount.addStyleName(style.voteCountNeg());
+		
 		upButton = new Button(constants.upVote());
 		upButton.addStyleName(style.upVote());
 		downButton = new Button(constants.downVote());
 		downButton.addStyleName(style.downVote());
 		
 		FlowPanel buttonsPannel = new FlowPanel();
-		
-		final PlayListEntryWidget self = this;
+
 		upButton.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				voteListener.onUpVote(self);
+				voteListener.onUpVote(playlistEntry);
 			}
 		});
 		downButton.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				voteListener.onDownVote(self);
+				voteListener.onDownVote(playlistEntry);
 			}
 		});
 		
+		
+		
+		buttonsPannel.add(voteCount);
 		buttonsPannel.add(upButton);
 		buttonsPannel.add(downButton);
 		
@@ -72,11 +83,7 @@ public class PlayListEntryWidget extends Composite {
 		initWidget(mainPanel);
 	}
 	
-	public void setVoteListener(VoteListener vl)
-	{
+	public void setVoteListener(VoteListener vl) {
 		voteListener = vl;
 	}
-	
-	
-	
 }

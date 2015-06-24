@@ -29,6 +29,15 @@ public interface AppResources extends ClientBundle {
 		
 		@ClassName("full-width")
 		String fullWidth();
+		
+		@ClassName("voteCount")
+		String voteCount();
+		
+		@ClassName("voteCountPos")
+		String voteCountPos();
+		
+		@ClassName("voteCountNeg")
+		String voteCountNeg();
 	}
 	
 	public interface AdminStyle extends CssResource {

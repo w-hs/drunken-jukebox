@@ -19,9 +19,6 @@ public class DISliderJQ extends Composite {
 	public DISliderJQ(String id) {
 		this.id = id;
 		
-		
-		
-		
 		String s = "<div id='"+id+"' style='width: 282px; background: linear-gradient(to right, green , blue);   margin-left: 10px;'></div>";
 		//SafeHtml sliderDivSafeHtml = SafeHtmlUtils.fromString(s);
 		HTML sliderDiv = new HTML(s);
@@ -29,13 +26,8 @@ public class DISliderJQ extends Composite {
 		HorizontalPanel mainPanel = new HorizontalPanel();
 		mainPanel.add(sliderDiv);
 		
-	
-		
-		
-		
+
 		initWidget(mainPanel);
-		
-		
 		
 	}
 
