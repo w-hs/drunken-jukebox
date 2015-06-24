@@ -115,3 +115,22 @@ body {
 {
 	width:100%;
 }
+
+.voteCount
+{
+	font-size: 27px;
+    float: right;
+    width:50px;
+    margin-right: 15px;
+    font-weight: bold;
+}
+.voteCountPos
+{
+	 color: #3ca365;
+	
+}
+.voteCountNeg
+{
+	 color: #e82727;
+	
+}

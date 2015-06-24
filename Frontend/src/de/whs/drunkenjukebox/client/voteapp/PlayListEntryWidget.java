@@ -3,12 +3,14 @@ package de.whs.drunkenjukebox.client.voteapp;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.NumberLabel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.whs.drunkenjukebox.resources.AppConstants;
@@ -38,6 +40,15 @@ public class PlayListEntryWidget extends Composite {
 		namePanel.add(songName);
 		namePanel.add(artistName);
 		
+		
+		NumberLabel<Integer> voteCount = new NumberLabel<Integer>(NumberFormat.getFormat("+#;-#"));
+		voteCount.setValue(p.getVotes());
+		voteCount.addStyleName(style.voteCount());
+		if(p.getVotes()>0)
+			voteCount.addStyleName(style.voteCountPos());
+		else if(p.getVotes()<0)
+			voteCount.addStyleName(style.voteCountNeg());
+		
 		upButton = new Button(constants.upVote());
 		upButton.addStyleName(style.upVote());
 		downButton = new Button(constants.downVote());
@@ -58,6 +69,9 @@ public class PlayListEntryWidget extends Composite {
 			}
 		});
 		
+		
+		
+		buttonsPannel.add(voteCount);
 		buttonsPannel.add(upButton);
 		buttonsPannel.add(downButton);
 		
