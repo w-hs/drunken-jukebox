@@ -44,20 +44,17 @@ public class PlayListEntryWidget extends Composite {
 		downButton.addStyleName(style.downVote());
 		
 		FlowPanel buttonsPannel = new FlowPanel();
-		
-		final PlayListEntryWidget self = this;
+
 		upButton.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				voteListener.onUpVote(self);
+				voteListener.onUpVote(playlistEntry);
 			}
 		});
 		downButton.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				voteListener.onDownVote(self);
+				voteListener.onDownVote(playlistEntry);
 			}
 		});
 		
@@ -72,11 +69,7 @@ public class PlayListEntryWidget extends Composite {
 		initWidget(mainPanel);
 	}
 	
-	public void setVoteListener(VoteListener vl)
-	{
+	public void setVoteListener(VoteListener vl) {
 		voteListener = vl;
 	}
-	
-	
-	
 }
