@@ -1,7 +1,39 @@
-\section{Fazit}
+\section{Schlussteil}
+
+\subsection{Probleme}
+
+Die Verwendung von GWT für die Umsetzung des Projekts verlief überwiegend problemlos. Dennoch sind uns einige
+Aspekte aufgefallen, die nicht etwas zu wünschen übrig ließen. Das betrifft zum einen die
+Übersetzung des Layouts in HTML und die Abstraktionsmöglichkeiten von GSS.
+
+\subsubsection{Übersetzung des Layouts in HTML}
+
+In GWT werden Panels verwendet um das Layout der Anwendung zu definieren. Wir haben in unserem Projekt
+hierzu überwiegend Horizontal-, Vertical- und FlowPanels verwendet. Für Tabellenstrukturen wie die Playlist
+wurden Flex- bzw. CellTables eingesetzt.
+
+Bei der Analyse von Problemen bzgl. des Layouts und dem Styling von einzelnen Oberflächenelementen haben wir
+festgestellt, dass alle Panels und Tables als verschachtelte <table>-Elemente im DOM eingefügt werden.
+Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt. Dies erschwert
+die Analyse von Layout und Styleproblemen, da im HTML-Code nicht direkt ersichtlich ist, welches
+<table>-Element welchem GWT-Widget entspricht. 
+
+Aus den oben genannten Gründen haben wir zu Analysezwecken Styles auf verschiedene GWT-Widgets angewendet,
+um ein Gefühl dafür zu bekommen, an welcher Stelle in der HTML-Tabellenstruktur diese eingefügt werden.
+Wir hätten uns hier eine einfachere Übersetzung eines Layout-Widgets in z.B. genau ein <div>-Element gewünscht.
+Damit wäre der Übersetzungsprozess von Widgets in HTML-Elemente besser nachvollziehbar 
+und die Analyse von Fehlern beim Layout oder beim Styling wesentlich vereinfacht.
+Es ist allerdings schwer zu beurteilen, ob andere Gründe für die Verwendung der Tabellenstruktur in GWT sprechen.
+ 
+\subsubsection{Zu geringe Abstraktionsmöglichkeiten in GSS}
+
+\subsection{Ausblick}
+
+\subsection{Fazit}
 Im Verlauf des MWB-Projekts wurden zwei Anwendungen in GWT implementiert, die über einen Proxy mit dem Backend auf Basis von Deployd als Alternative zum WildFly kommunizieren. Sowohl die Anwendung für den Administrator als auch die App für die Partygäste erfüllen alle eingangs spezifizierten Anforderungen. Unter der Verwendung von MVP haben wir zahlreiche eigene Widgets entwickelt, die in beiden Anwendungen genutzt werden. Die Vorteile von MVP sind allerdings aufgrund der geringen Komplexität unseres Projekts nicht deutlich geworden. 
 
 Die Verwendung von GWT und den dazu gehörigen Erweiterungen verlief für ein so großes Framework erstaunlicherweise problemlos.
 So brachte beispielsweise ein Upgrade der GWT-Version von 2.6 auf 2.7 zur Mitte unseres Projekts keinerlei Probleme mit sich. Zudem stehen eine sehr große Auswahl der wichtigsten Oberflächenkomponenten bereits im Standard zur Verfügung. Darüber hinaus verlief der Einsatz von JSNI  ohne erwähnenswerte Komplikationen. Ebenso gut hat uns das Grundprinzip von GSS gefallen, wobei sich teilweise der Eindruck verstärkt hat, dass es nicht zu Ende gedacht ist. Zuweisungen und das Durchreichen von Styles ist gewöhnungsbedürftig und wir hätten uns gewünscht, dass es möglich ist, mehrere CSS-Definitionen auf einer höheren Abstraktionsebene zu überspannen.
 
 Insgesamt hat das Projekt gezeigt, dass GWT ein gutes Tool ist, welches zum Einsatz in produktiven Umgebungen geeignet ist. Wir sind abschließend mit unserem Projekt und den Möglichkeiten von GWT zufrieden.
+
