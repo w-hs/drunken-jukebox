@@ -36,7 +36,7 @@ Bei der Verwendung von GSS ist uns aufgefallen, dass die gegebenen Abstraktionsm
 für bestimmte Anwendungsfälle nicht ausreichen. In unserem Projekt betrifft das die Definition
 von Button-Styles.
 Da unsere Buttons einheitlich aussehen sollten und sich lediglich in der Farbe unterscheiden, 
-haben wir Mixins in GSS genutzt um die GSS-Eigenschaften zu abstrahieren. Als Parameter kann
+haben wir Mixins in GSS genutzt um die CSS-Eigenschaften zu abstrahieren. Als Parameter kann
 die Hintergrund- sowie die Randfarbe angepasst werden.
 
 \begin{lstlisting}[language=CSS]
@@ -67,11 +67,11 @@ die Maus über diesem befindet, sind einzelne CSS-Anweisungen notwendig.
 \end{lstlisting}
 
 Um davon ausgehend einen Button mit einer anderen Farbe anzulegen, muss dieser Code kopiert und
-die Farbparameter angepasst.
-Das ist notwendig, da GSS keine Abstraktionsmöglichkeit zur Generierung mehrere CSS-Anweisungen
+die Farbparameter angepasst werden.
+Das ist notwendig, da GSS keine Abstraktionsmöglichkeit zur Generierung mehrerer CSS-Deklarationen
 bietet. Ein Mixin kann nur CSS-Eigenschaften in einer Anweisung erzeugen.
 
-Dieses Problem wird von less über "`Nested Rules"' und "`Parent Selectors"' gelöst\footnote{\url{http://lesscss.org/features/\#parent-selectors-feature}}. Ein ähnliches Konzept
+Dieses Problem wird von \textit{less} über "`Nested Rules"' und "`Parent Selectors"' gelöst\footnote{\url{http://lesscss.org/features/\#parent-selectors-feature}}. Ein ähnliches Konzept
 hätten wir uns auch in GSS gewünscht.
 
 \subsection{Ausblick}
