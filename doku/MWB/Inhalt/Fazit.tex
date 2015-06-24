@@ -14,9 +14,16 @@ wurden Flex- bzw. CellTables eingesetzt.
 
 Bei der Analyse von Problemen bzgl. des Layouts und dem Styling von einzelnen Oberflächenelementen haben wir
 festgestellt, dass alle Panels und Tables als verschachtelte <table>-Elemente im DOM eingefügt werden.
-Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt. Dies erschwert
+Dabei werden selbst einfache Panels in mehrfach verschachtelte HTML-Tabellen übersetzt (s. Abbildung \ref{fig:Probleme-HTML-tables}). Dies erschwert
 die Analyse von Layout und Styleproblemen, da im HTML-Code nicht direkt ersichtlich ist, welches
 <table>-Element welchem GWT-Widget entspricht. 
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\linewidth]{Bilder/Probleme-HTML-tables}
+\caption{Tabellenstruktur der VoteApp in den Chrome DevTools}
+\label{fig:Probleme-HTML-tables}
+\end{figure}
 
 Aus den oben genannten Gründen haben wir zu Analysezwecken Styles auf verschiedene GWT-Widgets angewendet,
 um ein Gefühl dafür zu bekommen, an welcher Stelle in der HTML-Tabellenstruktur diese eingefügt werden.
@@ -26,6 +33,8 @@ und die Analyse von Fehlern beim Layout oder beim Styling wesentlich vereinfacht
 Es ist allerdings schwer zu beurteilen, ob andere Gründe für die Verwendung der Tabellenstruktur in GWT sprechen.
  
 \subsubsection{Zu geringe Abstraktionsmöglichkeiten in GSS}
+
+
 
 \subsection{Ausblick}
 
