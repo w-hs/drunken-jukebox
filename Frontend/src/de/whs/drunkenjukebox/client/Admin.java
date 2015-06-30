@@ -48,7 +48,7 @@ public class Admin implements EntryPoint {
 		partyManagementPresenter.go();
 				
 		TabLayoutPanel tabLayoutPanel = new TabLayoutPanel(2.5, Unit.EM);
-		tabLayoutPanel.setAnimationDuration(1000);
+		tabLayoutPanel.setAnimationDuration(200);
 	    tabLayoutPanel.getElement().getStyle().setMarginBottom(10.0, Unit.PX);
 	       
 		tabLayoutPanel.add(partyManagementView.asWidget(), constants.party());
